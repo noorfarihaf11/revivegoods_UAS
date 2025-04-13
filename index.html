@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revive Goods - Trade Your Goods for Good</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+    
+    .h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    
+    .h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    
+    .h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    
+    .h4 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    
+    .h5 {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    
+    .links {
+      color: #473771;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .links:hover {
+      color: #37265c;
+      text-decoration: underline;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(90deg, #473771 0%, #AE92F7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    /* Simple animations */
+    .fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .btn-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <!-- Header -->
+  <header class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50">
+    <div class="text-2xl font-bold flex items-center">
+      <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+      <span class="gradient-text">Revive Goods.</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <nav class="flex gap-6">
+        <a href="#" class="links">Home</a>
+        <a href="#about" class="links">About Us</a>
+        <a href="#features" class="links">Features</a>
+        <a href="#testi" class="links">Testimonials</a>
+        <a href="#contact" class="links">Contact</a>
+      </nav>
+      <button
+        class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors btn-hover"
+      >
+        Sign Up
+      </button>
+    </div>
+    <!-- Mobile menu button -->
+    <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden" id="mobileMenu">
+    <nav class="flex flex-col p-4">
+      <a href="#" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Home</a>
+      <a href="#about" class="py-2 px-4 hover:bg-gray-100 rounded-lg">About Us</a>
+      <a href="#features" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Features</a>
+      <a href="#testi" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Testimonials</a>
+      <a href="#contact" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Contact</a>
+      <button class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base">Sign Up</button>
+    </nav>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative px-4 md:px-10 py-16 max-w-6xl mx-auto fade-in">
+    <div class="flex flex-col md:flex-row">
+      <div class="w-full md:w-3/5">
+        <h1 class="mb-6 h1 gradient-text">
+          Trade your goods<br />
+          for good
+        </h1>
+        <p class="mb-8 h2 text-gray-700">
+          Give your unused items a second life by donating them to those who
+          need them most. In return, you'll earn Green Coins that can be
+          redeemed for eco-friendly rewards. A simple trade that makes a
+          lasting impact!
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <button
+            class="border border-[#473771] bg-[#473771] text-white px-6 py-2 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors btn-hover"
+          >
+            Get Started
+            <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+          <button
+            class="border border-[#473771] bg-white text-[#473771] px-6 py-2 rounded font-medium text-base hover:bg-[#473771] hover:text-white transition-colors btn-hover"
+          >
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="w-full md:w-2/5 relative h-64 md:h-auto mt-8 md:mt-0">
+        <div class="absolute -top-2 -left-2 w-full h-full bg-[#AE92F7]/20 rounded-lg"></div>
+        <img
+          src="/assets/donate.webp"
+          alt="Donate items"
+          class="w-full h-full object-cover rounded-lg shadow-md relative"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about" class="relative px-4 md:px-10 py-16 max-w-6xl mx-auto bg-gray-50">
+    <div class="container mx-auto px-4 md:px-8 text-center mb-8">
+      <h1 class="h1 gradient-text inline-block mb-2">About Us</h1>
+      <p class="mx-auto mb-4 h2 text-gray-700">What we do?</p>
+
+      <!-- First Paragraph and Image -->
+      <div class="flex flex-col md:flex-row items-center mt-12 slide-up">
+        <div class="w-full md:w-3/5 text-left">
+          <p class="mb-8 h3 text-gray-700">
+            Providing users with a platform to donate usable items and earn
+            rewards for a sustainable future.
+          </p>
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-full bg-[#473771]/10 flex items-center justify-center text-[#473771]">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-[#473771]">Eco-Friendly</h3>
+              <p class="text-sm text-gray-600">Reducing waste and promoting reuse</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-full md:w-2/5 relative h-48 md:h-auto mt-8 md:mt-0 md:pl-4"> 
+          <img
+            src="/assets/boxdonation.jpg"
+            alt="Donation box"
+            class="w-full h-full object-cover rounded-lg shadow-md"
+          />
+        </div>
+      </div>
+
+      <!-- Second Paragraph and Image -->
+      <div class="flex flex-col md:flex-row mt-16 slide-up">
+          <div class="w-full md:w-2/5 relative h-48 md:h-auto mt-8 md:mt-0 md:pr-4 order-2 md:order-1"> 
+              <img
+                  src="/assets/joy.jpg"
+                  alt="Happy people"
+                  class="w-full h-full object-cover rounded-lg shadow-md"
+              />
+          </div>
+          <div class="w-full md:w-3/5 text-left md:pl-4 order-1 md:order-2">
+              <p class="mb-2 h3 text-gray-700">
+                  Donating items like clothes, toys, and electronics helps those in need. We ensure your donations reach trusted foundations, making a positive impact on the community.
+              </p>
+              <div class="flex items-center gap-4 mt-4">
+                <div class="w-10 h-10 rounded-full bg-[#473771]/10 flex items-center justify-center text-[#473771]">
+                  <i class="fas fa-hands-helping"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-[#473771]">Community-Focused</h3>
+                  <p class="text-sm text-gray-600">Supporting those in need through donations</p>
+                </div>
+              </div>
+          </div>
+      </div>        
+    </div>
+  </section>
+
+  <!-- How it Works Section -->
+  <section id="features" class="relative px-4 md:px-10 py-16 max-w-6xl mx-auto">
+      <div class="container mx-auto px-4 md:px-8 text-center mb-16">
+          <h1 class="h1 gradient-text inline-block">How it Works?</h1>
+          <p class="h2 mt-2 text-gray-700">Donate your goods in just 3 clicks</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 justify-center items-center text-center">
+          <!-- Step 1 -->
+          <div class="bg-white shadow-lg rounded-2xl p-6 card-hover">
+              <div class="w-16 h-16 rounded-full bg-[#473771]/10 flex items-center justify-center text-[#473771] text-2xl mx-auto mb-4">
+                1
+              </div>
+              <img src="/assets/mockup1.png" alt="Step 1" class="mx-auto w-48 h-auto rounded-lg">
+              <h3 class="mt-4 h4 text-[#473771] font-semibold">Choose Items</h3>
+              <p class="h5 mt-2 text-gray-700">Select the items you want to donate</p>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="bg-white shadow-lg rounded-2xl p-6 card-hover">
+              <div class="w-16 h-16 rounded-full bg-[#473771]/10 flex items-center justify-center text-[#473771] text-2xl mx-auto mb-4">
+                2
+              </div>
+              <img src="/assets/mockup2.png" alt="Step 2" class="mx-auto w-48 h-auto rounded-lg">
+              <h3 class="mt-4 h4 text-[#473771] font-semibold">Schedule Pickup</h3>
+              <p class="h5 mt-2 text-gray-700">Set pickup date and time</p>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="bg-white shadow-lg rounded-2xl p-6 card-hover">
+              <div class="w-16 h-16 rounded-full bg-[#473771]/10 flex items-center justify-center text-[#473771] text-2xl mx-auto mb-4">
+                3
+              </div>
+              <img src="/assets/mockup3.png" alt="Step 3" class="mx-auto w-48 h-auto rounded-lg">
+              <h3 class="mt-4 h4 text-[#473771] font-semibold">Earn Rewards</h3>
+              <p class="h5 mt-2 text-gray-700">Get Green Coins for your donations</p>
+          </div>
+      </div>
+  </section>
+
+  <!-- Rewards Section -->
+  <section class="flex flex-col md:flex-row items-center p-4 md:p-8 max-w-6xl mx-auto py-16 bg-gray-50">
+    <!-- Left Side: Image -->
+    <div class="w-full md:w-1/2 flex justify-center">
+      <img
+        src="/assets/boxdonation.jpg"
+        alt="Donation Box"
+        class="w-72 h-72 rounded-lg shadow-lg object-cover"
+      />
+    </div>
+  
+    <!-- Right Side: Content -->
+    <div class="w-full md:w-1/2 p-4 md:p-8">
+      <div class="max-w-lg">
+        <h2 class="h3 font-bold mb-4 gradient-text inline-block">
+          Earn Rewards Every Time You Give
+        </h2>
+        <p class="h4 mb-6 text-gray-700">
+          Support sustainability and get rewarded! Each donation earns you Green Coins, which you can redeem for eco-friendly rewards like sustainable products, vouchers, and more.
+        </p>
+        <ul class="h5 space-y-2 mb-6 text-gray-700">
+          <li class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+            Donate items & collect Green Coins
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+            Track your impact in real-time
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+            Redeem rewards for sustainable products
+          </li>
+        </ul>
+        <a
+        href="#"
+        class="bg-[#473771] text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-[#37265c] transition-all shadow-md inline-block btn-hover"
+      >
+        Start Donating Now
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>              
+      </div>
+    </div>
+  </section>
+  
+  <!-- FAQ Section -->
+  <section id="faq" class="max-w-4xl mx-auto py-16 px-4 md:px-6">
+      <h2 class="h1 mb-4 gradient-text inline-block text-center">Frequently Asked Questions</h2>
+      <p class="h5 mb-6 text-gray-700 text-center">Find Answers to Common Questions About Our Services.</p>
+      
+      <div class="space-y-4">
+          <!-- FAQ Item 1 -->
+          <div class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-300">
+              <button class="w-full flex justify-between items-center" onclick="toggleFAQ(this)">
+                  <span class="h4 text-[#473771]">How do I create an account on ReviveGoods?</span>
+                  <span class="text-[#473771]">
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                  </span>
+              </button>
+              <p class="mt-2 text-gray-700 hidden faq-content">
+                  Creating an account is easy! Simply click the "Sign Up" button at the top of the page and follow the instructions to set up your profile.
+              </p>
+          </div>
+          
+          <!-- FAQ Item 2 -->
+          <div class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-300">
+              <button class="w-full flex justify-between items-center" onclick="toggleFAQ(this)">
+                  <span class="h4 text-[#473771]">How do I earn eco-coins?</span>
+                  <span class="text-[#473771]">
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                  </span>
+              </button>
+              <p class="mt-2 text-gray-700 hidden faq-content">
+                You can earn eco-coins by donating or exchanging items through the app. Once your item is accepted and verified, eco-coins will be credited to your account. The number of coins you receive depends on the item's category, condition, and demand.
+              </p>
+          </div>
+          
+          <!-- FAQ Item 3 -->
+          <div class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-300">
+            <button class="w-full flex justify-between items-center" onclick="toggleFAQ(this)">
+                <span class="h4 text-[#473771]">Can I use my eco-coins to buy products?</span>
+                <span class="text-[#473771]">
+                  <i class="fas fa-chevron-down faq-icon"></i>
+                </span>
+            </button>
+            <p class="mt-2 text-gray-700 hidden faq-content">
+              Yes! Eco-coins can be redeemed for various eco-friendly products and services available in the ReviveGoods marketplace.
+            </p>
+          </div>
+          <div class="bg-gray-100 p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition duration-300">
+            <button class="w-full flex justify-between items-center" onclick="toggleFAQ(this)">
+                <span class="h4 text-[#473771]">What types of items can I donate or exchange?</span>
+                <span class="text-[#473771]">
+                  <i class="fas fa-chevron-down faq-icon"></i>
+                </span>
+            </button>
+            <p class="mt-2 text-gray-700 hidden faq-content">
+              You can donate or trade items such as clothes, electronics, books, furniture, and other reusable goods.
+            </p>
+          </div>          
+      </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section id="testi" class="relative overflow-hidden bg-gray-50 px-4 md:px-6 py-16 md:py-24">
+    <div class="mx-auto max-w-2xl lg:max-w-4xl">
+      <h2 class="h1 mb-10 gradient-text inline-block text-center">What Our Users Say</h2>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <blockquote class="text-center text-xl font-semibold text-gray-900 md:text-2xl">
+          <p>"Revive Goods has transformed how I think about my unused items. Instead of throwing things away, I now donate them and earn rewards. It's a win-win for me and the environment!"</p>
+        </blockquote>
+        <figcaption class="mt-10">
+          <img class="mx-auto h-10 w-10 rounded-full" src="/assets/profile.jpg" alt="User profile">
+          <div class="mt-4 flex items-center justify-center space-x-3 text-base">
+            <div class="font-semibold text-gray-900">Noor Fariha</div>
+            <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
+              <circle cx="1" cy="1" r="1" />
+            </svg>
+            <div class="text-gray-600">Regular User</div>
+          </div>
+        </figcaption>
+      </div>
+      
+      <!-- Simple testimonial navigation -->
+      <div class="flex justify-center mt-6 space-x-2">
+        <button class="w-3 h-3 rounded-full bg-[#473771]"></button>
+        <button class="w-3 h-3 rounded-full bg-gray-300"></button>
+        <button class="w-3 h-3 rounded-full bg-gray-300"></button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="bg-[#473771] text-white py-16 md:py-24 relative overflow-hidden">
+      <div class="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 z-10">
+          <h1 class="text-3xl md:text-4xl font-bold mb-6">
+            Make a Difference Today
+          </h1>
+          <p class="mb-8 max-w-lg">
+            Join thousands of people who are making a positive impact on the environment and helping those in need through our platform.
+          </p>
+          <p class="mb-6 text-sm max-w-lg">
+            Every donation counts, no matter how small. Start your journey towards a more sustainable future today.
+          </p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 rounded-full bg-white mr-3 overflow-hidden">
+              <img src="/assets/profile.jpg" alt="User" class="w-full h-full object-cover" />
+            </div>
+            <span class="text-sm">Noor Fariha, Environmental Activist</span>
+          </div>
+          
+          <div class="mt-8">
+            <a href="#" class="bg-white text-[#473771] px-6 py-3 rounded-lg font-medium inline-block hover:bg-gray-100 transition-colors shadow-md btn-hover">
+              Join Our Community
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 mt-10 md:mt-0 flex justify-end">
+          <div class="relative">
+            <div class="bg-white/20 w-64 h-32 md:w-80 md:h-40 absolute -top-4 -right-4 rounded-lg"></div>
+            <div class="bg-white/40 w-64 h-32 md:w-80 md:h-40 relative rounded-lg">
+              <img src="/assets/joy.jpg" alt="Impact" class="w-full h-full object-cover rounded-lg" />
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section id="contact" class="py-16 px-4">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
+      <h2 class="text-3xl font-bold h1 gradient-text inline-block text-center mb-4">
+        Get In Touch With Us
+      </h2>
+      <p class="text-center h5 mb-6 text-gray-700">
+        Have questions or need support? Fill out the form below, and our team will reach out to you as soon as possible.
+      </p>
+  
+      <!-- Success message (hidden by default) -->
+      <div id="contactSuccess" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 text-center">
+        <p>Thank you for your message! We'll get back to you soon.</p>
+      </div>
+  
+      <!-- Error message (hidden by default) -->
+      <div id="contactError" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 text-center">
+        <p>There was an error sending your message. Please try again.</p>
+      </div>
+  
+      <!-- Updated form with FormSubmit action -->
+      <form id="contactForm" action="https://formsubmit.co/noorfarihaf11@gmail.com" method="POST" class="space-y-4">
+        <!-- FormSubmit configuration -->
+        <input type="hidden" name="_subject" value="New message from Revive Goods website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://revivegoods.com/thank-you">
+        <input type="text" name="_honey" style="display:none">
+        
+        <!-- Name -->
+        <div>
+          <label class="block body mb-2 text-gray-700">Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="E.g 'Noor Fariha'"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+            required
+          />
+        </div>
+  
+        <!-- Email -->
+        <div>
+          <label class="block body mb-2 text-gray-700">Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="E.g 'nrfarihaf@gmail.com'"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+            required
+          />
+        </div>
+  
+        <!-- Message -->
+        <div>
+          <label class="block body mb-2 text-gray-700">Message</label>
+          <textarea
+            name="message"
+            placeholder="Your message here"
+            rows="4"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+            required
+          ></textarea>
+        </div>
+  
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button
+            type="submit"
+            id="submitBtn"
+            class="bg-[#473771] text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-[#37265c] transition-all shadow-md btn-hover"
+          >
+            Send Message
+            <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="relative px-4 md:px-10 py-16 max-w-6xl mx-auto bg-gray-50">
+    <div class="flex flex-col md:flex-row items-center md:items-start">
+      <!-- Text Content -->
+      <div class="w-full md:w-3/5 mt-8 md:mt-32">
+        <h1 class="mb-2 h2 gradient-text inline-block font-semibold">
+          Small actions, big impact.
+        </h1>
+        <p class="mb-4 h2 text-[#473771] font-semibold">
+          Join us for creating a better tomorrow!
+        </p>
+        <div class="mt-8">
+          <a href="#" class="bg-[#473771] text-white px-6 py-3 rounded-lg font-medium inline-block hover:bg-[#37265c] transition-colors shadow-md btn-hover">
+            Download Our App
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+  
+      <!-- Image -->
+      <div class="w-full md:w-2/5 relative h-64 md:h-auto mt-8 md:mt-0">
+        <img
+          src="/assets/wpp.png"
+          alt="Sustainable future"
+          class="w-full h-full object-cover rounded-lg"
+        />
+      </div>
+    </div>
+  </section>    
+  
+  <!-- Footer -->
+  <footer class="bg-[#473771] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Footer top section with columns -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <!-- Company info column -->
+        <div>
+          <h3 class="text-3xl mb-4 flex items-center">
+            <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+            <span class="text-white">Revive Goods.</span>
+          </h3>
+          <p class="h5 mb-4 text-[#FFFFFF]">Our mission is empowering individuals to make sustainable choices by 
+            turning unwanted goods into opportunities for a greener future.</p>
+          <div class="flex space-x-4">
+            <!-- Social media icons -->
+            <a href="https://instagram.com/nrfarihaaf" target="_blank"class="text-gray-400 hover:text-white">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://linkedin.com/in/noorfarihaf11" target="_blank" class="text-gray-400 hover:text-white">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Links column 1 -->
+        <div>
+          <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+            <li><a href="#about" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
+            <li><a href="#testi" class="text-gray-300 hover:text-white transition-colors">Testimonials</a></li>
+            <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        
+        <!-- Links column 2 -->
+        <div>
+          <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
+          <ul class="space-y-2">
+            <li><a href="https://instagram.com/nrfarihaaf" target="_blank" class="text-gray-300 hover:text-white transition-colors">Instagram</a></li>
+            <li><a href="https://github.com/noorfarihaf11" target="_blank" href="#" class="text-gray-300 hover:text-white transition-colors">Github</a></li>
+            <li><a href="https://linkedin.com/in/noorfarihaf11" target="_blank" class="text-gray-300 hover:text-white transition-colors">LinkedIn</a></li>
+          </ul>
+        </div>
+        
+        <!-- Newsletter column -->
+        <div>
+          <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
+          <p class="h5 mb-4 text-[#FFFFFF]">Subscribe to our newsletter for the latest updates.</p>
+          <form class="flex">
+            <input type="email" placeholder="Your email" class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none" />
+            <button type="submit" class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Footer bottom section -->
+      <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">&copy; 2025 Revive Goods. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top button -->
+  <button id="backToTop" class="fixed bottom-6 right-6 w-10 h-10 rounded-full bg-[#473771] text-white flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-[#37265c] z-50">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+    
+    // FAQ toggle
+    function toggleFAQ(button) {
+      const content = button.nextElementSibling;
+      const icon = button.querySelector('.faq-icon');
+      
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      } else {
+        content.classList.add('hidden');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      }
+    }
+    
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'invisible');
+        backToTopBtn.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopBtn.classList.add('opacity-0', 'invisible');
+        backToTopBtn.classList.remove('opacity-100', 'visible');
+      }
+    });
+    
+    backToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+</body>
+</html>
