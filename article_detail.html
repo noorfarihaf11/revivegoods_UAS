@@ -1,122 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How Your Donations Are Making a Global Impact - Revive Goods</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .article-content h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .article-content h2 {
-        font-size: 1.5rem;
-      }
-    }
-
-    .article-content h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-top: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    @media (min-width: 768px) {
-      .article-content h3 {
-        font-size: 1.25rem;
-      }
-    }
-
-    .article-content p {
-      margin-bottom: 1rem;
-      line-height: 1.7;
-      font-size: 0.95rem;
-    }
-
-    @media (min-width: 768px) {
-      .article-content p {
-        font-size: 1rem;
-      }
-    }
-
-    .article-content ul, .article-content ol {
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .article-content ul {
-      list-style-type: disc;
-    }
-
-    .article-content ol {
-      list-style-type: decimal;
-    }
-
-    .article-content li {
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-    }
-
-    @media (min-width: 768px) {
-      .article-content li {
-        font-size: 1rem;
-      }
-    }
-
-    .article-content blockquote {
-      border-left: 4px solid #AE92F7;
-      padding-left: 1rem;
-      font-style: italic;
-      margin: 1.5rem 0;
-      color: #4B5563;
-      font-size: 0.95rem;
-    }
-
-    @media (min-width: 768px) {
-      .article-content blockquote {
-        font-size: 1rem;
-        padding-left: 1.5rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How Your Donations Are Making a Global Impact - Revive Goods</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-gray-50">
-  <!-- Navbar Container -->
-  <div id="navbar-container"></div>
 
-  <!-- Article Header -->
-  <div class="bg-[#473771] text-white py-8 md:py-12">
-    <div class="container mx-auto px-4 md:px-8">
-      <div class="max-w-3xl mx-auto">
-        <span class="bg-white/20 text-white px-3 py-1 rounded-full text-xs md:text-sm font-medium inline-block">Featured</span>
-        <h1 class="text-2xl md:text-4xl font-bold mt-3 md:mt-4 mb-3 md:mb-4">How Your Donations Are Making a Global Impact</h1>
-        <div class="flex items-center">
-          <img src="/placeholder.svg?height=50&width=50" alt="Author" class="w-10 h-10 md:w-12 md:h-12 rounded-full mr-3 md:mr-4">
-          <div>
-            <p class="font-medium text-sm md:text-base">Sarah Johnson</p>
-            <p class="text-xs md:text-sm text-gray-300">May 15, 2025 • 8 min read</p>
-          </div>
+  <header
+      class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50"
+    >
+      <div class="text-2xl font-bold flex items-center">
+        <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+        <span class="gradient-text">Revive Goods.</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <nav class="flex gap-6">
+          <a href="index.html" class="links" id="nav-home">Home</a>
+          <a href="article_archive.html" class="links" id="nav-article"
+            >Article</a
+          >
+          <a href="shop.html" class="links" id="nav-shop">Shop</a>
+          <a href="donate.html" class="links" id="nav-donate">Donate</a>
+          <a href="history.html" class="links" id="nav-history">History</a>
+        </nav>
+        <div class="flex items-center gap-4">
+          <a href="rewards-cart.html" class="text-[#473771] hover:text-[#37265c]">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+          <button class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors">
+            Sign In
+          </button>
+        </div>
+      </div>
+      <!-- Mobile menu button -->
+      <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div
+      class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden"
+      id="mobileMenu"
+    >
+      <nav class="flex flex-col p-4">
+        <a href="#home" class="py-2 px-4 hover:bg-gray-100 rounded-lg active-mobile" id="mobile-nav-home">Home</a>
+        <a href="#about" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-about"
+          >About Us</a
+        >
+        <a href="#features" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-features"
+          >Features</a
+        >
+        <a href="#testi" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-testi"
+          >Testimonials</a
+        >
+        <a href="#contact" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-contact"
+          >Contact</a
+        >
+        <button
+          class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base"
+        >
+          Sign Up
+        </button>
+      </nav>
+    </div>
+
+<!-- Article Header -->
+<div class="bg-[#473771] text-white py-12">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="max-w-3xl mx-auto">
+      <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-medium">Featured</span>
+      <h1 class="text-3xl md:text-4xl font-bold mt-4 mb-4">How Your Donations Are Making a Global Impact</h1>
+      <div class="flex items-center">
+        <img src="assets/profile.jpg" alt="Author" class="w-12 h-12 rounded-full mr-4">
+        <div>
+          <p class="font-medium">Sarah Johnson</p>
+          <p class="text-sm text-gray-300">May 15, 2025 • 8 min read</p>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Article Content -->
-  <!-- ... Konten artikel ... -->
+<!-- Article Content -->
+<div class="container mx-auto px-4 md:px-8 py-12">
+  <div class="max-w-3xl mx-auto">
+    <img src="assets/joy.jpg" alt="Featured Image" class="w-full h-auto rounded-lg mb-8">
+    
+    <div class="article-content text-gray-700">
+      <p class="text-xl font-medium mb-6">Every item you donate through Revive Goods creates a ripple effect of positive change across communities worldwide. Here's how your generosity is transforming lives and protecting our planet.</p>
+      
+      <p>When you donate an item through Revive Goods, you're not just decluttering your home or earning Green Coins. You're becoming part of a global movement toward sustainability and community support. This article explores the journey of your donations and the impact they make.</p>
+      
+      <h2>The Journey of Your Donations</h2>
+      
+      <p>Once you schedule a pickup for your items, our dedicated team ensures they reach the right destination based on their condition and type:</p>
+      
+      <ul>
+        <li><strong>Clothing and Textiles:</strong> Gently used clothing items are distributed to local shelters and international relief organizations. Items that aren't suitable for direct reuse are recycled into new textile products.</li>
+        <li><strong>Electronics:</strong> Working electronics are refurbished and donated to schools and community centers. Non-working items are responsibly recycled to recover valuable materials.</li>
+        <li><strong>Books and Educational Materials:</strong> These are distributed to schools, libraries, and literacy programs in underserved communities.</li>
+        <li><strong>Household Items:</strong> Furniture, kitchenware, and other household goods help families transitioning from homelessness or recovering from disasters.</li>
+      </ul>
+      
+      <blockquote>
+        "The laptop I received through Revive Goods' donation program helped me complete my online courses and secure a job in web development. It changed my life." — Miguel, Program Recipient
+      </blockquote>
+      
+      <h2>Environmental Impact</h2>
+      
+      <p>Every item diverted from landfills represents a win for our environment:</p>
+      
+      <ul>
+        <li>In 2024 alone, Revive Goods users helped prevent over 500,000 pounds of textiles from entering landfills.</li>
+        <li>Our electronics recycling program recovered 12 tons of rare metals that could be reused in manufacturing.</li>
+        <li>By extending the life of existing products, we reduced the carbon footprint associated with manufacturing new items by an estimated 30%.</li>
+      </ul>
+      
+      <h2>Community Benefits</h2>
+      
+      <p>Your donations create a cascade of positive outcomes in communities:</p>
+      
+      <ol>
+        <li><strong>Job Creation:</strong> Our sorting, refurbishing, and distribution centers employ people from disadvantaged backgrounds, providing stable income and job training.</li>
+        <li><strong>Education Support:</strong> Donated books, computers, and school supplies help bridge the educational gap in underresourced communities.</li>
+        <li><strong>Disaster Relief:</strong> We maintain a reserve of essential items that can be quickly deployed to areas affected by natural disasters.</li>
+        <li><strong>Affordable Access:</strong> Through partner organizations, we ensure that essential items are available to those who need them most at little to no cost.</li>
+      </ol>
+      
+      <h2>Global Reach</h2>
+      
+      <p>While we prioritize local impact, Revive Goods also partners with international organizations to extend our reach:</p>
+      
+      <ul>
+        <li>Clothing donations have reached communities in 27 countries across 5 continents.</li>
+        <li>Our educational materials support literacy programs in 15 developing nations.</li>
+        <li>Through technology partnerships, refurbished computers have equipped 50+ schools in regions with limited digital access.</li>
+      </ul>
+      
+      <h2>Your Role in the Circular Economy</h2>
+      
+      <p>By participating in Revive Goods' donation program, you're helping to build a circular economy where items are reused, repurposed, and recycled rather than discarded. This model reduces waste, conserves resources, and creates economic opportunities.</p>
+      
+      <p>The Green Coins you earn represent not just a reward for your contribution but a tangible way to continue the cycle of sustainability as you redeem them for eco-friendly products.</p>
+      
+      <h2>Looking Forward</h2>
+      
+      <p>As our community grows, so does our impact. In the coming year, we aim to:</p>
+      
+      <ul>
+        <li>Expand our pickup service to 15 new cities</li>
+        <li>Launch specialized programs for professional clothing to support job seekers</li>
+        <li>Develop educational workshops on sustainable living using donated materials</li>
+        <li>Create a transparent tracking system so donors can see exactly where their items end up</li>
+      </ul>
+      
+      <p>Your continued participation makes all of this possible. Every item you donate, every Green Coin you earn, contributes to building a more sustainable and equitable world.</p>
+      
+      <p>Ready to make an impact? Schedule your next donation pickup today and join thousands of others in creating positive change one item at a time.</p>
+    </div>
+    
+    <!-- Article Tags -->
+    <div class="mt-8 flex flex-wrap gap-2">
+      <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Sustainability</span>
+      <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Donations</span>
+      <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Global Impact</span>
+      <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Community</span>
+      <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Environment</span>
+    </div>
+    
+    <!-- Share Buttons -->
+    <div class="mt-8 flex items-center">
+      <span class="mr-4 font-medium">Share:</span>
+      <div class="flex space-x-3">
+        <a href="#" class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-700">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="bg-blue-400 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-500">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-700">
+          <i class="fab fa-pinterest"></i>
+        </a>
+        <a href="#" class="bg-blue-800 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-900">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="#" class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-green-700">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Author Bio -->
+    <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
+      <div class="flex items-center">
+        <img src="assets/profile.jpg" alt="Sarah Johnson" class="w-16 h-16 rounded-full mr-4">
+        <div>
+          <h3 class="font-bold text-lg">Sarah Johnson</h3>
+          <p class="text-gray-600">Environmental Journalist & Sustainability Advocate</p>
+        </div>
+      </div>
+      <p class="mt-4 text-gray-700">Sarah has been covering environmental issues and sustainable living for over a decade. She holds a Master's degree in Environmental Science and is passionate about helping people make eco-friendly choices in their everyday lives.</p>
+    </div>
+    
+    <!-- Related Articles -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Related Articles</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Related Article 1 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img src="assets/boxdonation.jpg" alt="Related Article 1" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="font-bold mb-2">The Rise of Sustainable Fashion</h3>
+            <p class="text-gray-600 text-sm mb-2">How conscious consumers are changing the clothing industry</p>
+            <a href="#" class="text-[#473771] text-sm font-medium hover:underline">Read More →</a>
+          </div>
+        </div>
+        
+        <!-- Related Article 2 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img src="assets/donate.webp" alt="Related Article 2" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="font-bold mb-2">Electronic Waste: A Growing Crisis</h3>
+            <p class="text-gray-600 text-sm mb-2">Understanding the impact of discarded electronics</p>
+            <a href="#" class="text-[#473771] text-sm font-medium hover:underline">Read More →</a>
+          </div>
+        </div>
+        
+        <!-- Related Article 3 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img src="assets/joy.jpg" alt="Related Article 3" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="font-bold mb-2">Community-Led Sustainability Initiatives</h3>
+            <p class="text-gray-600 text-sm mb-2">How local action drives global change</p>
+            <a href="#" class="text-[#473771] text-sm font-medium hover:underline">Read More →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Comments Section -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Comments (8)</h2>
+      
+      <!-- Comment Form -->
+      <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h3 class="font-bold mb-4">Leave a Comment</h3>
+        <form>
+          <div class="mb-4">
+            <textarea placeholder="Your comment" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#473771]"></textarea>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <input type="text" placeholder="Your name" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#473771]">
+            <input type="email" placeholder="Your email" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#473771]">
+          </div>
+          <div class="flex items-center mb-4">
+            <input type="checkbox" id="saveInfo" class="mr-2">
+            <label for="saveInfo" class="text-sm text-gray-600">Save my name and email for the next time I comment</label>
+          </div>
+          <button type="submit" class="bg-[#473771] text-white px-6 py-2 rounded-lg hover:bg-[#37265c] transition-colors">Post Comment</button>
+        </form>
+      </div>
+      
+      <!-- Comments List -->
+      <div class="space-y-6">
+        <!-- Comment 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex items-start">
+            <img src="assets/profile.jpg" alt="Commenter" class="w-10 h-10 rounded-full mr-4">
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold">Emily Rodriguez</h4>
+                <span class="text-sm text-gray-500">2 days ago</span>
+              </div>
+              <p class="text-gray-700">This article really opened my eyes to the impact of my donations. I've been donating clothes for years but never realized how far-reaching the effects could be. Will definitely be scheduling another pickup soon!</p>
+              <div class="mt-3 flex items-center">
+                <button class="text-gray-500 hover:text-[#473771] mr-4">
+                  <i class="far fa-thumbs-up mr-1"></i> 12
+                </button>
+                <button class="text-gray-500 hover:text-[#473771] mr-4">
+                  <i class="far fa-comment mr-1"></i> Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Comment 2 with Reply -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex items-start">
+            <img src="assets/profile.jpg" alt="Commenter" class="w-10 h-10 rounded-full mr-4">
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold">Marcus Chen</h4>
+                <span class="text-sm text-gray-500">3 days ago</span>
+              </div>
+              <p class="text-gray-700">I'd love to see more specific examples of communities that have benefited from these donations. It would make the impact even more tangible.</p>
+              <div class="mt-3 flex items-center">
+                <button class="text-gray-500 hover:text-[#473771] mr-4">
+                  <i class="far fa-thumbs-up mr-1"></i> 8
+                </button>
+                <button class="text-gray-500 hover:text-[#473771] mr-4">
+                  <i class="far fa-comment mr-1"></i> Reply
+                </button>
+              </div>
+              
+              <!-- Reply -->
+              <div class="mt-4 ml-8 p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-start">
+                  <img src="assets/profile.jpg" alt="Replier" class="w-8 h-8 rounded-full mr-3">
+                  <div>
+                    <div class="flex items-center justify-between mb-1">
+                      <h5 class="font-bold text-sm">Sarah Johnson <span class="text-[#473771] font-normal">(Author)</span></h5>
+                      <span class="text-xs text-gray-500">2 days ago</span>
+                    </div>
+                    <p class="text-gray-700 text-sm">Great suggestion, Marcus! We're actually working on a series of community spotlight articles that will showcase specific impact stories. Stay tuned for those in the coming weeks!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- More comments would go here -->
+        
+        <!-- Load More Comments Button -->
+        <div class="text-center">
+          <button class="border border-[#473771] text-[#473771] px-6 py-2 rounded-lg hover:bg-[#473771] hover:text-white transition-colors">
+            Load More Comments
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-white py-8 md:py-12">
-    <!-- ... Konten footer ... -->
-  </footer>
+ <!-- Footer -->
+ <footer class="bg-[#473771] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Footer top section with columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <!-- Company info column -->
+      <div>
+        <h3 class="text-3xl mb-4 flex items-center">
+          <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+          <span class="text-white">Revive Goods.</span>
+        </h3>
+        <p class="h5 mb-4 text-[#FFFFFF]">
+          Our mission is empowering individuals to make sustainable choices
+          by turning unwanted goods into opportunities for a greener future.
+        </p>
+        <div class="flex space-x-4">
+          <!-- Social media icons -->
+          <a
+            href="https://instagram.com/nrfarihaaf"
+            target="_blank"
+            class="text-gray-400 hover:text-white"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/noorfarihaf11"
+            target="_blank"
+            class="text-gray-400 hover:text-white"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
 
-  <!-- Muat script untuk navbar -->
-  <script src="js/navbar.js"></script>
+      <!-- Links column 1 -->
+      <div>
+        <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="#home"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="#about"
+              class="text-gray-300 hover:text-white transition-colors"
+              >About Us</a
+            >
+          </li>
+          <li>
+            <a
+              href="#features"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Features</a
+            >
+          </li>
+          <li>
+            <a
+              href="#testi"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Testimonials</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Links column 2 -->
+      <div>
+        <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://instagram.com/nrfarihaaf"
+              target="_blank"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Instagram</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/noorfarihaf11"
+              target="_blank"
+              href="#"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Github</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://linkedin.com/in/noorfarihaf11"
+              target="_blank"
+              class="text-gray-300 hover:text-white transition-colors"
+              >LinkedIn</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Newsletter column -->
+      <div>
+        <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
+        <p class="h5 mb-4 text-[#FFFFFF]">
+          Subscribe to our newsletter for the latest updates.
+        </p>
+        <form class="flex">
+          <input
+            type="email"
+            placeholder="Your email"
+            class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
+          />
+          <button
+            type="submit"
+            class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer bottom section -->
+    <div
+      class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+    >
+      <p class="text-gray-400 text-sm">
+        &copy; 2025 Revive Goods. All rights reserved.
+      </p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="#" class="text-gray-400 hover:text-white text-sm"
+          >Privacy Policy</a
+        >
+        <a href="#" class="text-gray-400 hover:text-white text-sm"
+          >Terms of Service</a
+        >
+        <a href="#" class="text-gray-400 hover:text-white text-sm"
+          >Cookie Policy</a
+        >
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  mobileMenuBtn.addEventListener('click', function() {
+    if (mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.remove('hidden');
+    } else {
+      mobileMenu.classList.add('hidden');
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+        const path = window.location.pathname.split("/").pop() || "index.html";
+
+        // Mapping path ke ID nav
+        const pageToNavId = {
+          "index.html": "home",
+          "article_archive.html": "article",
+          "shop.html": "shop",
+          "donate.html": "donate",
+          "history.html": "history",
+        };
+
+        const currentId = pageToNavId[path] || "article"; // default ke home kalau tidak ditemukan
+
+        // Desktop dan mobile nav link
+        const desktopLink = document.getElementById("nav-" + currentId);
+        const mobileLink = document.getElementById("mobile-nav-" + currentId);
+
+        // Tambahkan class aktif
+        if (desktopLink) {
+          desktopLink.classList.add("active-link");
+        }
+
+        if (mobileLink) {
+          mobileLink.classList.add("text-[#AE92F7]", "font-semibold");
+        }
+      });
+</script>
 </body>
 </html>
