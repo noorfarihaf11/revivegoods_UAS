@@ -10,7 +10,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css">
   </head>
   <body class="bg-white">
     <!-- Header -->
@@ -23,27 +23,17 @@
       </div>
       <div class="hidden md:flex items-center gap-8">
         <nav class="flex gap-6">
-          <a href="index.html" class="links active-link" id="nav-home">Home</a>
-          <a href="article_archive.html" class="links" id="nav-article"
-            >Article</a
-          >
-          <a href="shop.html" class="links" id="nav-shop">Shop</a>
-          <a href="donate.html" class="links" id="nav-donate">Donate</a>
-          <a href="history.html" class="links" id="nav-history">History</a>
+          <a href="#home" class="links active-link" id="nav-home">Home</a>
+          <a href="article_archive.html" class="links" id="nav-about">Article</a>
+          <a href="#shop" class="links" id="nav-features">Shop</a>
+          <a href="#donate" class="links" id="nav-testi">Donate</a>
+          <a href="#history" class="links" id="nav-contact">History</a>
         </nav>
-        <div class="flex items-center gap-4">
-          <a
-            href="rewards_cart.html"
-            class="text-[#473771] hover:text-[#37265c]"
-          >
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-          <button
-            class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors"
-          >
-            Sign In
-          </button>
-        </div>
+        <button
+          class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors btn-hover"
+        >
+          Sign Up
+        </button>
       </div>
       <!-- Mobile menu button -->
       <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
@@ -70,35 +60,18 @@
       id="mobileMenu"
     >
       <nav class="flex flex-col p-4">
-        <a
-          href="index.html"
-          class="py-2 px-4 hover:bg-gray-100 rounded-lg active-mobile"
-          id="mobile-nav-home"
-          >Home</a
+        <a href="#home" class="py-2 px-4 hover:bg-gray-100 rounded-lg active-mobile" id="mobile-nav-home">Home</a>
+        <a href="#about" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-about"
+          >About Us</a
         >
-        <a
-          href="article_archive.html"
-          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
-          id="mobile-nav-article"
-          >Article</a
+        <a href="#features" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-features"
+          >Features</a
         >
-        <a
-          href="shop.html"
-          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
-          id="mobile-nav-shop"
-          >Shop</a
+        <a href="#testi" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-testi"
+          >Testimonials</a
         >
-        <a
-          href="donate.html"
-          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
-          id="mobile-nav-donate"
-          >Donate</a
-        >
-        <a
-          href="history.html"
-          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
-          id="mobile-nav-history"
-          >History</a
+        <a href="#contact" class="py-2 px-4 hover:bg-gray-100 rounded-lg" id="mobile-nav-contact"
+          >Contact</a
         >
         <button
           class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base"
@@ -109,10 +82,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section
-      id="home"
-      class="relative px-4 md:px-10 py-16 max-w-6xl mx-auto fade-in"
-    >
+    <section id="home" class="relative px-4 md:px-10 py-16 max-w-6xl mx-auto fade-in">
       <div class="flex flex-col md:flex-row">
         <div class="w-full md:w-3/5">
           <h1 class="mb-6 h1 gradient-text">
@@ -872,32 +842,103 @@
         });
       });
 
+      // Active navigation highlighting
       document.addEventListener("DOMContentLoaded", function () {
-        const path = window.location.pathname.split("/").pop() || "index.html";
+        // Get all sections that we want to track
+        const sections = document.querySelectorAll(
+          "#home, #about, #features, #testi, #contact"
+        );
 
-        // Mapping path ke ID nav
-        const pageToNavId = {
-          "index.html": "home",
-          "about.html": "about",
-          "features.html": "features",
-          "testimonials.html": "testi",
-          "contact.html": "contact",
+        // Get all navigation links
+        const navLinks = {
+          desktop: {
+            home: document.getElementById("nav-home"),
+            about: document.getElementById("nav-about"),
+            features: document.getElementById("nav-features"),
+            testi: document.getElementById("nav-testi"),
+            contact: document.getElementById("nav-contact"),
+          },
+          mobile: {
+            home: document.getElementById("mobile-nav-home"),
+            about: document.getElementById("mobile-nav-about"),
+            features: document.getElementById("mobile-nav-features"),
+            testi: document.getElementById("mobile-nav-testi"),
+            contact: document.getElementById("mobile-nav-contact"),
+          },
         };
 
-        const currentId = pageToNavId[path] || "home"; // default ke home kalau tidak ditemukan
+        // Function to set active link
+        function setActiveLink(id) {
+          // Remove active class from all desktop links
+          Object.values(navLinks.desktop).forEach((link) => {
+            if (link) link.classList.remove("active-link");
+          });
 
-        // Desktop dan mobile nav link
-        const desktopLink = document.getElementById("nav-" + currentId);
-        const mobileLink = document.getElementById("mobile-nav-" + currentId);
+          // Remove active class from all mobile links
+          Object.values(navLinks.mobile).forEach((link) => {
+            if (link) {
+              link.classList.remove("text-[#AE92F7]");
+              link.classList.remove("font-semibold");
+            }
+          });
 
-        // Tambahkan class aktif
-        if (desktopLink) {
-          desktopLink.classList.add("active-link");
+          // Add active class to current section links
+          if (navLinks.desktop[id]) {
+            navLinks.desktop[id].classList.add("active-link");
+          }
+
+          if (navLinks.mobile[id]) {
+            navLinks.mobile[id].classList.add("text-[#AE92F7]");
+            navLinks.mobile[id].classList.add("font-semibold");
+          }
         }
 
-        if (mobileLink) {
-          mobileLink.classList.add("text-[#AE92F7]", "font-semibold");
+        // Intersection Observer to detect which section is in view
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.id;
+                setActiveLink(id);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        ); // Trigger when 50% of the section is visible
+
+        // Observe all sections
+        sections.forEach((section) => {
+          observer.observe(section);
+        });
+
+        // Set initial active link based on scroll position
+        function setInitialActiveLink() {
+          let currentSectionId = "home"; // Default to home
+          let maxVisibility = 0;
+
+          sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            const height = window.innerHeight;
+
+            // Calculate how much of the section is visible
+            const visibleHeight =
+              Math.min(rect.bottom, height) - Math.max(rect.top, 0);
+            const visibilityRatio = visibleHeight / section.offsetHeight;
+
+            if (visibilityRatio > maxVisibility) {
+              maxVisibility = visibilityRatio;
+              currentSectionId = section.id;
+            }
+          });
+
+          setActiveLink(currentSectionId);
         }
+
+        // Set initial active link on page load
+        setInitialActiveLink();
+
+        // Update active link on scroll
+        window.addEventListener("scroll", setInitialActiveLink);
       });
     </script>
 
