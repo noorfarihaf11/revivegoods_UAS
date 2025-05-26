@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop Eco-Friendly Products - Revive Goods</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  .filter-checkbox:checked + label:before {
+    background-color: #473771;
+    border-color: #473771;
+  }
+  
+  .add-to-cart-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .product-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-card-footer {
+    margin-top: auto;
+  }
+</style>
+</head>
+<body class="bg-gray-50">
+<!-- Header -->
+<header class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50">
+  <div class="text-2xl font-bold flex items-center">
+    <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+    <a href="index.html" class="gradient-text">Revive Goods.</a>
+  </div>
+  <div class="hidden md:flex items-center gap-8">
+     <nav class="flex gap-6">
+          <a href="index.html" class="links" id="nav-home">Home</a>
+          <a href="article_archive.html" class="links" id="nav-article"
+            >Article</a
+          >
+          <a href="shop.html" class="links active-link" id="nav-shop">Shop</a>
+          <!-- <a href="donate.html" class="links" id="nav-donate">Donate</a> -->
+          <a href="history.html" class="links" id="nav-history">History</a>
+        </nav>
+    <div class="flex items-center gap-4">
+      <a href="rewards-cart.html" class="text-[#473771] hover:text-[#37265c] relative">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-[#AE92F7] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+      </a>
+      <button class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors">
+        Sign In
+      </button>
+    </div>
+  </div>
+  <!-- Mobile menu button -->
+  <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+</header>
+
+<!-- Mobile Menu -->
+<div class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden" id="mobileMenu">
+  <nav class="flex flex-col p-4">
+    <a href="index.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Home</a>
+    <a href="article-archive.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Articles</a>
+    <a href="shop.html" class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg">Shop</a>
+    <a href="donation-basket.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Donate</a>
+    <a href="transaction-history.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">History</a>
+    <a href="rewards-cart.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Cart <span id="mobile-cart-count" class="bg-[#AE92F7] text-white text-xs px-2 py-0.5 rounded-full ml-1">0</span></a>
+    <button class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base">Sign In</button>
+  </nav>
+</div>
+
+<!-- Hero Banner -->
+<div class="bg-gradient-to-r from-[#473771] to-[#AE92F7] text-white py-12 md:py-20">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">Shop Eco-Friendly Products</h1>
+      <p class="text-lg mb-6">Discover sustainable alternatives that help reduce waste and protect our planet.</p>
+      <div class="relative max-w-xl">
+        <input type="text" placeholder="Search for products..." class="w-full px-4 py-3 pr-10 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#473771]">
+        <button class="absolute right-3 top-3 text-gray-500">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="container mx-auto px-4 md:px-8 py-8">
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Sidebar Filters (Desktop) -->
+    <div class="hidden lg:block w-64 flex-shrink-0">
+      <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+        <h3 class="font-bold text-lg mb-4">Categories</h3>
+        <ul class="space-y-2 mb-6">
+          <li>
+            <a href="#" class="flex items-center justify-between text-[#473771] font-medium">
+              <span>All Products</span>
+              <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">42</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-between text-gray-700 hover:text-[#473771]">
+              <span>Home & Living</span>
+              <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">16</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-between text-gray-700 hover:text-[#473771]">
+              <span>Personal Care</span>
+              <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">9</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-between text-gray-700 hover:text-[#473771]">
+              <span>Food & Drink</span>
+              <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">7</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-between text-gray-700 hover:text-[#473771]">
+              <span>Fashion</span>
+              <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">5</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-between text-gray-700 hover:text-[#473771]">
+              <span>Stationery</span>
+              <span class="bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">5</span>
+            </a>
+          </li>
+        </ul>
+        
+        <h3 class="font-bold text-lg mb-4">Price Range</h3>
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-gray-600">Min: 50 GC</span>
+            <span class="text-sm text-gray-600">Max: 1000 GC</span>
+          </div>
+          <input type="range" min="50" max="1000" value="500" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#473771]">
+        </div>
+        
+        <h3 class="font-bold text-lg mb-4">Filter By</h3>
+        <div class="space-y-3 mb-6">
+          <div class="flex items-center">
+            <input type="checkbox" id="new-arrivals" class="filter-checkbox hidden">
+            <label for="new-arrivals" class="flex items-center cursor-pointer">
+              <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+              <span class="text-gray-700">New Arrivals</span>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="best-sellers" class="filter-checkbox hidden">
+            <label for="best-sellers" class="flex items-center cursor-pointer">
+              <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+              <span class="text-gray-700">Best Sellers</span>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="on-sale" class="filter-checkbox hidden">
+            <label for="on-sale" class="flex items-center cursor-pointer">
+              <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+              <span class="text-gray-700">On Sale</span>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="plastic-free" class="filter-checkbox hidden">
+            <label for="plastic-free" class="flex items-center cursor-pointer">
+              <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+              <span class="text-gray-700">Plastic-Free</span>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="biodegradable" class="filter-checkbox hidden">
+            <label for="biodegradable" class="flex items-center cursor-pointer">
+              <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+              <span class="text-gray-700">Biodegradable</span>
+            </label>
+          </div>
+        </div>
+        
+        <h3 class="font-bold text-lg mb-4">Customer Rating</h3>
+        <div class="space-y-2 mb-6">
+          <div class="flex items-center">
+            <input type="radio" name="rating" id="rating-all" class="hidden">
+            <label for="rating-all" class="flex items-center cursor-pointer">
+              <span class="w-4 h-4 inline-block mr-2 rounded-full border border-gray-300 flex-shrink-0"></span>
+              <span class="text-gray-700">All Ratings</span>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" name="rating" id="rating-4plus" class="hidden">
+            <label for="rating-4plus" class="flex items-center cursor-pointer">
+              <span class="w-4 h-4 inline-block mr-2 rounded-full border border-gray-300 flex-shrink-0"></span>
+              <div class="flex text-yellow-400">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star text-gray-300"></i>
+                <span class="text-gray-700 ml-1">& up</span>
+              </div>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input type="radio" name="rating" id="rating-3plus" class="hidden">
+            <label for="rating-3plus" class="flex items-center cursor-pointer">
+              <span class="w-4 h-4 inline-block mr-2 rounded-full border border-gray-300 flex-shrink-0"></span>
+              <div class="flex text-yellow-400">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star text-gray-300"></i>
+                <i class="far fa-star text-gray-300"></i>
+                <span class="text-gray-700 ml-1">& up</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        
+        <button class="bg-[#473771] text-white w-full py-2 rounded-lg hover:bg-[#37265c] transition-colors">Apply Filters</button>
+        <button class="text-[#473771] w-full py-2 mt-2 hover:underline">Clear All</button>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex-1">
+      <!-- Mobile Category Buttons -->
+      <div class="lg:hidden overflow-x-auto pb-4 mb-4 flex gap-2 whitespace-nowrap">
+        <button class="category-btn active px-4 py-2 rounded-full text-sm font-medium">All Products</button>
+        <button class="category-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300">Home & Living</button>
+        <button class="category-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300">Personal Care</button>
+        <button class="category-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300">Food & Drink</button>
+        <button class="category-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300">Fashion</button>
+        <button class="category-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300">Stationery</button>
+      </div>
+      
+      <!-- Mobile Filter Button -->
+      <div class="lg:hidden mb-6">
+        <button class="w-full bg-white shadow-md rounded-lg px-4 py-3 text-left flex justify-between items-center" id="mobileFilterBtn">
+          <span class="font-medium">Filter & Sort</span>
+          <i class="fas fa-sliders-h text-[#473771]"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Filter Panel -->
+      <div class="lg:hidden bg-white shadow-lg rounded-lg absolute left-0 right-0 mx-4 z-30 p-4 hidden" id="mobileFilterPanel">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-lg">Filters</h3>
+          <button id="closeFilterBtn" class="text-gray-500">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="border-b border-gray-200 pb-4 mb-4">
+          <h4 class="font-medium mb-2">Sort By</h4>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="bg-[#473771] text-white px-3 py-2 rounded-lg text-sm">Most Popular</button>
+            <button class="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-300">Newest</button>
+            <button class="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-300">Price: Low to High</button>
+            <button class="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-sm hover:bg-gray-300">Price: High to Low</button>
+          </div>
+        </div>
+        
+        <div class="border-b border-gray-200 pb-4 mb-4">
+          <h4 class="font-medium mb-2">Price Range</h4>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-gray-600">Min: 50 GC</span>
+            <span class="text-sm text-gray-600">Max: 1000 GC</span>
+          </div>
+          <input type="range" min="50" max="1000" value="500" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#473771]">
+        </div>
+        
+        <div class="border-b border-gray-200 pb-4 mb-4">
+          <h4 class="font-medium mb-2">Filter By</h4>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <input type="checkbox" id="mobile-new-arrivals" class="filter-checkbox hidden">
+              <label for="mobile-new-arrivals" class="flex items-center cursor-pointer">
+                <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+                <span class="text-gray-700">New Arrivals</span>
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="mobile-best-sellers" class="filter-checkbox hidden">
+              <label for="mobile-best-sellers" class="flex items-center cursor-pointer">
+                <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+                <span class="text-gray-700">Best Sellers</span>
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="mobile-on-sale" class="filter-checkbox hidden">
+              <label for="mobile-on-sale" class="flex items-center cursor-pointer">
+                <span class="w-5 h-5 inline-block mr-2 rounded border border-gray-300 flex-shrink-0"></span>
+                <span class="text-gray-700">On Sale</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex gap-2">
+          <button class="bg-[#473771] text-white flex-1 py-2 rounded-lg hover:bg-[#37265c] transition-colors">Apply</button>
+          <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100">Reset</button>
+        </div>
+      </div>
+      
+      <!-- Results Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+        <div>
+          <h2 class="text-2xl font-bold mb-1">All Products</h2>
+          <p class="text-gray-600">Showing 1-12 of 42 products</p>
+        </div>
+        <div class="mt-4 sm:mt-0 flex items-center">
+          <span class="text-gray-600 mr-2 hidden sm:inline">Sort by:</span>
+          <select class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#473771]">
+            <option>Most Popular</option>
+            <option>Newest</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Rating: High to Low</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Product 1 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
+          <div class="relative">
+            <a href="product-detail.html">
+              <img src="assets/boxdonation.jpg" alt="Bamboo Utensil Set" class="w-full h-48 object-cover">
+            </a>
+            <span class="absolute top-2 left-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">New</span>
+            <button class="absolute top-2 right-2 bg-white rounded-full p-2 text-gray-600 hover:text-[#473771]">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 product-card-content">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-500">Home & Living</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold">250</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-lg mb-2">
+              <a href="product-detail.html" class="hover:text-[#473771]">Bamboo Utensil Set</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">Portable and reusable bamboo utensils with carrying case.</p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span class="text-gray-600 ml-1">(28)</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center" data-product-id="1" data-product-name="Bamboo Utensil Set" data-product-price="250">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <div class="flex justify-between items-center mt-3">
+                <a href="product-detail.html" class="text-[#473771] text-sm font-medium hover:underline">View Details</a>
+                <button class="text-[#473771] text-sm font-medium hover:underline flex items-center quick-view-btn">
+                  <i class="fas fa-eye mr-1"></i> Quick View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
+          <div class="relative">
+            <a href="product-detail.html">
+              <img src="assets/boxdonation.jpg" alt="Stainless Steel Water Bottle" class="w-full h-48 object-cover">
+            </a>
+            <span class="absolute top-2 left-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">Best Seller</span>
+            <button class="absolute top-2 right-2 bg-white rounded-full p-2 text-gray-600 hover:text-[#473771]">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 product-card-content">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-500">Food & Drink</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold">350</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-lg mb-2">
+              <a href="product-detail.html" class="hover:text-[#473771]">Stainless Steel Water Bottle</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">Double-walled insulated bottle that keeps drinks cold for 24 hours.</p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span class="text-gray-600 ml-1">(42)</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center" data-product-id="2" data-product-name="Stainless Steel Water Bottle" data-product-price="350">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <div class="flex justify-between items-center mt-3">
+                <a href="product-detail.html" class="text-[#473771] text-sm font-medium hover:underline">View Details</a>
+                <button class="text-[#473771] text-sm font-medium hover:underline flex items-center quick-view-btn">
+                  <i class="fas fa-eye mr-1"></i> Quick View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
+          <div class="relative">
+            <a href="product-detail.html">
+              <img src="assets/boxdonation.jpg" alt="Beeswax Food Wraps" class="w-full h-48 object-cover">
+            </a>
+            <button class="absolute top-2 right-2 bg-white rounded-full p-2 text-gray-600 hover:text-[#473771]">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 product-card-content">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-500">Home & Living</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold">180</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-lg mb-2">
+              <a href="product-detail.html" class="hover:text-[#473771]">Beeswax Food Wraps (Set of 3)</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">Reusable, biodegradable alternative to plastic wrap.</p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-600 ml-1">(19)</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center" data-product-id="3" data-product-name="Beeswax Food Wraps" data-product-price="180">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <div class="flex justify-between items-center mt-3">
+                <a href="product-detail.html" class="text-[#473771] text-sm font-medium hover:underline">View Details</a>
+                <button class="text-[#473771] text-sm font-medium hover:underline flex items-center quick-view-btn">
+                  <i class="fas fa-eye mr-1"></i> Quick View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 4 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
+          <div class="relative">
+            <a href="product-detail.html">
+              <img src="assets/boxdonation.jpg" alt="Organic Cotton Tote Bag" class="w-full h-48 object-cover">
+            </a>
+            <span class="absolute top-2 left-2 bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">Sale</span>
+            <button class="absolute top-2 right-2 bg-white rounded-full p-2 text-gray-600 hover:text-[#473771]">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 product-card-content">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-500">Fashion</span>
+              <div class="flex items-center">
+                <span class="text-gray-400 line-through text-sm mr-1">250</span>
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold">200</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-lg mb-2">
+              <a href="product-detail.html" class="hover:text-[#473771]">Organic Cotton Tote Bag</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">Durable, washable tote bag made from 100% organic cotton.</p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-600 ml-1">(23)</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center" data-product-id="4" data-product-name="Organic Cotton Tote Bag" data-product-price="200">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <div class="flex justify-between items-center mt-3">
+                <a href="product-detail.html" class="text-[#473771] text-sm font-medium hover:underline">View Details</a>
+                <button class="text-[#473771] text-sm font-medium hover:underline flex items-center quick-view-btn">
+                  <i class="fas fa-eye mr-1"></i> Quick View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 5 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
+          <div class="relative">
+            <a href="product-detail.html">
+              <img src="/placeholder.svg?height=300&width=300" alt="Reusable Produce Bags" class="w-full h-48 object-cover">
+            </a>
+            <button class="absolute top-2 right-2 bg-white rounded-full p-2 text-gray-600 hover:text-[#473771]">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 product-card-content">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-500">Home & Living</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold">150</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-lg mb-2">
+              <a href="product-detail.html" class="hover:text-[#473771]">Reusable Produce Bags (Set of 5)</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">Mesh bags for fruits and vegetables, machine washable.</p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-600 ml-1">(15)</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center" data-product-id="5" data-product-name="Reusable Produce Bags" data-product-price="150">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <div class="flex justify-between items-center mt-3">
+                <a href="product-detail.html" class="text-[#473771] text-sm font-medium hover:underline">View Details</a>
+                <button class="text-[#473771] text-sm font-medium hover:underline flex items-center quick-view-btn">
+                  <i class="fas fa-eye mr-1"></i> Quick View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 6 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
+          <div class="relative">
+            <a href="product-detail.html">
+              <img src="/placeholder.svg?height=300&width=300" alt="Recycled Paper Notebook" class="w-full h-48 object-cover">
+            </a>
+            <button class="absolute top-2 right-2 bg-white rounded-full p-2 text-gray-600 hover:text-[#473771]">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 product-card-content">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-500">Stationery</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold">100</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-lg mb-2">
+              <a href="product-detail.html" class="hover:text-[#473771]">Recycled Paper Notebook</a>
+            </h3>
+            <p class="text-gray-600 text-sm mb-4">Handcrafted notebook made from 100% recycled paper.</p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="text-gray-600 ml-1">(12)</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center" data-product-id="6" data-product-name="Recycled Paper Notebook" data-product-price="100">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <div class="flex justify-between items-center mt-3">
+                <a href="product-detail.html" class="text-[#473771] text-sm font-medium hover:underline">View Details</a>
+                <button class="text-[#473771] text-sm font-medium hover:underline flex items-center quick-view-btn">
+                  <i class="fas fa-eye mr-1"></i> Quick View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Additional products continue with the same pattern -->
+      </div>
+      
+      <!-- Pagination -->
+      <div class="mt-10 flex justify-center">
+        <nav class="flex items-center space-x-2">
+          <a href="#" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-500 hover:bg-gray-100">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+          <a href="#" class="px-4 py-2 rounded-lg bg-[#473771] text-white">1</a>
+          <a href="#" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">2</a>
+          <a href="#" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">3</a>
+          <a href="#" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">4</a>
+          <a href="#" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-[#473771] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Footer top section with columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <!-- Company info column -->
+      <div>
+        <h3 class="text-3xl mb-4 flex items-center">
+          <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+          <span class="text-white">Revive Goods.</span>
+        </h3>
+        <p class="h5 mb-4 text-[#FFFFFF]">
+          Our mission is empowering individuals to make sustainable choices
+          by turning unwanted goods into opportunities for a greener future.
+        </p>
+        <div class="flex space-x-4">
+          <!-- Social media icons -->
+          <a
+            href="https://instagram.com/nrfarihaaf"
+            target="_blank"
+            class="text-gray-400 hover:text-white"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/noorfarihaf11"
+            target="_blank"
+            class="text-gray-400 hover:text-white"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links column 1 -->
+      <div>
+        <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="#home"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="#about"
+              class="text-gray-300 hover:text-white transition-colors"
+              >About Us</a
+            >
+          </li>
+          <li>
+            <a
+              href="#features"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Features</a
+            >
+          </li>
+          <li>
+            <a
+              href="#testi"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Testimonials</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Links column 2 -->
+      <div>
+        <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="https://instagram.com/nrfarihaaf"
+              target="_blank"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Instagram</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/noorfarihaf11"
+              target="_blank"
+              href="#"
+              class="text-gray-300 hover:text-white transition-colors"
+              >Github</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://linkedin.com/in/noorfarihaf11"
+              target="_blank"
+              class="text-gray-300 hover:text-white transition-colors"
+              >LinkedIn</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Newsletter column -->
+      <div>
+        <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
+        <p class="h5 mb-4 text-[#FFFFFF]">
+          Subscribe to our newsletter for the latest updates.
+        </p>
+        <form class="flex">
+          <input
+            type="email"
+            placeholder="Your email"
+            class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
+          />
+          <button
+            type="submit"
+            class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer bottom section -->
+    <div
+      class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+    >
+      <p class="text-gray-400 text-sm">
+        &copy; 2025 Revive Goods. All rights reserved.
+      </p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="#" class="text-gray-400 hover:text-white text-sm"
+          >Privacy Policy</a
+        >
+        <a href="#" class="text-gray-400 hover:text-white text-sm"
+          >Terms of Service</a
+        >
+        <a href="#" class="text-gray-400 hover:text-white text-sm"
+          >Cookie Policy</a
+        >
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  mobileMenuBtn.addEventListener('click', function() {
+    if (mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.remove('hidden');
+    } else {
+      mobileMenu.classList.add('hidden');
+    }
+  });
+  
+  // Mobile filter toggle
+  const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+  const mobileFilterPanel = document.getElementById('mobileFilterPanel');
+  const closeFilterBtn = document.getElementById('closeFilterBtn');
+  
+  mobileFilterBtn.addEventListener('click', function() {
+    mobileFilterPanel.classList.toggle('hidden');
+  });
+  
+  closeFilterBtn.addEventListener('click', function() {
+    mobileFilterPanel.classList.add('hidden');
+  });
+  
+  // Category buttons
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      categoryBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  // Checkbox styling
+  const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+  
+  filterCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const label = this.nextElementSibling;
+      const span = label.querySelector('span:first-child');
+      
+      if (this.checked) {
+        span.innerHTML = '<i class="fas fa-check text-white text-xs"></i>';
+        span.classList.add('bg-[#473771]', 'border-[#473771]');
+      } else {
+        span.innerHTML = '';
+        span.classList.remove('bg-[#473771]', 'border-[#473771]');
+      }
+    });
+  });
+  
+  // Radio button styling
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+  
+  radioButtons.forEach(radio => {
+    radio.addEventListener('change', function() {
+      const name = this.getAttribute('name');
+      const radios = document.querySelectorAll(`input[name="${name}"]`);
+      
+      radios.forEach(r => {
+        const span = r.nextElementSibling.querySelector('span:first-child');
+        
+        if (r.checked) {
+          span.innerHTML = '<span class="block w-2 h-2 bg-white rounded-full"></span>';
+          span.classList.add('bg-[#473771]', 'border-[#473771]', 'flex', 'items-center', 'justify-center');
+        } else {
+          span.innerHTML = '';
+          span.classList.remove('bg-[#473771]', 'border-[#473771]', 'flex', 'items-center', 'justify-center');
+        }
+      });
+    });
+  });
+  
+  // Cart functionality
+  let cartCount = 0;
+  const cartCountElements = document.querySelectorAll('#cart-count, #mobile-cart-count');
+  
+  // Load cart count from localStorage if available
+  window.addEventListener('DOMContentLoaded', function() {
+    const savedCartCount = localStorage.getItem('cartCount');
+    if (savedCartCount) {
+      cartCount = parseInt(savedCartCount);
+      updateCartCountDisplay();
+    }
+  });
+  
+  // Add to cart functionality
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+  
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Get product info
+      const productId = this.getAttribute('data-product-id');
+      const productName = this.getAttribute('data-product-name');
+      const productPrice = this.getAttribute('data-product-price');
+      
+      // Save to cart (simplified version - in a real app, you'd store the full cart items)
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push({
+        id: productId,
+        name: productName,
+        price: productPrice,
+        quantity: 1
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Update cart count
+      cartCount++;
+      localStorage.setItem('cartCount', cartCount);
+      updateCartCountDisplay();
+      
+      // Animation effect
+      this.innerHTML = '<i class="fas fa-check mr-2"></i> Added to Cart';
+      this.classList.add('bg-green-600');
+      
+      // Reset after 2 seconds
+      const originalButton = this;
+      setTimeout(() => {
+        originalButton.innerHTML = '<i class="fas fa-shopping-cart mr-2"></i> Add to Cart';
+        originalButton.classList.remove('bg-green-600');
+      }, 2000);
+    });
+  });
+  
+  // Update cart count display
+  function updateCartCountDisplay() {
+    cartCountElements.forEach(element => {
+      element.textContent = cartCount;
+    });
+  }
+  
+  // Quick view functionality
+  const quickViewButtons = document.querySelectorAll('.quick-view-btn');
+  
+  quickViewButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // This would be replaced with actual quick view modal functionality
+      alert('Quick view functionality would open a modal with product details');
+    });
+  });
+</script>
+</body>
+</html>
