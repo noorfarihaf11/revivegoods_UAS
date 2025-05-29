@@ -6,139 +6,7 @@
 <title>Donate Items - Revive Goods</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-body {
-  font-family: 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-  background-color: #f8f9fa;
-}
-
-.gradient-text {
-  background: linear-gradient(90deg, #473771 0%, #AE92F7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.step-indicator {
-  transition: all 0.3s ease;
-}
-
-.step-active {
-  background-color: #473771;
-  color: white;
-  border-color: #473771;
-}
-
-.step-completed {
-  background-color: #10b981;
-  color: white;
-  border-color: #10b981;
-}
-
-.step-inactive {
-  background-color: #f3f4f6;
-  color: #6b7280;
-  border-color: #d1d5db;
-}
-
-.category-card {
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.category-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-.category-card.selected {
-  border-color: #473771;
-  background-color: #f8f7ff;
-  box-shadow: 0 0 0 2px rgba(71, 55, 113, 0.2);
-}
-
-.item-card {
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.item-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.item-card.selected {
-  border-color: #473771;
-  background-color: #f8f7ff;
-}
-
-.condition-option {
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.condition-option:hover {
-  background-color: #f9fafb;
-}
-
-.condition-option.selected {
-  border-color: #473771;
-  background-color: #f8f7ff;
-}
-
-.fade-in {
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.pulse-animation {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.coins-animation {
-  animation: coinsFloat 3s ease-in-out infinite;
-}
-
-@keyframes coinsFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.progress-line {
-  transition: background-color 0.3s ease;
-}
-
-.progress-line.completed {
-  background-color: #10b981;
-}
-
-.progress-line.active {
-  background-color: #473771;
-}
-
-.progress-line.inactive {
-  background-color: #e5e7eb;
-}
-</style>
+ <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="bg-gray-50">
 <!-- Header -->
@@ -149,20 +17,16 @@ body {
 </div>
 <div class="hidden md:flex items-center gap-8">
   <nav class="flex gap-6">
-    <a href="index.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Home</a>
-    <a href="article-archive.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Articles</a>
-    <a href="product-catalog.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Shop</a>
-    <a href="donation-page.html" class="text-[#AE92F7] font-medium hover:text-[#37265c] hover:underline">Donate</a>
-    <a href="transaction-history.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">History</a>
-  </nav>
-  <div class="flex items-center gap-4">
-    <a href="rewards-cart.html" class="text-[#473771] hover:text-[#37265c] relative">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="absolute -top-2 -right-2 bg-[#AE92F7] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
-    </a>
+          <a href="index.html" class="links " id="nav-home">Home</a>
+          <a href="donate.html" class="links active-link" id="nav-donate">Donate</a>
+          <a href="shop.html" class="links" id="nav-shop">Shop</a>
+          <a href="history.html" class="links" id="nav-history">History</a>
+          <a href="articles.html" class="links" id="nav-article">Article</a>
+        </nav>
+  <div class="flex items-center gap-2">
     <div class="flex items-center bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-1">
       <i class="fas fa-coins text-yellow-500 mr-2"></i>
-      <span class="font-bold text-[#473771]" id="userCoins">1,250</span>
+      <span class="font-bold text-[#473771]" id="userCoins">0</span>
     </div>
     <button class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors">
       Sign In
@@ -178,28 +42,55 @@ body {
 </header>
 
 <!-- Mobile Menu -->
-<div class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden" id="mobileMenu">
-<nav class="flex flex-col p-4">
-  <a href="index.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Home</a>
-  <a href="article-archive.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Articles</a>
-  <a href="product-catalog.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Shop</a>
-  <a href="donation-page.html" class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg">Donate</a>
-  <a href="transaction-history.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">History</a>
-  <a href="rewards-cart.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Cart <span class="bg-[#AE92F7] text-white text-xs px-2 py-0.5 rounded-full ml-1">3</span></a>
-  <div class="flex items-center py-2 px-4 bg-yellow-50 border border-yellow-200 rounded-lg mt-2">
-    <i class="fas fa-coins text-yellow-500 mr-2"></i>
-    <span class="font-bold text-[#473771]">1,250 Coins</span>
-  </div>
-  <button class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base">Sign In</button>
-</nav>
-</div>
+ <div
+      class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden"
+      id="mobileMenu"
+    >
+      <nav class="flex flex-col p-4">
+        <a
+          href="index.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-home"
+          >Home</a
+        >
+        <a
+          href="donate.html"
+         class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg"
+          id="mobile-nav-donate"
+          >Donate</a
+        >
+        <a
+          href="shop.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-shop"
+          >Shop</a
+        >
+        <a
+          href="history.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-history"
+          >History</a
+        >    
+        <a
+          href="articles.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-article"
+          >Article</a
+        >
+        <button
+          class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base"
+        >
+          Sign Up
+        </button>
+      </nav>
+    </div>
 
 <!-- Main Content -->
 <div class="container mx-auto px-4 md:px-8 py-8">
 <!-- Hero Section -->
 <div class="text-center mb-12">
   <h1 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-    Donate Items & <span class="gradient-text">Earn Green Coins</span>
+    <span class="gradient-text">  Donate Items & Earn Green Coins</span>
   </h1>
   <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
     Turn your unwanted items into positive environmental impact and earn Green Coins for future purchases!
@@ -684,46 +575,46 @@ body {
     </div>
 
     <!-- Links column 1 -->
-    <div>
-      <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
-      <ul class="space-y-2">
-        <li>
-          <a
-            href="index.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Home</a
-          >
-        </li>
-        <li>
-          <a
-            href="article-archive.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Articles</a
-          >
-        </li>
-        <li>
-          <a
-            href="product-catalog.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Shop</a
-          >
-        </li>
-        <li>
-          <a
-            href="donation-page.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Donate</a
-          >
-        </li>
-        <li>
-          <a
-            href="transaction-history.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >History</a
-          >
-        </li>
-      </ul>
-    </div>
+      <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="donate.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Donate</a
+                >
+              </li>
+              <li>
+                <a
+                  href="shop.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Shop</a
+                >
+              </li>
+              <li>
+                <a
+                  href="history.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >History</a
+                >
+              </li>
+              <li>
+                <a
+                  href="articles.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Article</a
+                >
+              </li>
+            </ul>
+          </div>
 
     <!-- Links column 2 -->
     <div>
@@ -1275,7 +1166,7 @@ document.getElementById('confirmDonation').addEventListener('click', function() 
 
 // Success modal actions
 document.getElementById('viewHistory').addEventListener('click', function() {
-  window.location.href = 'transaction-history.html';
+  window.location.href = 'history.html';
 });
 
 document.getElementById('donateMore').addEventListener('click', function() {

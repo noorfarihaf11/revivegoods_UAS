@@ -158,3 +158,119 @@ body {
   margin: 1.5rem 0;
   color: #4B5563;
 }
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.step-indicator {
+  transition: all 0.3s ease;
+}
+
+.step-active {
+  background-color: #473771;
+  color: white;
+  border-color: #473771;
+}
+
+.step-completed {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.step-inactive {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+.category-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.category-card.selected {
+  border-color: #473771;
+  background-color: #f8f7ff;
+  box-shadow: 0 0 0 2px rgba(71, 55, 113, 0.2);
+}
+
+.item-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.item-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.item-card.selected {
+  border-color: #473771;
+  background-color: #f8f7ff;
+}
+
+.condition-option {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.condition-option:hover {
+  background-color: #f9fafb;
+}
+
+.condition-option.selected {
+  border-color: #473771;
+  background-color: #f8f7ff;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.coins-animation {
+  animation: coinsFloat 3s ease-in-out infinite;
+}
+
+@keyframes coinsFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.progress-line {
+  transition: background-color 0.3s ease;
+}
+
+.progress-line.completed {
+  background-color: #10b981;
+}
+
+.progress-line.active {
+  background-color: #473771;
+}
+
+.progress-line.inactive {
+  background-color: #e5e7eb;
+}
