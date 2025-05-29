@@ -315,3 +315,123 @@ body {
   .product-image-thumbnail:hover {
     opacity: 0.8;
   }
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    background-color: #f8f9fa;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, #473771 0%, #AE92F7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .transaction-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+  }
+  
+  .transaction-card:hover {
+    border-left-color: #473771;
+    background-color: #fafafa;
+  }
+  
+  .status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .status-completed {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .status-processing {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  
+  .status-shipped {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+  
+  .status-cancelled {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+  
+  .status-pending {
+    background-color: #f3f4f6;
+    color: #374151;
+  }
+
+  .filter-tab {
+    transition: all 0.3s ease;
+  }
+  
+  .filter-tab.active {
+    background-color: #473771;
+    color: white;
+  }
+  
+  .timeline-item {
+    position: relative;
+  }
+  
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 2rem;
+    bottom: -1rem;
+    width: 2px;
+    background-color: #e5e7eb;
+  }
+  
+  .timeline-item:last-child::before {
+    display: none;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-backdrop {
+    backdrop-filter: blur(4px);
+  }
+  
+  .modal-enter {
+    animation: modalEnter 0.3s ease-out;
+  }
+  
+  @keyframes modalEnter {
+    from {
+      opacity: 0;
+      transform: scale(0.9) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }

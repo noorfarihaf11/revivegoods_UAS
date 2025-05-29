@@ -1,897 +1,1054 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Transaction History - Revive Goods</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-  
-  body {
-    font-family: 'Poppins', sans-serif;
-    scroll-behavior: smooth;
-    background-color: #f8f9fa;
-  }
-  
-  .gradient-text {
-    background: linear-gradient(90deg, #473771 0%, #AE92F7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
-  }
-
-  .card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-  }
-  
-  .transaction-card {
-    transition: all 0.3s ease;
-    border-left: 4px solid transparent;
-  }
-  
-  .transaction-card:hover {
-    border-left-color: #473771;
-    background-color: #fafafa;
-  }
-  
-  .status-badge {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  .status-completed {
-    background-color: #dcfce7;
-    color: #166534;
-  }
-  
-  .status-processing {
-    background-color: #fef3c7;
-    color: #92400e;
-  }
-  
-  .status-shipped {
-    background-color: #dbeafe;
-    color: #1e40af;
-  }
-  
-  .status-cancelled {
-    background-color: #fee2e2;
-    color: #dc2626;
-  }
-  
-  .status-pending {
-    background-color: #f3f4f6;
-    color: #374151;
-  }
-
-  .filter-tab {
-    transition: all 0.3s ease;
-  }
-  
-  .filter-tab.active {
-    background-color: #473771;
-    color: white;
-  }
-  
-  .timeline-item {
-    position: relative;
-  }
-  
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: 0.75rem;
-    top: 2rem;
-    bottom: -1rem;
-    width: 2px;
-    background-color: #e5e7eb;
-  }
-  
-  .timeline-item:last-child::before {
-    display: none;
-  }
-  
-  .fade-in {
-    animation: fadeIn 0.5s ease-in;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .modal-backdrop {
-    backdrop-filter: blur(4px);
-  }
-  
-  .modal-enter {
-    animation: modalEnter 0.3s ease-out;
-  }
-  
-  @keyframes modalEnter {
-    from {
-      opacity: 0;
-      transform: scale(0.9) translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-</style>
-</head>
-<body class="bg-gray-50">
-<!-- Header -->
-<header class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50">
-  <div class="text-2xl font-bold flex items-center">
-    <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
-    <a href="index.html" class="gradient-text">Revive Goods.</a>
-  </div>
-  <div class="hidden md:flex items-center gap-8">
-    <nav class="flex gap-6">
-      <a href="index.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Home</a>
-      <a href="article-archive.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Articles</a>
-      <a href="product-catalog.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Shop</a>
-      <a href="donation-basket.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Donate</a>
-      <a href="transaction-history.html" class="text-[#AE92F7] font-medium hover:text-[#37265c] hover:underline">History</a>
-    </nav>
-    <div class="flex items-center gap-4">
-      <a href="rewards-cart.html" class="text-[#473771] hover:text-[#37265c] relative">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="absolute -top-2 -right-2 bg-[#AE92F7] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
-      </a>
-      <div class="relative">
-        <button id="profileBtn" class="flex items-center space-x-2 text-[#473771] hover:text-[#37265c]">
-          <img src="assets/profile.jpg" alt="Profile" class="w-8 h-8 rounded-full">
-          <span class="font-medium">Noor Fariha</span>
-          <i class="fas fa-chevron-down text-sm"></i>
-        </button>
-        <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
-          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile Settings</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Green Coins: 1,250</a>
-          <a href="transaction-history.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-gray-50">Order History</a>
-          <div class="border-t border-gray-100"></div>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Mobile menu button -->
-  <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  </button>
-</header>
-
-<!-- Mobile Menu -->
-<div class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden" id="mobileMenu">
-  <nav class="flex flex-col p-4">
-    <a href="index.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Home</a>
-    <a href="article-archive.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Articles</a>
-    <a href="product-catalog.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Shop</a>
-    <a href="donation-basket.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Donate</a>
-    <a href="transaction-history.html" class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg">History</a>
-    <a href="rewards-cart.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Cart <span class="bg-[#AE92F7] text-white text-xs px-2 py-0.5 rounded-full ml-1">3</span></a>
-    <div class="border-t border-gray-200 mt-2 pt-2">
-      <div class="flex items-center py-2 px-4">
-        <img src="assets/profile.jpg" alt="Profile" class="w-8 h-8 rounded-full mr-3">
-        <span class="font-medium text-gray-700">Noor Fariha</span>
-      </div>
-      <a href="#" class="py-2 px-4 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Green Coins: 1,250</a>
-      <button class="w-full text-left py-2 px-4 text-sm text-red-600 hover:bg-gray-100 rounded-lg">Sign Out</button>
-    </div>
-  </nav>
-</div>
-
-<!-- Main Content -->
-<div class="container mx-auto px-4 md:px-8 py-8">
-  <!-- Page Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl md:text-3xl font-bold mb-2 text-gray-900">Transaction History</h1>
-    <p class="text-gray-600">Track your orders, donations, and Green Coins transactions</p>
-  </div>
-
-  <!-- Stats Overview -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-green-100 text-green-600">
-          <i class="fas fa-shopping-bag text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Total Orders</p>
-          <p class="text-2xl font-bold text-gray-900">24</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-          <i class="fas fa-coins text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Green Coins Spent</p>
-          <p class="text-2xl font-bold text-gray-900">8,450</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-          <i class="fas fa-heart text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">Donations Made</p>
-          <p class="text-2xl font-bold text-gray-900">12</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-white rounded-lg shadow-md p-6 card-hover">
-      <div class="flex items-center">
-        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-          <i class="fas fa-leaf text-xl"></i>
-        </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-600">CO₂ Saved</p>
-          <p class="text-2xl font-bold text-gray-900">45.2kg</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Filters and Search -->
-  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-      <!-- Filter Tabs -->
-      <div class="flex flex-wrap gap-2">
-        <button class="filter-tab active px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-filter="all">
-          All Transactions
-        </button>
-        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="orders">
-          Orders
-        </button>
-        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="donations">
-          Donations
-        </button>
-        <button class="filter-tab px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200" data-filter="coins">
-          Green Coins
-        </button>
-      </div>
-      
-      <!-- Search and Date Filter -->
-      <div class="flex flex-col sm:flex-row gap-4">
-        <div class="relative">
-          <input type="text" placeholder="Search transactions..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771] w-full sm:w-64">
-          <div class="absolute left-3 top-2.5 text-gray-400">
-            <i class="fas fa-search"></i>
-          </div>
-        </div>
-        <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]">
-          <option>Last 30 days</option>
-          <option>Last 3 months</option>
-          <option>Last 6 months</option>
-          <option>This year</option>
-          <option>All time</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- Transaction List -->
-  <div class="space-y-6" id="transactionList">
-    <!-- Order Transaction -->
-    <div class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in" data-type="orders">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex-1">
-          <div class="flex items-center mb-2">
-            <div class="p-2 rounded-full bg-green-100 text-green-600 mr-3">
-              <i class="fas fa-shopping-bag"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900">Order #RG-2025-001</h3>
-              <p class="text-sm text-gray-500">January 15, 2025 at 2:30 PM</p>
-            </div>
-          </div>
-          <div class="ml-11">
-            <p class="text-gray-600 mb-2">3 items • Bamboo Utensil Set, Water Bottle, Tote Bag</p>
-            <div class="flex items-center space-x-4">
-              <span class="status-badge status-completed">Delivered</span>
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span>750 Green Coins</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col sm:flex-row gap-2">
-          <button class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors" onclick="viewOrderDetails('RG-2025-001')">
-            View Details
-          </button>
-          <button class="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-            Reorder
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Donation Transaction -->
-    <div class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in" data-type="donations">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex-1">
-          <div class="flex items-center mb-2">
-            <div class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3">
-              <i class="fas fa-heart"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900">Donation #DN-2025-008</h3>
-              <p class="text-sm text-gray-500">January 12, 2025 at 10:15 AM</p>
-            </div>
-          </div>
-          <div class="ml-11">
-            <p class="text-gray-600 mb-2">Clothing donation • 5 items picked up</p>
-            <div class="flex items-center space-x-4">
-              <span class="status-badge status-completed">Completed</span>
-              <div class="flex items-center text-sm text-green-600">
-                <i class="fas fa-plus-circle mr-1"></i>
-                <span>+150 Green Coins earned</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:ml-6">
-          <button class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors" onclick="viewDonationDetails('DN-2025-008')">
-            View Details
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Processing Order -->
-    <div class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in" data-type="orders">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex-1">
-          <div class="flex items-center mb-2">
-            <div class="p-2 rounded-full bg-yellow-100 text-yellow-600 mr-3">
-              <i class="fas fa-clock"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900">Order #RG-2025-002</h3>
-              <p class="text-sm text-gray-500">January 14, 2025 at 4:45 PM</p>
-            </div>
-          </div>
-          <div class="ml-11">
-            <p class="text-gray-600 mb-2">2 items • Bamboo Toothbrush Set, Beeswax Wraps</p>
-            <div class="flex items-center space-x-4">
-              <span class="status-badge status-processing">Processing</span>
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span>300 Green Coins</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col sm:flex-row gap-2">
-          <button class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors" onclick="viewOrderDetails('RG-2025-002')">
-            Track Order
-          </button>
-          <button class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Green Coins Transaction -->
-    <div class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in" data-type="coins">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex-1">
-          <div class="flex items-center mb-2">
-            <div class="p-2 rounded-full bg-yellow-100 text-yellow-600 mr-3">
-              <i class="fas fa-coins"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900">Green Coins Earned</h3>
-              <p class="text-sm text-gray-500">January 10, 2025 at 9:20 AM</p>
-            </div>
-          </div>
-          <div class="ml-11">
-            <p class="text-gray-600 mb-2">Weekly eco-challenge completion bonus</p>
-            <div class="flex items-center space-x-4">
-              <span class="status-badge status-completed">Credited</span>
-              <div class="flex items-center text-sm text-green-600">
-                <i class="fas fa-plus-circle mr-1"></i>
-                <span>+100 Green Coins</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:ml-6">
-          <button class="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-            View Challenge
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Shipped Order -->
-    <div class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in" data-type="orders">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex-1">
-          <div class="flex items-center mb-2">
-            <div class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3">
-              <i class="fas fa-truck"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900">Order #RG-2025-003</h3>
-              <p class="text-sm text-gray-500">January 8, 2025 at 11:30 AM</p>
-            </div>
-          </div>
-          <div class="ml-11">
-            <p class="text-gray-600 mb-2">1 item • Natural Shampoo Bar</p>
-            <div class="flex items-center space-x-4">
-              <span class="status-badge status-shipped">Shipped</span>
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span>180 Green Coins</span>
-              </div>
-              <div class="flex items-center text-sm text-blue-600">
-                <i class="fas fa-truck mr-1"></i>
-                <span>Tracking: TRK123456789</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:ml-6">
-          <button class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors" onclick="viewOrderDetails('RG-2025-003')">
-            Track Package
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pending Donation -->
-    <div class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in" data-type="donations">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex-1">
-          <div class="flex items-center mb-2">
-            <div class="p-2 rounded-full bg-gray-100 text-gray-600 mr-3">
-              <i class="fas fa-clock"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900">Donation #DN-2025-009</h3>
-              <p class="text-sm text-gray-500">January 16, 2025 at 3:15 PM</p>
-            </div>
-          </div>
-          <div class="ml-11">
-            <p class="text-gray-600 mb-2">Electronics donation • Pickup scheduled</p>
-            <div class="flex items-center space-x-4">
-              <span class="status-badge status-pending">Pickup Pending</span>
-              <div class="flex items-center text-sm text-gray-500">
-                <i class="fas fa-calendar mr-1"></i>
-                <span>Scheduled: Jan 18, 2025</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col sm:flex-row gap-2">
-          <button class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors" onclick="viewDonationDetails('DN-2025-009')">
-            View Details
-          </button>
-          <button class="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-            Reschedule
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Load More Button -->
-  <div class="text-center mt-8">
-    <button class="px-6 py-3 bg-[#473771] text-white rounded-lg font-medium hover:bg-[#37265c] transition-colors">
-      Load More Transactions
-    </button>
-  </div>
-</div>
-
-<!-- Order Details Modal -->
-<div id="orderModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 transition-opacity modal-backdrop" aria-hidden="true">
-      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-    </div>
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter">
-      <!-- Modal Header -->
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200">
-        <div class="flex justify-between items-center">
-          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalOrderTitle">Order Details</h3>
-          <button id="closeOrderModal" class="text-gray-400 hover:text-gray-600">
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6" id="modalOrderContent">
-        <!-- Content will be populated by JavaScript -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Donation Details Modal -->
-<div id="donationModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="fixed inset-0 transition-opacity modal-backdrop" aria-hidden="true">
-      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-    </div>
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter">
-      <!-- Modal Header -->
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200">
-        <div class="flex justify-between items-center">
-          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalDonationTitle">Donation Details</h3>
-          <button id="closeDonationModal" class="text-gray-400 hover:text-gray-600">
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6" id="modalDonationContent">
-        <!-- Content will be populated by JavaScript -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="bg-[#473771] text-white mt-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Footer top section with columns -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-      <!-- Company info column -->
-      <div>
-        <h3 class="text-3xl mb-4 flex items-center">
-          <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
-          <span class="text-white">Revive Goods.</span>
-        </h3>
-        <p class="h5 mb-4 text-[#FFFFFF]">
-          Our mission is empowering individuals to make sustainable choices
-          by turning unwanted goods into opportunities for a greener future.
-        </p>
-        <div class="flex space-x-4">
-          <!-- Social media icons -->
-          <a
-            href="https://instagram.com/nrfarihaaf"
-            target="_blank"
-            class="text-gray-400 hover:text-white"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a
-            href="https://linkedin.com/in/noorfarihaf11"
-            target="_blank"
-            class="text-gray-400 hover:text-white"
-          >
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Links column 1 -->
-      <div>
-        <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href="index.html"
-              class="text-gray-300 hover:text-white transition-colors"
-              >Home</a
-            >
-          </li>
-          <li>
-            <a
-              href="article-archive.html"
-              class="text-gray-300 hover:text-white transition-colors"
-              >Articles</a
-            >
-          </li>
-          <li>
-            <a
-              href="product-catalog.html"
-              class="text-gray-300 hover:text-white transition-colors"
-              >Shop</a
-            >
-          </li>
-          <li>
-            <a
-              href="donation-basket.html"
-              class="text-gray-300 hover:text-white transition-colors"
-              >Donate</a
-            >
-          </li>
-          <li>
-            <a
-              href="transaction-history.html"
-              class="text-gray-300 hover:text-white transition-colors"
-              >History</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Links column 2 -->
-      <div>
-        <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href="https://instagram.com/nrfarihaaf"
-              target="_blank"
-              class="text-gray-300 hover:text-white transition-colors"
-              >Instagram</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://github.com/noorfarihaf11"
-              target="_blank"
-              class="text-gray-300 hover:text-white transition-colors"
-              >Github</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://linkedin.com/in/noorfarihaf11"
-              target="_blank"
-              class="text-gray-300 hover:text-white transition-colors"
-              >LinkedIn</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Newsletter column -->
-      <div>
-        <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
-        <p class="h5 mb-4 text-[#FFFFFF]">
-          Subscribe to our newsletter for the latest updates.
-        </p>
-        <form class="flex">
-          <input
-            type="email"
-            placeholder="Your email"
-            class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
-          />
-          <button
-            type="submit"
-            class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
-          >
-            Subscribe
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Footer bottom section -->
-    <div
-      class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction History - Revive Goods</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header -->
+    <header
+      class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50"
     >
-      <p class="text-gray-400 text-sm">
-        &copy; 2025 Revive Goods. All rights reserved.
-      </p>
-      <div class="flex space-x-6 mt-4 md:mt-0">
-        <a href="#" class="text-gray-400 hover:text-white text-sm"
-          >Privacy Policy</a
+      <div class="text-2xl font-bold flex items-center">
+        <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+        <a href="index.html" class="gradient-text">Revive Goods.</a>
+      </div>
+      <div class="hidden md:flex items-center gap-6">
+        <nav class="flex gap-6">
+          <a href="index.html" class="links" id="nav-home">Home</a>
+          <a href="donate.html" class="links" id="nav-donate">Donate</a>
+          <a href="shop.html" class="links" id="nav-shop">Shop</a>
+          <a href="history.html" class="links active-link" id="nav-history"
+            >History</a
+          >
+          <a href="articles.html" class="links" id="nav-article">Article</a>
+        </nav>
+        <div class="flex items-center gap-6">
+          <a
+            href="rewards-cart.html"
+            class="text-[#473771] hover:text-[#37265c] relative"
+          >
+            <i class="fas fa-shopping-cart"></i>
+            <span
+              class="absolute -top-2 -right-2 bg-[#AE92F7] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+              >3</span
+            >
+          </a>
+          <div class="relative">
+            <button
+              id="profileBtn"
+              class="flex items-center space-x-2 text-[#473771] hover:text-[#37265c]"
+            >
+              <img
+                src="assets/profile.jpg"
+                alt="Profile"
+                class="w-8 h-8 rounded-full"
+              />
+              <span class="font-medium">Noor Fariha</span>
+              <i class="fas fa-chevron-down text-sm"></i>
+            </button>
+            <div
+              id="profileMenu"
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden"
+            >
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Profile Settings</a
+              >
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Green Coins: 1,250</a
+              >
+              <a
+                href="transaction-history.html"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-gray-50"
+                >Order History</a
+              >
+              <div class="border-t border-gray-100"></div>
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Sign Out</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile menu button -->
+      <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-        <a href="#" class="text-gray-400 hover:text-white text-sm"
-          >Terms of Service</a
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div
+      class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden"
+      id="mobileMenu"
+    >
+      <nav class="flex flex-col p-4">
+        <a
+          href="index.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-home"
+          >Home</a
         >
-        <a href="#" class="text-gray-400 hover:text-white text-sm"
-          >Cookie Policy</a
+        <a
+          href="donate.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-donate"
+          >Donate</a
         >
+        <a
+          href="shop.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-shop"
+          >Shop</a
+        >
+        <a
+          href="history.html"
+          class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg"
+          id="mobile-nav-history"
+          >History</a
+        >
+        <a
+          href="articles.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-article"
+          >Article</a
+        >
+        <button
+          class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base"
+        >
+          Sign Up
+        </button>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 md:px-8 py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold mb-2 text-gray-900">
+          Transaction History
+        </h1>
+        <p class="text-gray-600">
+          Track your orders, donations, and Green Coins transactions
+        </p>
+      </div>
+
+      <!-- Stats Overview -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-green-100 text-green-600">
+              <i class="fas fa-shopping-bag text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Orders</p>
+              <p class="text-2xl font-bold text-gray-900">24</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+              <i class="fas fa-coins text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Green Coins Spent</p>
+              <p class="text-2xl font-bold text-gray-900">8,450</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+              <i class="fas fa-heart text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Donations Made</p>
+              <p class="text-2xl font-bold text-gray-900">12</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+              <i class="fas fa-leaf text-xl"></i>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">CO₂ Saved</p>
+              <p class="text-2xl font-bold text-gray-900">45.2kg</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters and Search -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div
+          class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+        >
+          <!-- Filter Tabs -->
+          <div class="flex flex-wrap gap-2">
+            <button
+              class="filter-tab active px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              data-filter="all"
+            >
+              All Transactions
+            </button>
+            <button
+              class="filter-tab px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200"
+              data-filter="orders"
+            >
+              Orders
+            </button>
+            <button
+              class="filter-tab px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200"
+              data-filter="donations"
+            >
+              Donations
+            </button>
+            <button
+              class="filter-tab px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200"
+              data-filter="coins"
+            >
+              Green Coins
+            </button>
+          </div>
+
+          <!-- Search and Date Filter -->
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Search transactions..."
+                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771] w-full sm:w-64"
+              />
+              <div class="absolute left-3 top-2.5 text-gray-400">
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+            <select
+              class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+            >
+              <option>Last 30 days</option>
+              <option>Last 3 months</option>
+              <option>Last 6 months</option>
+              <option>This year</option>
+              <option>All time</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction List -->
+      <div class="space-y-6" id="transactionList">
+        <!-- Order Transaction -->
+        <div
+          class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in"
+          data-type="orders"
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <div class="p-2 rounded-full bg-green-100 text-green-600 mr-3">
+                  <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    Order #RG-2025-001
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    January 15, 2025 at 2:30 PM
+                  </p>
+                </div>
+              </div>
+              <div class="ml-11">
+                <p class="text-gray-600 mb-2">
+                  3 items • Bamboo Utensil Set, Water Bottle, Tote Bag
+                </p>
+                <div class="flex items-center space-x-4">
+                  <span class="status-badge status-completed">Delivered</span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                    <span>750 Green Coins</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col sm:flex-row gap-2">
+              <button
+                class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors"
+                onclick="viewOrderDetails('RG-2025-001')"
+              >
+                View Details
+              </button>
+              <button
+                class="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Reorder
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donation Transaction -->
+        <div
+          class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in"
+          data-type="donations"
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <div class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3">
+                  <i class="fas fa-heart"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    Donation #DN-2025-008
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    January 12, 2025 at 10:15 AM
+                  </p>
+                </div>
+              </div>
+              <div class="ml-11">
+                <p class="text-gray-600 mb-2">
+                  Clothing donation • 5 items picked up
+                </p>
+                <div class="flex items-center space-x-4">
+                  <span class="status-badge status-completed">Completed</span>
+                  <div class="flex items-center text-sm text-green-600">
+                    <i class="fas fa-plus-circle mr-1"></i>
+                    <span>+150 Green Coins earned</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 lg:mt-0 lg:ml-6">
+              <button
+                class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors"
+                onclick="viewDonationDetails('DN-2025-008')"
+              >
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Processing Order -->
+        <div
+          class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in"
+          data-type="orders"
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <div
+                  class="p-2 rounded-full bg-yellow-100 text-yellow-600 mr-3"
+                >
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    Order #RG-2025-002
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    January 14, 2025 at 4:45 PM
+                  </p>
+                </div>
+              </div>
+              <div class="ml-11">
+                <p class="text-gray-600 mb-2">
+                  2 items • Bamboo Toothbrush Set, Beeswax Wraps
+                </p>
+                <div class="flex items-center space-x-4">
+                  <span class="status-badge status-processing">Processing</span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                    <span>300 Green Coins</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col sm:flex-row gap-2">
+              <button
+                class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors"
+                onclick="viewOrderDetails('RG-2025-002')"
+              >
+                Track Order
+              </button>
+              <button
+                class="px-4 py-2 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Green Coins Transaction -->
+        <div
+          class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in"
+          data-type="coins"
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <div
+                  class="p-2 rounded-full bg-yellow-100 text-yellow-600 mr-3"
+                >
+                  <i class="fas fa-coins"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    Green Coins Earned
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    January 10, 2025 at 9:20 AM
+                  </p>
+                </div>
+              </div>
+              <div class="ml-11">
+                <p class="text-gray-600 mb-2">
+                  Weekly eco-challenge completion bonus
+                </p>
+                <div class="flex items-center space-x-4">
+                  <span class="status-badge status-completed">Credited</span>
+                  <div class="flex items-center text-sm text-green-600">
+                    <i class="fas fa-plus-circle mr-1"></i>
+                    <span>+100 Green Coins</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 lg:mt-0 lg:ml-6">
+              <button
+                class="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                View Challenge
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipped Order -->
+        <div
+          class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in"
+          data-type="orders"
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <div class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3">
+                  <i class="fas fa-truck"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    Order #RG-2025-003
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    January 8, 2025 at 11:30 AM
+                  </p>
+                </div>
+              </div>
+              <div class="ml-11">
+                <p class="text-gray-600 mb-2">1 item • Natural Shampoo Bar</p>
+                <div class="flex items-center space-x-4">
+                  <span class="status-badge status-shipped">Shipped</span>
+                  <div class="flex items-center text-sm text-gray-500">
+                    <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                    <span>180 Green Coins</span>
+                  </div>
+                  <div class="flex items-center text-sm text-blue-600">
+                    <i class="fas fa-truck mr-1"></i>
+                    <span>Tracking: TRK123456789</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 lg:mt-0 lg:ml-6">
+              <button
+                class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors"
+                onclick="viewOrderDetails('RG-2025-003')"
+              >
+                Track Package
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending Donation -->
+        <div
+          class="bg-white rounded-lg shadow-md p-6 transaction-card fade-in"
+          data-type="donations"
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="flex-1">
+              <div class="flex items-center mb-2">
+                <div class="p-2 rounded-full bg-gray-100 text-gray-600 mr-3">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    Donation #DN-2025-009
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    January 16, 2025 at 3:15 PM
+                  </p>
+                </div>
+              </div>
+              <div class="ml-11">
+                <p class="text-gray-600 mb-2">
+                  Electronics donation • Pickup scheduled
+                </p>
+                <div class="flex items-center space-x-4">
+                  <span class="status-badge status-pending"
+                    >Pickup Pending</span
+                  >
+                  <div class="flex items-center text-sm text-gray-500">
+                    <i class="fas fa-calendar mr-1"></i>
+                    <span>Scheduled: Jan 18, 2025</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col sm:flex-row gap-2">
+              <button
+                class="px-4 py-2 text-sm font-medium text-[#473771] border border-[#473771] rounded-lg hover:bg-purple-50 transition-colors"
+                onclick="viewDonationDetails('DN-2025-009')"
+              >
+                View Details
+              </button>
+              <button
+                class="px-4 py-2 text-sm font-medium text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Reschedule
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="text-center mt-8">
+        <button
+          class="px-6 py-3 bg-[#473771] text-white rounded-lg font-medium hover:bg-[#37265c] transition-colors"
+        >
+          Load More Transactions
+        </button>
       </div>
     </div>
-  </div>
-</footer>
 
-<!-- JavaScript -->
-<script>
-  // Mobile menu toggle
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  
-  mobileMenuBtn.addEventListener('click', function() {
-    mobileMenu.classList.toggle('hidden');
-  });
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+      <div
+        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div
+          class="fixed inset-0 transition-opacity modal-backdrop"
+          aria-hidden="true"
+        >
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter"
+        >
+          <!-- Modal Header -->
+          <div
+            class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200"
+          >
+            <div class="flex justify-between items-center">
+              <h3
+                class="text-lg leading-6 font-medium text-gray-900"
+                id="modalOrderTitle"
+              >
+                Order Details
+              </h3>
+              <button
+                id="closeOrderModal"
+                class="text-gray-400 hover:text-gray-600"
+              >
+                <i class="fas fa-times text-xl"></i>
+              </button>
+            </div>
+          </div>
 
-  // Profile dropdown toggle
-  const profileBtn = document.getElementById('profileBtn');
-  const profileMenu = document.getElementById('profileMenu');
-  
-  profileBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    profileMenu.classList.toggle('hidden');
-  });
+          <!-- Modal Body -->
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6" id="modalOrderContent">
+            <!-- Content will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
 
-  // Close profile menu when clicking outside
-  document.addEventListener('click', function() {
-    profileMenu.classList.add('hidden');
-  });
+    <!-- Donation Details Modal -->
+    <div id="donationModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+      <div
+        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div
+          class="fixed inset-0 transition-opacity modal-backdrop"
+          aria-hidden="true"
+        >
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter"
+        >
+          <!-- Modal Header -->
+          <div
+            class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200"
+          >
+            <div class="flex justify-between items-center">
+              <h3
+                class="text-lg leading-6 font-medium text-gray-900"
+                id="modalDonationTitle"
+              >
+                Donation Details
+              </h3>
+              <button
+                id="closeDonationModal"
+                class="text-gray-400 hover:text-gray-600"
+              >
+                <i class="fas fa-times text-xl"></i>
+              </button>
+            </div>
+          </div>
 
-  // Filter functionality
-  const filterTabs = document.querySelectorAll('.filter-tab');
-  const transactionCards = document.querySelectorAll('.transaction-card');
+          <!-- Modal Body -->
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6" id="modalDonationContent">
+            <!-- Content will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
 
-  filterTabs.forEach(tab => {
-    tab.addEventListener('click', function() {
-      const filter = this.dataset.filter;
-      
-      // Update active tab
-      filterTabs.forEach(t => {
-        t.classList.remove('active');
-        t.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+    <!-- Footer -->
+    <footer class="bg-[#473771] text-white mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Footer top section with columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <!-- Company info column -->
+          <div>
+            <h3 class="text-3xl mb-4 flex items-center">
+              <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+              <span class="text-white">Revive Goods.</span>
+            </h3>
+            <p class="h5 mb-4 text-[#FFFFFF]">
+              Our mission is empowering individuals to make sustainable choices
+              by turning unwanted goods into opportunities for a greener future.
+            </p>
+            <div class="flex space-x-4">
+              <!-- Social media icons -->
+              <a
+                href="https://instagram.com/nrfarihaaf"
+                target="_blank"
+                class="text-gray-400 hover:text-white"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/noorfarihaf11"
+                target="_blank"
+                class="text-gray-400 hover:text-white"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Links column 1 -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="article-archive.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Articles</a
+                >
+              </li>
+              <li>
+                <a
+                  href="product-catalog.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Shop</a
+                >
+              </li>
+              <li>
+                <a
+                  href="donation-basket.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Donate</a
+                >
+              </li>
+              <li>
+                <a
+                  href="transaction-history.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >History</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Links column 2 -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="https://instagram.com/nrfarihaaf"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/noorfarihaf11"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Github</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://linkedin.com/in/noorfarihaf11"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >LinkedIn</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Newsletter column -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
+            <p class="h5 mb-4 text-[#FFFFFF]">
+              Subscribe to our newsletter for the latest updates.
+            </p>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="Your email"
+                class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
+              />
+              <button
+                type="submit"
+                class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Footer bottom section -->
+        <div
+          class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 text-sm">
+            &copy; 2025 Revive Goods. All rights reserved.
+          </p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      mobileMenuBtn.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
       });
-      
-      this.classList.add('active');
-      this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
-      
-      // Filter transactions
-      transactionCards.forEach(card => {
-        if (filter === 'all' || card.dataset.type === filter) {
-          card.style.display = 'block';
-          card.classList.add('fade-in');
-        } else {
-          card.style.display = 'none';
-        }
+
+      // Profile dropdown toggle
+      const profileBtn = document.getElementById("profileBtn");
+      const profileMenu = document.getElementById("profileMenu");
+
+      profileBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        profileMenu.classList.toggle("hidden");
       });
-    });
-  });
 
-  // Modal functionality
-  const orderModal = document.getElementById('orderModal');
-  const donationModal = document.getElementById('donationModal');
-  const closeOrderModal = document.getElementById('closeOrderModal');
-  const closeDonationModal = document.getElementById('closeDonationModal');
+      // Close profile menu when clicking outside
+      document.addEventListener("click", function () {
+        profileMenu.classList.add("hidden");
+      });
 
-  // Sample order data
-  const orderData = {
-    'RG-2025-001': {
-      id: 'RG-2025-001',
-      date: 'January 15, 2025',
-      status: 'Delivered',
-      items: [
-        { name: 'Bamboo Utensil Set', price: 250, quantity: 1, image: 'assets/boxdonation.jpg' },
-        { name: 'Stainless Steel Water Bottle', price: 350, quantity: 1, image: 'assets/boxdonation.jpg' },
-        { name: 'Organic Cotton Tote Bag', price: 200, quantity: 1, image: 'assets/boxdonation.jpg' }
-      ],
-      shipping: {
-        address: '123 Main Street, New York, NY 10001',
-        method: 'Standard Shipping',
-        cost: 0
-      },
-      payment: {
-        method: 'Green Coins',
-        total: 750
-      },
-      tracking: 'Delivered on January 18, 2025'
-    },
-    'RG-2025-002': {
-      id: 'RG-2025-002',
-      date: 'January 14, 2025',
-      status: 'Processing',
-      items: [
-        { name: 'Bamboo Toothbrush Set', price: 120, quantity: 1, image: 'assets/boxdonation.jpg' },
-        { name: 'Beeswax Food Wraps', price: 180, quantity: 1, image: 'assets/boxdonation.jpg' }
-      ],
-      shipping: {
-        address: '123 Main Street, New York, NY 10001',
-        method: 'Standard Shipping',
-        cost: 0
-      },
-      payment: {
-        method: 'Green Coins',
-        total: 300
-      },
-      tracking: 'Order is being prepared for shipment'
-    },
-    'RG-2025-003': {
-      id: 'RG-2025-003',
-      date: 'January 8, 2025',
-      status: 'Shipped',
-      items: [
-        { name: 'Natural Shampoo Bar', price: 180, quantity: 1, image: 'assets/boxdonation.jpg' }
-      ],
-      shipping: {
-        address: '123 Main Street, New York, NY 10001',
-        method: 'Standard Shipping',
-        cost: 0
-      },
-      payment: {
-        method: 'Green Coins',
-        total: 180
-      },
-      tracking: 'TRK123456789 - In transit, expected delivery January 20, 2025'
-    }
-  };
+      // Filter functionality
+      const filterTabs = document.querySelectorAll(".filter-tab");
+      const transactionCards = document.querySelectorAll(".transaction-card");
 
-  // Sample donation data
-  const donationData = {
-    'DN-2025-008': {
-      id: 'DN-2025-008',
-      date: 'January 12, 2025',
-      status: 'Completed',
-      type: 'Clothing',
-      items: [
-        'Winter jacket (size M)',
-        'Jeans (size 32)',
-        'T-shirts (3 pieces)',
-        'Sweater (size L)',
-        'Shoes (size 9)'
-      ],
-      pickup: {
-        address: '123 Main Street, New York, NY 10001',
-        date: 'January 12, 2025',
-        time: '10:00 AM - 12:00 PM'
-      },
-      impact: {
-        coinsEarned: 150,
-        co2Saved: '2.1 kg',
-        itemsHelped: 5
-      }
-    },
-    'DN-2025-009': {
-      id: 'DN-2025-009',
-      date: 'January 16, 2025',
-      status: 'Pickup Pending',
-      type: 'Electronics',
-      items: [
-        'Old laptop',
-        'Smartphone (iPhone 8)',
-        'Tablet',
-        'Charging cables (various)'
-      ],
-      pickup: {
-        address: '123 Main Street, New York, NY 10001',
-        date: 'January 18, 2025',
-        time: '2:00 PM - 4:00 PM'
-      },
-      impact: {
-        coinsEarned: 200,
-        co2Saved: '3.5 kg',
-        itemsHelped: 4
-      }
-    }
-  };
+      filterTabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          const filter = this.dataset.filter;
 
-  // View order details function
-  function viewOrderDetails(orderId) {
-    const order = orderData[orderId];
-    if (!order) return;
+          // Update active tab
+          filterTabs.forEach((t) => {
+            t.classList.remove("active");
+            t.classList.add(
+              "bg-gray-100",
+              "text-gray-700",
+              "hover:bg-gray-200"
+            );
+          });
 
-    document.getElementById('modalOrderTitle').textContent = `Order ${order.id}`;
-    
-    const content = `
+          this.classList.add("active");
+          this.classList.remove(
+            "bg-gray-100",
+            "text-gray-700",
+            "hover:bg-gray-200"
+          );
+
+          // Filter transactions
+          transactionCards.forEach((card) => {
+            if (filter === "all" || card.dataset.type === filter) {
+              card.style.display = "block";
+              card.classList.add("fade-in");
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+
+      // Modal functionality
+      const orderModal = document.getElementById("orderModal");
+      const donationModal = document.getElementById("donationModal");
+      const closeOrderModal = document.getElementById("closeOrderModal");
+      const closeDonationModal = document.getElementById("closeDonationModal");
+
+      // Sample order data
+      const orderData = {
+        "RG-2025-001": {
+          id: "RG-2025-001",
+          date: "January 15, 2025",
+          status: "Delivered",
+          items: [
+            {
+              name: "Bamboo Utensil Set",
+              price: 250,
+              quantity: 1,
+              image: "assets/boxdonation.jpg",
+            },
+            {
+              name: "Stainless Steel Water Bottle",
+              price: 350,
+              quantity: 1,
+              image: "assets/boxdonation.jpg",
+            },
+            {
+              name: "Organic Cotton Tote Bag",
+              price: 200,
+              quantity: 1,
+              image: "assets/boxdonation.jpg",
+            },
+          ],
+          shipping: {
+            address: "123 Main Street, New York, NY 10001",
+            method: "Standard Shipping",
+            cost: 0,
+          },
+          payment: {
+            method: "Green Coins",
+            total: 750,
+          },
+          tracking: "Delivered on January 18, 2025",
+        },
+        "RG-2025-002": {
+          id: "RG-2025-002",
+          date: "January 14, 2025",
+          status: "Processing",
+          items: [
+            {
+              name: "Bamboo Toothbrush Set",
+              price: 120,
+              quantity: 1,
+              image: "assets/boxdonation.jpg",
+            },
+            {
+              name: "Beeswax Food Wraps",
+              price: 180,
+              quantity: 1,
+              image: "assets/boxdonation.jpg",
+            },
+          ],
+          shipping: {
+            address: "123 Main Street, New York, NY 10001",
+            method: "Standard Shipping",
+            cost: 0,
+          },
+          payment: {
+            method: "Green Coins",
+            total: 300,
+          },
+          tracking: "Order is being prepared for shipment",
+        },
+        "RG-2025-003": {
+          id: "RG-2025-003",
+          date: "January 8, 2025",
+          status: "Shipped",
+          items: [
+            {
+              name: "Natural Shampoo Bar",
+              price: 180,
+              quantity: 1,
+              image: "assets/boxdonation.jpg",
+            },
+          ],
+          shipping: {
+            address: "123 Main Street, New York, NY 10001",
+            method: "Standard Shipping",
+            cost: 0,
+          },
+          payment: {
+            method: "Green Coins",
+            total: 180,
+          },
+          tracking:
+            "TRK123456789 - In transit, expected delivery January 20, 2025",
+        },
+      };
+
+      // Sample donation data
+      const donationData = {
+        "DN-2025-008": {
+          id: "DN-2025-008",
+          date: "January 12, 2025",
+          status: "Completed",
+          type: "Clothing",
+          items: [
+            "Winter jacket (size M)",
+            "Jeans (size 32)",
+            "T-shirts (3 pieces)",
+            "Sweater (size L)",
+            "Shoes (size 9)",
+          ],
+          pickup: {
+            address: "123 Main Street, New York, NY 10001",
+            date: "January 12, 2025",
+            time: "10:00 AM - 12:00 PM",
+          },
+          impact: {
+            coinsEarned: 150,
+            co2Saved: "2.1 kg",
+            itemsHelped: 5,
+          },
+        },
+        "DN-2025-009": {
+          id: "DN-2025-009",
+          date: "January 16, 2025",
+          status: "Pickup Pending",
+          type: "Electronics",
+          items: [
+            "Old laptop",
+            "Smartphone (iPhone 8)",
+            "Tablet",
+            "Charging cables (various)",
+          ],
+          pickup: {
+            address: "123 Main Street, New York, NY 10001",
+            date: "January 18, 2025",
+            time: "2:00 PM - 4:00 PM",
+          },
+          impact: {
+            coinsEarned: 200,
+            co2Saved: "3.5 kg",
+            itemsHelped: 4,
+          },
+        },
+      };
+
+      // View order details function
+      function viewOrderDetails(orderId) {
+        const order = orderData[orderId];
+        if (!order) return;
+
+        document.getElementById(
+          "modalOrderTitle"
+        ).textContent = `Order ${order.id}`;
+
+        const content = `
       <div class="space-y-6">
         <!-- Order Status -->
         <div class="bg-gray-50 rounded-lg p-4">
           <div class="flex justify-between items-center mb-2">
             <h4 class="font-semibold text-gray-900">Order Status</h4>
-            <span class="status-badge ${getStatusClass(order.status)}">${order.status}</span>
+            <span class="status-badge ${getStatusClass(order.status)}">${
+          order.status
+        }</span>
           </div>
           <p class="text-sm text-gray-600">${order.tracking}</p>
         </div>
@@ -900,19 +1057,27 @@
         <div>
           <h4 class="font-semibold text-gray-900 mb-3">Items Ordered</h4>
           <div class="space-y-3">
-            ${order.items.map(item => `
+            ${order.items
+              .map(
+                (item) => `
               <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                <img src="${item.image}" alt="${
+                  item.name
+                }" class="w-12 h-12 object-cover rounded">
                 <div class="flex-1">
                   <h5 class="font-medium text-gray-900">${item.name}</h5>
-                  <p class="text-sm text-gray-500">Quantity: ${item.quantity}</p>
+                  <p class="text-sm text-gray-500">Quantity: ${
+                    item.quantity
+                  }</p>
                 </div>
                 <div class="flex items-center">
                   <i class="fas fa-coins text-yellow-500 mr-1"></i>
                   <span class="font-medium">${item.price * item.quantity}</span>
                 </div>
               </div>
-            `).join('')}
+            `
+              )
+              .join("")}
           </div>
         </div>
 
@@ -920,9 +1085,17 @@
         <div>
           <h4 class="font-semibold text-gray-900 mb-3">Shipping Information</h4>
           <div class="bg-gray-50 rounded-lg p-4">
-            <p class="text-sm text-gray-600 mb-2"><strong>Address:</strong> ${order.shipping.address}</p>
-            <p class="text-sm text-gray-600 mb-2"><strong>Method:</strong> ${order.shipping.method}</p>
-            <p class="text-sm text-gray-600"><strong>Cost:</strong> ${order.shipping.cost === 0 ? 'Free' : order.shipping.cost + ' Green Coins'}</p>
+            <p class="text-sm text-gray-600 mb-2"><strong>Address:</strong> ${
+              order.shipping.address
+            }</p>
+            <p class="text-sm text-gray-600 mb-2"><strong>Method:</strong> ${
+              order.shipping.method
+            }</p>
+            <p class="text-sm text-gray-600"><strong>Cost:</strong> ${
+              order.shipping.cost === 0
+                ? "Free"
+                : order.shipping.cost + " Green Coins"
+            }</p>
           </div>
         </div>
 
@@ -938,7 +1111,9 @@
               <span class="text-sm text-gray-600">Total Paid:</span>
               <div class="flex items-center">
                 <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span class="font-bold text-[#473771]">${order.payment.total}</span>
+                <span class="font-bold text-[#473771]">${
+                  order.payment.total
+                }</span>
               </div>
             </div>
           </div>
@@ -954,25 +1129,29 @@
       </div>
     `;
 
-    document.getElementById('modalOrderContent').innerHTML = content;
-    orderModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
+        document.getElementById("modalOrderContent").innerHTML = content;
+        orderModal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
 
-  // View donation details function
-  function viewDonationDetails(donationId) {
-    const donation = donationData[donationId];
-    if (!donation) return;
+      // View donation details function
+      function viewDonationDetails(donationId) {
+        const donation = donationData[donationId];
+        if (!donation) return;
 
-    document.getElementById('modalDonationTitle').textContent = `Donation ${donation.id}`;
-    
-    const content = `
+        document.getElementById(
+          "modalDonationTitle"
+        ).textContent = `Donation ${donation.id}`;
+
+        const content = `
       <div class="space-y-6">
         <!-- Donation Status -->
         <div class="bg-gray-50 rounded-lg p-4">
           <div class="flex justify-between items-center mb-2">
             <h4 class="font-semibold text-gray-900">Donation Status</h4>
-            <span class="status-badge ${getStatusClass(donation.status)}">${donation.status}</span>
+            <span class="status-badge ${getStatusClass(donation.status)}">${
+          donation.status
+        }</span>
           </div>
           <p class="text-sm text-gray-600">Type: ${donation.type} donation</p>
         </div>
@@ -982,12 +1161,16 @@
           <h4 class="font-semibold text-gray-900 mb-3">Items Donated</h4>
           <div class="bg-gray-50 rounded-lg p-4">
             <ul class="space-y-2">
-              ${donation.items.map(item => `
+              ${donation.items
+                .map(
+                  (item) => `
                 <li class="flex items-center text-sm text-gray-700">
                   <i class="fas fa-check-circle text-green-500 mr-2"></i>
                   ${item}
                 </li>
-              `).join('')}
+              `
+                )
+                .join("")}
             </ul>
           </div>
         </div>
@@ -996,9 +1179,15 @@
         <div>
           <h4 class="font-semibold text-gray-900 mb-3">Pickup Information</h4>
           <div class="bg-gray-50 rounded-lg p-4">
-            <p class="text-sm text-gray-600 mb-2"><strong>Address:</strong> ${donation.pickup.address}</p>
-            <p class="text-sm text-gray-600 mb-2"><strong>Date:</strong> ${donation.pickup.date}</p>
-            <p class="text-sm text-gray-600"><strong>Time:</strong> ${donation.pickup.time}</p>
+            <p class="text-sm text-gray-600 mb-2"><strong>Address:</strong> ${
+              donation.pickup.address
+            }</p>
+            <p class="text-sm text-gray-600 mb-2"><strong>Date:</strong> ${
+              donation.pickup.date
+            }</p>
+            <p class="text-sm text-gray-600"><strong>Time:</strong> ${
+              donation.pickup.time
+            }</p>
           </div>
         </div>
 
@@ -1007,15 +1196,21 @@
           <h4 class="font-semibold text-gray-900 mb-3">Environmental Impact</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="bg-green-50 rounded-lg p-4 text-center">
-              <div class="text-green-600 text-2xl font-bold">${donation.impact.coinsEarned}</div>
+              <div class="text-green-600 text-2xl font-bold">${
+                donation.impact.coinsEarned
+              }</div>
               <div class="text-green-800 text-sm">Green Coins Earned</div>
             </div>
             <div class="bg-blue-50 rounded-lg p-4 text-center">
-              <div class="text-blue-600 text-2xl font-bold">${donation.impact.co2Saved}</div>
+              <div class="text-blue-600 text-2xl font-bold">${
+                donation.impact.co2Saved
+              }</div>
               <div class="text-blue-800 text-sm">CO₂ Saved</div>
             </div>
             <div class="bg-purple-50 rounded-lg p-4 text-center">
-              <div class="text-purple-600 text-2xl font-bold">${donation.impact.itemsHelped}</div>
+              <div class="text-purple-600 text-2xl font-bold">${
+                donation.impact.itemsHelped
+              }</div>
               <div class="text-purple-800 text-sm">Items Helped</div>
             </div>
           </div>
@@ -1023,141 +1218,158 @@
       </div>
     `;
 
-    document.getElementById('modalDonationContent').innerHTML = content;
-    donationModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
+        document.getElementById("modalDonationContent").innerHTML = content;
+        donationModal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
 
-  // Helper function to get status class
-  function getStatusClass(status) {
-    const statusMap = {
-      'Delivered': 'status-completed',
-      'Completed': 'status-completed',
-      'Processing': 'status-processing',
-      'Shipped': 'status-shipped',
-      'Cancelled': 'status-cancelled',
-      'Pickup Pending': 'status-pending'
-    };
-    return statusMap[status] || 'status-pending';
-  }
+      // Helper function to get status class
+      function getStatusClass(status) {
+        const statusMap = {
+          Delivered: "status-completed",
+          Completed: "status-completed",
+          Processing: "status-processing",
+          Shipped: "status-shipped",
+          Cancelled: "status-cancelled",
+          "Pickup Pending": "status-pending",
+        };
+        return statusMap[status] || "status-pending";
+      }
 
-  // Generate order timeline
-  function generateOrderTimeline(order) {
-    const timelines = {
-      'Delivered': [
-        { status: 'Order Placed', date: order.date, completed: true },
-        { status: 'Processing', date: 'January 16, 2025', completed: true },
-        { status: 'Shipped', date: 'January 17, 2025', completed: true },
-        { status: 'Delivered', date: 'January 18, 2025', completed: true }
-      ],
-      'Processing': [
-        { status: 'Order Placed', date: order.date, completed: true },
-        { status: 'Processing', date: 'In progress', completed: false },
-        { status: 'Shipped', date: 'Pending', completed: false },
-        { status: 'Delivered', date: 'Pending', completed: false }
-      ],
-      'Shipped': [
-        { status: 'Order Placed', date: order.date, completed: true },
-        { status: 'Processing', date: 'January 9, 2025', completed: true },
-        { status: 'Shipped', date: 'January 10, 2025', completed: true },
-        { status: 'Delivered', date: 'Expected January 20, 2025', completed: false }
-      ]
-    };
+      // Generate order timeline
+      function generateOrderTimeline(order) {
+        const timelines = {
+          Delivered: [
+            { status: "Order Placed", date: order.date, completed: true },
+            { status: "Processing", date: "January 16, 2025", completed: true },
+            { status: "Shipped", date: "January 17, 2025", completed: true },
+            { status: "Delivered", date: "January 18, 2025", completed: true },
+          ],
+          Processing: [
+            { status: "Order Placed", date: order.date, completed: true },
+            { status: "Processing", date: "In progress", completed: false },
+            { status: "Shipped", date: "Pending", completed: false },
+            { status: "Delivered", date: "Pending", completed: false },
+          ],
+          Shipped: [
+            { status: "Order Placed", date: order.date, completed: true },
+            { status: "Processing", date: "January 9, 2025", completed: true },
+            { status: "Shipped", date: "January 10, 2025", completed: true },
+            {
+              status: "Delivered",
+              date: "Expected January 20, 2025",
+              completed: false,
+            },
+          ],
+        };
 
-    const timeline = timelines[order.status] || [];
-    
-    return timeline.map((item, index) => `
+        const timeline = timelines[order.status] || [];
+
+        return timeline
+          .map(
+            (item, index) => `
       <div class="timeline-item flex items-center">
-        <div class="w-6 h-6 rounded-full ${item.completed ? 'bg-green-500' : 'bg-gray-300'} flex items-center justify-center mr-4">
-          ${item.completed ? '<i class="fas fa-check text-white text-xs"></i>' : '<div class="w-2 h-2 bg-white rounded-full"></div>'}
+        <div class="w-6 h-6 rounded-full ${
+          item.completed ? "bg-green-500" : "bg-gray-300"
+        } flex items-center justify-center mr-4">
+          ${
+            item.completed
+              ? '<i class="fas fa-check text-white text-xs"></i>'
+              : '<div class="w-2 h-2 bg-white rounded-full"></div>'
+          }
         </div>
         <div class="flex-1">
           <p class="font-medium text-gray-900">${item.status}</p>
           <p class="text-sm text-gray-500">${item.date}</p>
         </div>
       </div>
-    `).join('');
-  }
-
-  // Close modals
-  closeOrderModal.addEventListener('click', function() {
-    orderModal.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-  });
-
-  closeDonationModal.addEventListener('click', function() {
-    donationModal.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-  });
-
-  // Close modals when clicking outside
-  orderModal.addEventListener('click', function(e) {
-    if (e.target === orderModal) {
-      orderModal.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
-  });
-
-  donationModal.addEventListener('click', function(e) {
-    if (e.target === donationModal) {
-      donationModal.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
-  });
-
-  // Keyboard shortcuts
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      if (!orderModal.classList.contains('hidden')) {
-        orderModal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+    `
+          )
+          .join("");
       }
-      if (!donationModal.classList.contains('hidden')) {
-        donationModal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-      }
-    }
-  });
 
-  // Search functionality
-  const searchInput = document.querySelector('input[placeholder="Search transactions..."]');
-  
-  searchInput.addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-    
-    transactionCards.forEach(card => {
-      const text = card.textContent.toLowerCase();
-      if (text.includes(searchTerm)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  });
+      // Close modals
+      closeOrderModal.addEventListener("click", function () {
+        orderModal.classList.add("hidden");
+        document.body.style.overflow = "auto";
+      });
 
-  // Load more functionality
-  const loadMoreBtn = document.querySelector('.text-center button');
-  
-  loadMoreBtn.addEventListener('click', function() {
-    // Simulate loading more transactions
-    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Loading...';
-    
-    setTimeout(() => {
-      this.textContent = 'Load More Transactions';
-      // Here you would typically load more data from your backend
-    }, 1500);
-  });
+      closeDonationModal.addEventListener("click", function () {
+        donationModal.classList.add("hidden");
+        document.body.style.overflow = "auto";
+      });
 
-  // Initialize page
-  document.addEventListener('DOMContentLoaded', function() {
-    // Add fade-in animation to existing cards
-    const cards = document.querySelectorAll('.transaction-card');
-    cards.forEach((card, index) => {
-      setTimeout(() => {
-        card.classList.add('fade-in');
-      }, index * 100);
-    });
-  });
-</script>
-</body>
+      // Close modals when clicking outside
+      orderModal.addEventListener("click", function (e) {
+        if (e.target === orderModal) {
+          orderModal.classList.add("hidden");
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      donationModal.addEventListener("click", function (e) {
+        if (e.target === donationModal) {
+          donationModal.classList.add("hidden");
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          if (!orderModal.classList.contains("hidden")) {
+            orderModal.classList.add("hidden");
+            document.body.style.overflow = "auto";
+          }
+          if (!donationModal.classList.contains("hidden")) {
+            donationModal.classList.add("hidden");
+            document.body.style.overflow = "auto";
+          }
+        }
+      });
+
+      // Search functionality
+      const searchInput = document.querySelector(
+        'input[placeholder="Search transactions..."]'
+      );
+
+      searchInput.addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+
+        transactionCards.forEach((card) => {
+          const text = card.textContent.toLowerCase();
+          if (text.includes(searchTerm)) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+
+      // Load more functionality
+      const loadMoreBtn = document.querySelector(".text-center button");
+
+      loadMoreBtn.addEventListener("click", function () {
+        // Simulate loading more transactions
+        this.innerHTML =
+          '<i class="fas fa-spinner fa-spin mr-2"></i> Loading...';
+
+        setTimeout(() => {
+          this.textContent = "Load More Transactions";
+          // Here you would typically load more data from your backend
+        }, 1500);
+      });
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add fade-in animation to existing cards
+        const cards = document.querySelectorAll(".transaction-card");
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add("fade-in");
+          }, index * 100);
+        });
+      });
+    </script>
+  </body>
 </html>
