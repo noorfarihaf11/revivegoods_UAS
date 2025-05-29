@@ -303,3 +303,15 @@ body {
   .product-card-footer {
     margin-top: auto;
   }
+    .product-image-thumbnail {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .product-image-thumbnail.active {
+    border: 2px solid #473771;
+  }
+  
+  .product-image-thumbnail:hover {
+    opacity: 0.8;
+  }
