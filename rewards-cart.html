@@ -1,1103 +1,1428 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Your Shopping Cart - Revive Goods</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-body {
-  font-family: 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-  background-color: #f8f9fa;
-}
-
-.gradient-text {
-  background: linear-gradient(90deg, #473771 0%, #AE92F7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.cart-item {
-  transition: all 0.3s ease;
-}
-
-.cart-item:hover {
-  background-color: #f9fafb;
-}
-
-.quantity-btn {
-  transition: all 0.2s ease;
-}
-
-.quantity-btn:hover {
-  background-color: #e5e7eb;
-}
-
-.product-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card-footer {
-  margin-top: auto;
-}
-
-.add-to-cart-btn {
-  transition: all 0.3s ease;
-}
-
-.add-to-cart-btn:hover {
-  transform: translateY(-2px);
-}
-
-/* Modal styles */
-.modal-backdrop {
-  backdrop-filter: blur(4px);
-}
-
-.modal-enter {
-  animation: modalEnter 0.3s ease-out;
-}
-
-@keyframes modalEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.step-indicator {
-  transition: all 0.3s ease;
-}
-
-.step-active {
-  background-color: #473771;
-  color: white;
-}
-
-.step-completed {
-  background-color: #10b981;
-  color: white;
-}
-</style>
-</head>
-<body class="bg-gray-50">
-<!-- Header -->
-<header class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50">
-<div class="text-2xl font-bold flex items-center">
-  <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
-  <a href="index.html" class="gradient-text">Revive Goods.</a>
-</div>
-<div class="hidden md:flex items-center gap-8">
-  <nav class="flex gap-6">
-    <a href="index.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Home</a>
-    <a href="article-archive.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Articles</a>
-    <a href="product-catalog.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Shop</a>
-    <a href="donation-basket.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">Donate</a>
-    <a href="transaction-history.html" class="text-[#473771] font-medium hover:text-[#37265c] hover:underline">History</a>
-  </nav>
-  <div class="flex items-center gap-4">
-    <a href="rewards-cart.html" class="text-[#AE92F7] hover:text-[#37265c] relative">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="absolute -top-2 -right-2 bg-[#AE92F7] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" id="cartCount">3</span>
-    </a>
-    <button class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors">
-      Sign In
-    </button>
-  </div>
-</div>
-<!-- Mobile menu button -->
-<button class="md:hidden text-[#473771]" id="mobileMenuBtn">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-  </svg>
-</button>
-</header>
-
-<!-- Mobile Menu -->
-<div class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden" id="mobileMenu">
-<nav class="flex flex-col p-4">
-  <a href="index.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Home</a>
-  <a href="article-archive.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Articles</a>
-  <a href="product-catalog.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Shop</a>
-  <a href="donation-basket.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">Donate</a>
-  <a href="transaction-history.html" class="py-2 px-4 hover:bg-gray-100 rounded-lg">History</a>
-  <a href="rewards-cart.html" class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg">Cart <span class="bg-[#AE92F7] text-white text-xs px-2 py-0.5 rounded-full ml-1">3</span></a>
-  <button class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base">Sign In</button>
-</nav>
-</div>
-
-<!-- Main Content -->
-<div class="container mx-auto px-4 md:px-8 py-8">
-<h1 class="text-2xl md:text-3xl font-bold mb-8 text-gray-900">Your Shopping Cart</h1>
-
-<div class="flex flex-col lg:flex-row gap-8">
-  <!-- Cart Items -->
-  <div class="flex-1">
-    <!-- Cart Items List -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold text-gray-900">Cart Items (3)</h2>
-        <button class="text-sm text-[#473771] font-medium hover:underline">Clear Cart</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Shopping Cart - Revive Goods</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header -->
+    <header
+      class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50"
+    >
+      <div class="text-2xl font-bold flex items-center">
+        <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+        <a href="index.html" class="gradient-text">Revive Goods.</a>
       </div>
-      
-      <!-- Cart Item 1 -->
-      <div class="cart-item border-b border-gray-200 pb-6 mb-6" data-price="250" data-name="Bamboo Utensil Set">
-        <div class="flex flex-col sm:flex-row gap-4">
-          <div class="relative w-full sm:w-24 h-24">
-            <img src="assets/boxdonation.jpg" alt="Bamboo Utensil Set" class="w-full h-full object-cover rounded-lg">
-            <span class="absolute top-0 left-0 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-br-lg rounded-tl-lg">New</span>
-          </div>
-          <div class="flex-1">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
-              <div>
-                <h3 class="font-bold text-lg text-gray-900 hover:text-[#473771]">
-                  <a href="product-detail.html">Bamboo Utensil Set</a>
-                </h3>
-                <div class="flex items-center mt-1 text-sm text-gray-500">
-                  <span class="mr-3">Home & Living</span>
-                  <span>Eco-friendly</span>
-                </div>
-              </div>
-              <div class="flex items-center mt-2 sm:mt-0">
-                <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span class="font-bold text-[#473771]">250</span>
-              </div>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4">
-              <div class="flex items-center border border-gray-300 rounded-md w-max">
-                <button class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100">
-                  <i class="fas fa-minus text-xs"></i>
-                </button>
-                <input type="number" min="1" value="1" class="w-12 text-center border-0 focus:ring-0 p-0 text-gray-900 quantity-input">
-                <button class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100">
-                  <i class="fas fa-plus text-xs"></i>
-                </button>
-              </div>
-              <button class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-3 sm:mt-0 remove-item">
-                <i class="fas fa-trash-alt mr-1"></i> Remove
-              </button>
-            </div>
-          </div>
+      <div class="hidden md:flex items-center gap-6">
+        <nav class="flex gap-6">
+          <a href="index.html" class="links" id="nav-home">Home</a>
+          <a href="donate.html" class="links" id="nav-donate">Donate</a>
+          <a href="shop.html" class="links" id="nav-shop">Shop</a>
+          <a href="history.html" class="links" id="nav-history">History</a>
+          <a href="articles.html" class="links" id="nav-article">Article</a>
+        </nav>
+        <div class="flex items-center gap-6">
+          <a
+            href="rewards-cart.html"
+            class="text-[#473771] hover:text-[#37265c] relative active-link"
+          >
+            <i class="fas fa-shopping-cart"></i>
+            <span
+              id="cart-count"
+              class="absolute -top-2 -right-2 bg-[#AE92F7] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+              >0</span
+            >
+          </a>
         </div>
       </div>
-      
-      <!-- Cart Item 2 -->
-      <div class="cart-item border-b border-gray-200 pb-6 mb-6" data-price="350" data-name="Stainless Steel Water Bottle">
-        <div class="flex flex-col sm:flex-row gap-4">
-          <div class="relative w-full sm:w-24 h-24">
-            <img src="assets/boxdonation.jpg" alt="Stainless Steel Water Bottle" class="w-full h-full object-cover rounded-lg">
-            <span class="absolute top-0 left-0 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-br-lg rounded-tl-lg">Best Seller</span>
-          </div>
-          <div class="flex-1">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
-              <div>
-                <h3 class="font-bold text-lg text-gray-900 hover:text-[#473771]">
-                  <a href="product-detail.html">Stainless Steel Water Bottle</a>
-                </h3>
-                <div class="flex items-center mt-1 text-sm text-gray-500">
-                  <span class="mr-3">Food & Drink</span>
-                  <span>Plastic-free</span>
-                </div>
-              </div>
-              <div class="flex items-center mt-2 sm:mt-0">
-                <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span class="font-bold text-[#473771]">350</span>
-              </div>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4">
-              <div class="flex items-center border border-gray-300 rounded-md w-max">
-                <button class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100">
-                  <i class="fas fa-minus text-xs"></i>
-                </button>
-                <input type="number" min="1" value="1" class="w-12 text-center border-0 focus:ring-0 p-0 text-gray-900 quantity-input">
-                <button class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100">
-                  <i class="fas fa-plus text-xs"></i>
-                </button>
-              </div>
-              <button class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-3 sm:mt-0 remove-item">
-                <i class="fas fa-trash-alt mr-1"></i> Remove
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Cart Item 3 -->
-      <div class="cart-item" data-price="200" data-name="Organic Cotton Tote Bag">
-        <div class="flex flex-col sm:flex-row gap-4">
-          <div class="relative w-full sm:w-24 h-24">
-            <img src="assets/boxdonation.jpg" alt="Organic Cotton Tote Bag" class="w-full h-full object-cover rounded-lg">
-            <span class="absolute top-0 left-0 bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-br-lg rounded-tl-lg">Sale</span>
-          </div>
-          <div class="flex-1">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
-              <div>
-                <h3 class="font-bold text-lg text-gray-900 hover:text-[#473771]">
-                  <a href="product-detail.html">Organic Cotton Tote Bag</a>
-                </h3>
-                <div class="flex items-center mt-1 text-sm text-gray-500">
-                  <span class="mr-3">Fashion</span>
-                  <span>Organic</span>
-                </div>
-              </div>
-              <div class="flex items-center mt-2 sm:mt-0">
-                <span class="text-gray-400 line-through text-sm mr-2">250</span>
-                <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                <span class="font-bold text-[#473771]">200</span>
-              </div>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4">
-              <div class="flex items-center border border-gray-300 rounded-md w-max">
-                <button class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100">
-                  <i class="fas fa-minus text-xs"></i>
-                </button>
-                <input type="number" min="1" value="1" class="w-12 text-center border-0 focus:ring-0 p-0 text-gray-900 quantity-input">
-                <button class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100">
-                  <i class="fas fa-plus text-xs"></i>
-                </button>
-              </div>
-              <button class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-3 sm:mt-0 remove-item">
-                <i class="fas fa-trash-alt mr-1"></i> Remove
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Reward Points Information -->
-    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-      <div class="flex items-center text-blue-700 font-semibold mb-1">
-        <i class="fas fa-medal mr-2"></i>
-        <h3>Reward Points</h3>
-      </div>
-      <p class="text-blue-800 text-sm">
-        You'll earn <span class="font-bold">80</span> points from this purchase. Points can be redeemed for discounts on future purchases.
-      </p>
-    </div>
-    
-    <!-- Eco Impact -->
-    <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-      <div class="flex items-center justify-center text-green-700 font-semibold mb-1">
-        <i class="fas fa-leaf mr-2"></i>
-        <h3>Your Environmental Impact</h3>
-      </div>
-      <p class="text-green-800 text-sm mb-3">
-        By choosing these eco-friendly products, you're making a positive impact on the environment.
-      </p>
-      <div class="flex justify-center gap-6">
-        <div class="text-center">
-          <div class="text-green-700 font-bold text-lg">2.5 kg</div>
-          <div class="text-green-800 text-xs">Plastic Saved</div>
-        </div>
-        <div class="text-center">
-          <div class="text-green-700 font-bold text-lg">4.2 kg</div>
-          <div class="text-green-800 text-xs">CO₂ Reduced</div>
-        </div>
-        <div class="text-center">
-          <div class="text-green-700 font-bold text-lg">15 L</div>
-          <div class="text-green-800 text-xs">Water Saved</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Order Summary -->
-  <div class="lg:w-80">
-    <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
-      <h3 class="font-bold text-lg mb-4">Order Summary</h3>
-      
-      <!-- Subtotal -->
-      <div class="flex justify-between mb-3">
-        <span class="text-gray-600">Subtotal (3 items)</span>
-        <div class="flex items-center">
-          <i class="fas fa-coins text-yellow-500 mr-1"></i>
-          <span class="font-medium" id="subtotal">800</span>
-        </div>
-      </div>
-      
-      <!-- Discount -->
-      <div class="flex justify-between mb-3">
-        <span class="text-gray-600">Discount</span>
-        <span class="text-green-600 font-medium" id="discount">-50</span>
-      </div>
-      
-      <!-- Shipping Options -->
-      <div class="mb-4">
-        <h4 class="text-gray-600 mb-2">Shipping</h4>
-        
-        <div class="mb-2 border border-[#473771] bg-purple-50 rounded-lg p-3 flex items-start">
-          <input type="radio" name="shipping" id="standard" checked class="mt-1 mr-2 accent-[#473771]" value="0">
-          <div class="flex-1">
-            <label for="standard" class="font-medium text-gray-900 block">Standard Shipping</label>
-            <span class="text-sm text-gray-600">3-5 business days</span>
-          </div>
-          <span class="font-medium text-[#473771]">Free</span>
-        </div>
-        
-        <div class="border border-gray-200 rounded-lg p-3 flex items-start">
-          <input type="radio" name="shipping" id="express" class="mt-1 mr-2 accent-[#473771]" value="50">
-          <div class="flex-1">
-            <label for="express" class="font-medium text-gray-900 block">Express Shipping</label>
-            <span class="text-sm text-gray-600">1-2 business days</span>
-          </div>
-          <div class="flex items-center">
-            <i class="fas fa-coins text-yellow-500 mr-1"></i>
-            <span class="font-medium">50</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Promo Code -->
-      <div class="mb-4">
-        <h4 class="text-gray-600 mb-2">Promo Code</h4>
-        <div class="flex">
-          <input type="text" placeholder="Enter code" id="promoCode" class="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]">
-          <button id="applyPromo" class="bg-[#473771] text-white px-3 py-2 rounded-r-lg text-sm hover:bg-[#37265c] transition-colors">Apply</button>
-        </div>
-      </div>
-      
-      <div class="border-t border-gray-200 my-4 pt-4"></div>
-      
-      <!-- Total -->
-      <div class="flex justify-between mb-6">
-        <span class="font-semibold">Total</span>
-        <div class="flex items-center">
-          <i class="fas fa-coins text-yellow-500 mr-1"></i>
-          <span class="font-bold text-xl text-[#473771]" id="total">750</span>
-        </div>
-      </div>
-      
-      <!-- Checkout Buttons -->
-      <div>
-        <button id="checkoutBtn" class="block w-full bg-[#473771] text-white text-center py-3 rounded-lg font-medium hover:bg-[#37265c] transition-colors mb-3">
-          Proceed to Checkout
+      <!-- Mobile menu button -->
+      <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Menu -->
+     <div
+      class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden"
+      id="mobileMenu"
+    >
+      <nav class="flex flex-col p-4">
+        <a
+          href="index.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-home"
+          >Home</a
+        >
+        <a
+          href="donate.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-donate"
+          >Donate</a
+        >
+        <a
+          href="shop.html"
+          class="py-2 px-4 bg-gray-100 text-[#AE92F7] font-semibold rounded-lg"
+          id="mobile-nav-shop"
+          >Shop</a
+        >
+        <a
+          href="history.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-history"
+          >History</a
+        >
+        <a
+          href="articles.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-article"
+          >Article</a
+        >
+        <button
+          class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base"
+        >
+          Sign Up
         </button>
-        <a href="product-catalog.html" class="block border border-[#473771] text-[#473771] text-center py-3 rounded-lg font-medium hover:bg-purple-50 transition-colors">
-          Continue Shopping
-        </a>
-      </div>
-      
-      <!-- Payment Methods -->
-      <div class="flex justify-center gap-4 mt-6 text-gray-400">
-        <i class="fab fa-cc-visa text-xl"></i>
-        <i class="fab fa-cc-mastercard text-xl"></i>
-        <i class="fab fa-cc-paypal text-xl"></i>
-        <i class="fab fa-cc-apple-pay text-xl"></i>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Related Products -->
-<div class="mt-12">
-  <h2 class="text-2xl font-bold mb-6 text-center">You Might Also Like</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Product 1 -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
-      <div class="relative">
-        <a href="product-detail.html">
-          <img src="/placeholder.svg?height=200&width=200" alt="Reusable Produce Bags" class="w-full h-48 object-cover">
-        </a>
-      </div>
-      <div class="p-4 product-card-content">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm text-gray-500">Home & Living</span>
-          <div class="flex items-center">
-            <i class="fas fa-coins text-yellow-500 mr-1"></i>
-            <span class="font-bold">150</span>
-          </div>
-        </div>
-        <h3 class="font-bold text-lg mb-2">
-          <a href="product-detail.html" class="hover:text-[#473771]">Reusable Produce Bags (Set of 5)</a>
-        </h3>
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400 text-sm">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <i class="far fa-star"></i>
-          </div>
-        </div>
-        <div class="product-card-footer">
-          <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center">
-            <i class="fas fa-shopping-cart mr-2"></i>
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Product 2 -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
-      <div class="relative">
-        <a href="product-detail.html">
-          <img src="/placeholder.svg?height=200&width=200" alt="Bamboo Toothbrush Set" class="w-full h-48 object-cover">
-        </a>
-        <span class="absolute top-2 left-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">Best Seller</span>
-      </div>
-      <div class="p-4 product-card-content">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm text-gray-500">Personal Care</span>
-          <div class="flex items-center">
-            <i class="fas fa-coins text-yellow-500 mr-1"></i>
-            <span class="font-bold">120</span>
-          </div>
-        </div>
-        <h3 class="font-bold text-lg mb-2">
-          <a href="product-detail.html" class="hover:text-[#473771]">Bamboo Toothbrush Set (Pack of 4)</a>
-        </h3>
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400 text-sm">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="far fa-star"></i>
-          </div>
-        </div>
-        <div class="product-card-footer">
-          <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center">
-            <i class="fas fa-shopping-cart mr-2"></i>
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Product 3 -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
-      <div class="relative">
-        <a href="product-detail.html">
-          <img src="/placeholder.svg?height=200&width=200" alt="Beeswax Food Wraps" class="w-full h-48 object-cover">
-        </a>
-      </div>
-      <div class="p-4 product-card-content">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm text-gray-500">Home & Living</span>
-          <div class="flex items-center">
-            <i class="fas fa-coins text-yellow-500 mr-1"></i>
-            <span class="font-bold">180</span>
-          </div>
-        </div>
-        <h3 class="font-bold text-lg mb-2">
-          <a href="product-detail.html" class="hover:text-[#473771]">Beeswax Food Wraps (Set of 3)</a>
-        </h3>
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400 text-sm">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="far fa-star"></i>
-          </div>
-        </div>
-        <div class="product-card-footer">
-          <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center">
-            <i class="fas fa-shopping-cart mr-2"></i>
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Product 4 -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card">
-      <div class="relative">
-        <a href="product-detail.html">
-          <img src="/placeholder.svg?height=200&width=200" alt="Natural Shampoo Bar" class="w-full h-48 object-cover">
-        </a>
-        <span class="absolute top-2 left-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">New</span>
-      </div>
-      <div class="p-4 product-card-content">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm text-gray-500">Personal Care</span>
-          <div class="flex items-center">
-            <i class="fas fa-coins text-yellow-500 mr-1"></i>
-            <span class="font-bold">180</span>
-          </div>
-        </div>
-        <h3 class="font-bold text-lg mb-2">
-          <a href="product-detail.html" class="hover:text-[#473771]">Natural Shampoo Bar</a>
-        </h3>
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400 text-sm">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-        </div>
-        <div class="product-card-footer">
-          <button class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center">
-            <i class="fas fa-shopping-cart mr-2"></i>
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- Checkout Modal -->
-<div id="checkoutModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-<div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-  <!-- Background overlay -->
-  <div class="fixed inset-0 transition-opacity modal-backdrop" aria-hidden="true">
-    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-  </div>
-
-  <!-- Modal panel -->
-  <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-  <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full modal-enter">
-    <!-- Modal Header -->
-    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Checkout Summary</h3>
-        <button id="closeModal" class="text-gray-400 hover:text-gray-600">
-          <i class="fas fa-times text-xl"></i>
-        </button>
-      </div>
-      
-      <!-- Progress Steps -->
-      <div class="flex items-center justify-center mt-4 space-x-4">
-        <div class="flex items-center">
-          <div class="step-indicator step-completed w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium">
-            <i class="fas fa-check"></i>
-          </div>
-          <span class="ml-2 text-sm font-medium text-gray-900">Cart Review</span>
-        </div>
-        <div class="w-12 h-0.5 bg-gray-300"></div>
-        <div class="flex items-center">
-          <div class="step-indicator step-active w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium">2</div>
-          <span class="ml-2 text-sm font-medium text-gray-900">Order Summary</span>
-        </div>
-        <div class="w-12 h-0.5 bg-gray-300"></div>
-        <div class="flex items-center">
-          <div class="step-indicator w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600">3</div>
-          <span class="ml-2 text-sm font-medium text-gray-500">Payment</span>
-        </div>
-      </div>
+      </nav>
     </div>
 
-    <!-- Modal Body -->
-    <div class="bg-white px-4 pt-5 pb-4 sm:p-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <!-- Order Items -->
-        <div>
-          <h4 class="text-lg font-semibold mb-4">Order Items</h4>
-          <div class="space-y-4 max-h-64 overflow-y-auto" id="modalOrderItems">
-            <!-- Items will be populated by JavaScript -->
-          </div>
-        </div>
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 md:px-8 py-8">
+      <h1 class="text-2xl md:text-3xl font-bold mb-8 text-gray-900">
+        Your Shopping Cart
+      </h1>
 
-        <!-- Order Summary & Shipping -->
-        <div>
-          <!-- Shipping Information -->
-          <div class="mb-6">
-            <h4 class="text-lg font-semibold mb-4">Shipping Information</h4>
-            <div class="bg-gray-50 rounded-lg p-4">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]" placeholder="John">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Cart Items -->
+        <div class="flex-1">
+          <!-- Cart Items List -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-semibold text-gray-900">
+                Cart Items (3)
+              </h2>
+              <button
+                class="text-sm text-[#473771] font-medium hover:underline"
+              >
+                Clear Cart
+              </button>
+            </div>
+
+            <!-- Cart Item 1 -->
+            <div
+              class="cart-item border-b border-gray-200 pb-6 mb-6"
+              data-price="250"
+              data-name="Bamboo Utensil Set"
+            >
+              <div class="flex flex-col sm:flex-row gap-4">
+                <div class="relative w-full sm:w-24 h-24">
+                  <img
+                    src="assets/bamboo.jpg"
+                    alt="Bamboo Utensil Set"
+                    class="w-full h-full object-cover rounded-lg"
+                  />
+                  <span
+                    class="absolute top-0 left-0 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-br-lg rounded-tl-lg"
+                    >New</span
+                  >
                 </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]" placeholder="Doe">
-                </div>
-                <div class="md:col-span-2">
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]" placeholder="123 Main Street">
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]" placeholder="New York">
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]" placeholder="10001">
+                <div class="flex-1">
+                  <div
+                    class="flex flex-col sm:flex-row sm:justify-between sm:items-start"
+                  >
+                    <div>
+                      <h3
+                        class="font-bold text-lg text-gray-900 hover:text-[#473771]"
+                      >
+                        <a href="product-detail.html">Bamboo Utensil Set</a>
+                      </h3>
+                      <div class="flex items-center mt-1 text-sm text-gray-500">
+                        <span class="mr-3">Home & Living</span>
+                        <span>Eco-friendly</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center mt-2 sm:mt-0">
+                      <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                      <span class="font-bold text-[#473771]">250</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4"
+                  >
+                    <div
+                      class="flex items-center border border-gray-300 rounded-md w-max"
+                    >
+                      <button
+                        class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100"
+                      >
+                        <i class="fas fa-minus text-xs"></i>
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value="1"
+                        class="w-12 text-center border-0 focus:ring-0 p-0 text-gray-900 quantity-input"
+                      />
+                      <button
+                        class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100"
+                      >
+                        <i class="fas fa-plus text-xs"></i>
+                      </button>
+                    </div>
+                    <button
+                      class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-3 sm:mt-0 remove-item"
+                    >
+                      <i class="fas fa-trash-alt mr-1"></i> Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Payment Method -->
-          <div class="mb-6">
-            <h4 class="text-lg font-semibold mb-4">Payment Method</h4>
-            <div class="space-y-3">
-              <div class="border border-[#473771] bg-purple-50 rounded-lg p-3 flex items-center">
-                <input type="radio" name="payment" id="greenCoins" checked class="mr-3 accent-[#473771]">
-                <div class="flex-1">
-                  <label for="greenCoins" class="font-medium text-gray-900 flex items-center">
-                    <i class="fas fa-coins text-yellow-500 mr-2"></i>
-                    Green Coins
-                  </label>
-                  <span class="text-sm text-gray-600">Use your earned Green Coins</span>
+            <!-- Cart Item 2 -->
+            <div
+              class="cart-item border-b border-gray-200 pb-6 mb-6"
+              data-price="350"
+              data-name="Stainless Steel Water Bottle"
+            >
+              <div class="flex flex-col sm:flex-row gap-4">
+                <div class="relative w-full sm:w-24 h-24">
+                  <img
+                    src="assets/bottle.webp"
+                    alt="Stainless Steel Water Bottle"
+                    class="w-full h-full object-cover rounded-lg"
+                  />
+                  <span
+                    class="absolute top-0 left-0 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-br-lg rounded-tl-lg"
+                    >Best Seller</span
+                  >
                 </div>
-                <span class="font-medium text-[#473771]">Available: 1,250</span>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3 flex items-center">
-                <input type="radio" name="payment" id="creditCard" class="mr-3 accent-[#473771]">
                 <div class="flex-1">
-                  <label for="creditCard" class="font-medium text-gray-900 flex items-center">
-                    <i class="fas fa-credit-card mr-2"></i>
-                    Credit/Debit Card
-                  </label>
-                  <span class="text-sm text-gray-600">Visa, Mastercard, American Express</span>
-                </div>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3 flex items-center">
-                <input type="radio" name="payment" id="paypal" class="mr-3 accent-[#473771]">
-                <div class="flex-1">
-                  <label for="paypal" class="font-medium text-gray-900 flex items-center">
-                    <i class="fab fa-paypal mr-2"></i>
-                    PayPal
-                  </label>
-                  <span class="text-sm text-gray-600">Pay with your PayPal account</span>
+                  <div
+                    class="flex flex-col sm:flex-row sm:justify-between sm:items-start"
+                  >
+                    <div>
+                      <h3
+                        class="font-bold text-lg text-gray-900 hover:text-[#473771]"
+                      >
+                        <a href="product-detail.html"
+                          >Stainless Steel Water Bottle</a
+                        >
+                      </h3>
+                      <div class="flex items-center mt-1 text-sm text-gray-500">
+                        <span class="mr-3">Food & Drink</span>
+                        <span>Plastic-free</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center mt-2 sm:mt-0">
+                      <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                      <span class="font-bold text-[#473771]">350</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4"
+                  >
+                    <div
+                      class="flex items-center border border-gray-300 rounded-md w-max"
+                    >
+                      <button
+                        class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100"
+                      >
+                        <i class="fas fa-minus text-xs"></i>
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value="1"
+                        class="w-12 text-center border-0 focus:ring-0 p-0 text-gray-900 quantity-input"
+                      />
+                      <button
+                        class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100"
+                      >
+                        <i class="fas fa-plus text-xs"></i>
+                      </button>
+                    </div>
+                    <button
+                      class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-3 sm:mt-0 remove-item"
+                    >
+                      <i class="fas fa-trash-alt mr-1"></i> Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Order Total -->
-          <div class="bg-gray-50 rounded-lg p-4">
-            <h4 class="text-lg font-semibold mb-3">Order Total</h4>
-            <div class="space-y-2">
-              <div class="flex justify-between">
-                <span class="text-gray-600">Subtotal</span>
-                <div class="flex items-center">
-                  <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                  <span id="modalSubtotal">800</span>
+            <!-- Cart Item 3 -->
+            <div
+              class="cart-item"
+              data-price="200"
+              data-name="Organic Cotton Tote Bag"
+            >
+              <div class="flex flex-col sm:flex-row gap-4">
+                <div class="relative w-full sm:w-24 h-24">
+                  <img
+                    src="assets/totebag.webp"
+                    alt="Organic Cotton Tote Bag"
+                    class="w-full h-full object-cover rounded-lg"
+                  />
+                  <span
+                    class="absolute top-0 left-0 bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-br-lg rounded-tl-lg"
+                    >Sale</span
+                  >
                 </div>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Discount</span>
-                <span class="text-green-600" id="modalDiscount">-50</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Shipping</span>
-                <span id="modalShipping">Free</span>
-              </div>
-              <div class="border-t border-gray-300 pt-2">
-                <div class="flex justify-between font-semibold text-lg">
-                  <span>Total</span>
-                  <div class="flex items-center">
-                    <i class="fas fa-coins text-yellow-500 mr-1"></i>
-                    <span class="text-[#473771]" id="modalTotal">750</span>
+                <div class="flex-1">
+                  <div
+                    class="flex flex-col sm:flex-row sm:justify-between sm:items-start"
+                  >
+                    <div>
+                      <h3
+                        class="font-bold text-lg text-gray-900 hover:text-[#473771]"
+                      >
+                        <a href="product-detail.html"
+                          >Organic Cotton Tote Bag</a
+                        >
+                      </h3>
+                      <div class="flex items-center mt-1 text-sm text-gray-500">
+                        <span class="mr-3">Fashion</span>
+                        <span>Organic</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center mt-2 sm:mt-0">
+                      <span class="text-gray-400 line-through text-sm mr-2"
+                        >250</span
+                      >
+                      <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                      <span class="font-bold text-[#473771]">200</span>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4"
+                  >
+                    <div
+                      class="flex items-center border border-gray-300 rounded-md w-max"
+                    >
+                      <button
+                        class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100"
+                      >
+                        <i class="fas fa-minus text-xs"></i>
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value="1"
+                        class="w-12 text-center border-0 focus:ring-0 p-0 text-gray-900 quantity-input"
+                      />
+                      <button
+                        class="quantity-btn px-3 py-1 text-gray-600 hover:bg-gray-100"
+                      >
+                        <i class="fas fa-plus text-xs"></i>
+                      </button>
+                    </div>
+                    <button
+                      class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-3 sm:mt-0 remove-item"
+                    >
+                      <i class="fas fa-trash-alt mr-1"></i> Remove
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Reward Points Information -->
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div class="flex items-center text-blue-700 font-semibold mb-1">
+              <i class="fas fa-medal mr-2"></i>
+              <h3>Reward Points</h3>
+            </div>
+            <p class="text-blue-800 text-sm">
+              You'll earn <span class="font-bold">80</span> points from this
+              purchase. Points can be redeemed for discounts on future
+              purchases.
+            </p>
+          </div>
+
+          <!-- Eco Impact -->
+          <div
+            class="bg-green-50 border border-green-200 rounded-lg p-4 text-center"
+          >
+            <div
+              class="flex items-center justify-center text-green-700 font-semibold mb-1"
+            >
+              <i class="fas fa-leaf mr-2"></i>
+              <h3>Your Environmental Impact</h3>
+            </div>
+            <p class="text-green-800 text-sm mb-3">
+              By choosing these eco-friendly products, you're making a positive
+              impact on the environment.
+            </p>
+            <div class="flex justify-center gap-6">
+              <div class="text-center">
+                <div class="text-green-700 font-bold text-lg">2.5 kg</div>
+                <div class="text-green-800 text-xs">Plastic Saved</div>
+              </div>
+              <div class="text-center">
+                <div class="text-green-700 font-bold text-lg">4.2 kg</div>
+                <div class="text-green-800 text-xs">CO₂ Reduced</div>
+              </div>
+              <div class="text-center">
+                <div class="text-green-700 font-bold text-lg">15 L</div>
+                <div class="text-green-800 text-xs">Water Saved</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:w-80">
+          <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+            <h3 class="font-bold text-lg mb-4">Order Summary</h3>
+
+            <!-- Subtotal -->
+            <div class="flex justify-between mb-3">
+              <span class="text-gray-600">Subtotal (3 items)</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-medium" id="subtotal">800</span>
+              </div>
+            </div>
+
+            <!-- Discount -->
+            <div class="flex justify-between mb-3">
+              <span class="text-gray-600">Discount</span>
+              <span class="text-green-600 font-medium" id="discount">-50</span>
+            </div>
+
+            <!-- Shipping Options -->
+            <div class="mb-4">
+              <h4 class="text-gray-600 mb-2">Shipping</h4>
+
+              <div
+                class="mb-2 border border-[#473771] bg-purple-50 rounded-lg p-3 flex items-start"
+              >
+                <input
+                  type="radio"
+                  name="shipping"
+                  id="standard"
+                  checked
+                  class="mt-1 mr-2 accent-[#473771]"
+                  value="0"
+                />
+                <div class="flex-1">
+                  <label for="standard" class="font-medium text-gray-900 block"
+                    >Standard Shipping</label
+                  >
+                  <span class="text-sm text-gray-600">3-5 business days</span>
+                </div>
+                <span class="font-medium text-[#473771]">Free</span>
+              </div>
+
+              <div
+                class="border border-gray-200 rounded-lg p-3 flex items-start"
+              >
+                <input
+                  type="radio"
+                  name="shipping"
+                  id="express"
+                  class="mt-1 mr-2 accent-[#473771]"
+                  value="50"
+                />
+                <div class="flex-1">
+                  <label for="express" class="font-medium text-gray-900 block"
+                    >Express Shipping</label
+                  >
+                  <span class="text-sm text-gray-600">1-2 business days</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                  <span class="font-medium">50</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="mb-4">
+              <h4 class="text-gray-600 mb-2">Promo Code</h4>
+              <div class="flex">
+                <input
+                  type="text"
+                  placeholder="Enter code"
+                  id="promoCode"
+                  class="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                />
+                <button
+                  id="applyPromo"
+                  class="bg-[#473771] text-white px-3 py-2 rounded-r-lg text-sm hover:bg-[#37265c] transition-colors"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 my-4 pt-4"></div>
+
+            <!-- Total -->
+            <div class="flex justify-between mb-6">
+              <span class="font-semibold">Total</span>
+              <div class="flex items-center">
+                <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                <span class="font-bold text-xl text-[#473771]" id="total"
+                  >750</span
+                >
+              </div>
+            </div>
+
+            <!-- Checkout Buttons -->
+            <div>
+              <button
+                id="checkoutBtn"
+                class="block w-full bg-[#473771] text-white text-center py-3 rounded-lg font-medium hover:bg-[#37265c] transition-colors mb-3"
+              >
+                Proceed to Checkout
+              </button>
+              <a
+                href="product-catalog.html"
+                class="block border border-[#473771] text-[#473771] text-center py-3 rounded-lg font-medium hover:bg-purple-50 transition-colors"
+              >
+                Continue Shopping
+              </a>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="flex justify-center gap-4 mt-6 text-gray-400">
+              <i class="fab fa-cc-visa text-xl"></i>
+              <i class="fab fa-cc-mastercard text-xl"></i>
+              <i class="fab fa-cc-paypal text-xl"></i>
+              <i class="fab fa-cc-apple-pay text-xl"></i>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Modal Footer -->
-    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-      <button type="button" id="confirmOrder" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#473771] text-base font-medium text-white hover:bg-[#37265c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:ml-3 sm:w-auto sm:text-sm">
-        <i class="fas fa-check mr-2"></i>
-        Confirm Order
-      </button>
-      <button type="button" id="backToCart" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-        Back to Cart
-      </button>
-    </div>
-  </div>
-</div>
-</div>
+      <!-- Related Products -->
+      <div class="mt-12">
+        <h2 class="text-2xl font-bold mb-6 text-center">You Might Also Like</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Product 1 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card"
+          >
+            <div class="relative">
+              <a href="product-detail.html">
+                <img
+                  src="assets/reusablebags.jpg"
+                  alt="Reusable Produce Bags"
+                  class="w-full h-48 object-cover"
+                />
+              </a>
+            </div>
+            <div class="p-4 product-card-content">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-500">Home & Living</span>
+                <div class="flex items-center">
+                  <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                  <span class="font-bold">150</span>
+                </div>
+              </div>
+              <h3 class="font-bold text-lg mb-2">
+                <a href="product-detail.html" class="hover:text-[#473771]"
+                  >Reusable Produce Bags (Set of 5)</a
+                >
+              </h3>
+              <div class="flex items-center mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <div class="product-card-footer">
+                <button
+                  class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center"
+                >
+                  <i class="fas fa-shopping-cart mr-2"></i>
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
 
-<!-- Success Modal -->
-<div id="successModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-<div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-  <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-  </div>
-  <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-  <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full modal-enter">
-    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-      <div class="sm:flex sm:items-start">
-        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-          <i class="fas fa-check text-green-600"></i>
-        </div>
-        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">Order Confirmed!</h3>
-          <div class="mt-2">
-            <p class="text-sm text-gray-500">
-              Your order has been successfully placed. You'll receive a confirmation email shortly with your order details and tracking information.
-            </p>
-            <div class="mt-4 p-3 bg-green-50 rounded-lg">
-              <p class="text-sm font-medium text-green-800">Order #RG-2025-001</p>
-              <p class="text-xs text-green-600">Estimated delivery: 3-5 business days</p>
+          <!-- Product 2 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card"
+          >
+            <div class="relative">
+              <a href="product-detail.html">
+                <img
+                  src="assets/toothbrush.webp"
+                  alt="Bamboo Toothbrush Set"
+                  class="w-full h-48 object-cover"
+                />
+              </a>
+              <span
+                class="absolute top-2 left-2 bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full"
+                >Best Seller</span
+              >
+            </div>
+            <div class="p-4 product-card-content">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-500">Personal Care</span>
+                <div class="flex items-center">
+                  <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                  <span class="font-bold">120</span>
+                </div>
+              </div>
+              <h3 class="font-bold text-lg mb-2">
+                <a href="product-detail.html" class="hover:text-[#473771]"
+                  >Bamboo Toothbrush Set (Pack of 4)</a
+                >
+              </h3>
+              <div class="flex items-center mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <div class="product-card-footer">
+                <button
+                  class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center"
+                >
+                  <i class="fas fa-shopping-cart mr-2"></i>
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card"
+          >
+            <div class="relative">
+              <a href="product-detail.html">
+                <img
+                  src="assets/wrap.jpg"
+                  alt="Beeswax Food Wraps"
+                  class="w-full h-48 object-cover"
+                />
+              </a>
+            </div>
+            <div class="p-4 product-card-content">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-500">Home & Living</span>
+                <div class="flex items-center">
+                  <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                  <span class="font-bold">180</span>
+                </div>
+              </div>
+              <h3 class="font-bold text-lg mb-2">
+                <a href="product-detail.html" class="hover:text-[#473771]"
+                  >Beeswax Food Wraps (Set of 3)</a
+                >
+              </h3>
+              <div class="flex items-center mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <div class="product-card-footer">
+                <button
+                  class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center"
+                >
+                  <i class="fas fa-shopping-cart mr-2"></i>
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden card-hover product-card"
+          >
+            <div class="relative">
+              <a href="product-detail.html">
+                <img
+                  src="assets/shampoo.jpg"
+                  alt="Natural Shampoo Bar"
+                  class="w-full h-48 object-cover"
+                />
+              </a>
+              <span
+                class="absolute top-2 left-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full"
+                >New</span
+              >
+            </div>
+            <div class="p-4 product-card-content">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-gray-500">Personal Care</span>
+                <div class="flex items-center">
+                  <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                  <span class="font-bold">180</span>
+                </div>
+              </div>
+              <h3 class="font-bold text-lg mb-2">
+                <a href="product-detail.html" class="hover:text-[#473771]"
+                  >Natural Shampoo Bar</a
+                >
+              </h3>
+              <div class="flex items-center mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+              <div class="product-card-footer">
+                <button
+                  class="w-full bg-[#473771] text-white py-2 rounded-lg hover:bg-[#37265c] transition-colors add-to-cart-btn flex items-center justify-center"
+                >
+                  <i class="fas fa-shopping-cart mr-2"></i>
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-      <button type="button" id="viewOrders" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#473771] text-base font-medium text-white hover:bg-[#37265c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:ml-3 sm:w-auto sm:text-sm">
-        View My Orders
-      </button>
-      <button type="button" id="continueShopping" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-        Continue Shopping
-      </button>
-    </div>
-  </div>
-</div>
-</div>
 
-<!-- Footer -->
-<footer class="bg-[#473771] text-white">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <!-- Footer top section with columns -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-    <!-- Company info column -->
-    <div>
-      <h3 class="text-3xl mb-4 flex items-center">
-        <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
-        <span class="text-white">Revive Goods.</span>
-      </h3>
-      <p class="h5 mb-4 text-[#FFFFFF]">
-        Our mission is empowering individuals to make sustainable choices
-        by turning unwanted goods into opportunities for a greener future.
-      </p>
-      <div class="flex space-x-4">
-        <!-- Social media icons -->
-        <a
-          href="https://instagram.com/nrfarihaaf"
-          target="_blank"
-          class="text-gray-400 hover:text-white"
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+      <div
+        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <!-- Background overlay -->
+        <div
+          class="fixed inset-0 transition-opacity modal-backdrop"
+          aria-hidden="true"
         >
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a
-          href="https://linkedin.com/in/noorfarihaf11"
-          target="_blank"
-          class="text-gray-400 hover:text-white"
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Modal panel -->
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
         >
-          <i class="fab fa-linkedin-in"></i>
-        </a>
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full modal-enter"
+        >
+          <!-- Modal Header -->
+          <div
+            class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200"
+          >
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Checkout Summary
+              </h3>
+              <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-xl"></i>
+              </button>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="flex items-center justify-center mt-4 space-x-4">
+              <div class="flex items-center">
+                <div
+                  class="step-indicator step-completed w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium"
+                >
+                  <i class="fas fa-check"></i>
+                </div>
+                <span class="ml-2 text-sm font-medium text-gray-900"
+                  >Cart Review</span
+                >
+              </div>
+              <div class="w-12 h-0.5 bg-gray-300"></div>
+              <div class="flex items-center">
+                <div
+                  class="step-indicator step-active w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium"
+                >
+                  2
+                </div>
+                <span class="ml-2 text-sm font-medium text-gray-900"
+                  >Order Summary</span
+                >
+              </div>
+              <div class="w-12 h-0.5 bg-gray-300"></div>
+              <div class="flex items-center">
+                <div
+                  class="step-indicator w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600"
+                >
+                  3
+                </div>
+                <span class="ml-2 text-sm font-medium text-gray-500"
+                  >Payment</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Order Items -->
+              <div>
+                <h4 class="text-lg font-semibold mb-4">Order Items</h4>
+                <div
+                  class="space-y-4 max-h-64 overflow-y-auto"
+                  id="modalOrderItems"
+                >
+                  <!-- Items will be populated by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Order Summary & Shipping -->
+              <div>
+                <!-- Shipping Information -->
+                <div class="mb-6">
+                  <h4 class="text-lg font-semibold mb-4">
+                    Shipping Information
+                  </h4>
+                  <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                          >First Name</label
+                        >
+                        <input
+                          type="text"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                          placeholder="John"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                          >Last Name</label
+                        >
+                        <input
+                          type="text"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                          placeholder="Doe"
+                        />
+                      </div>
+                      <div class="md:col-span-2">
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                          >Address</label
+                        >
+                        <input
+                          type="text"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                          placeholder="123 Main Street"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                          >City</label
+                        >
+                        <input
+                          type="text"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                          placeholder="New York"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                          >Postal Code</label
+                        >
+                        <input
+                          type="text"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                          placeholder="10001"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="mb-6">
+                  <h4 class="text-lg font-semibold mb-4">Payment Method</h4>
+                  <div class="space-y-3">
+                    <div
+                      class="border border-[#473771] bg-purple-50 rounded-lg p-3 flex items-center"
+                    >
+                      <input
+                        type="radio"
+                        name="payment"
+                        id="greenCoins"
+                        checked
+                        class="mr-3 accent-[#473771]"
+                      />
+                      <div class="flex-1">
+                        <label
+                          for="greenCoins"
+                          class="font-medium text-gray-900 flex items-center"
+                        >
+                          <i class="fas fa-coins text-yellow-500 mr-2"></i>
+                          Green Coins
+                        </label>
+                        <span class="text-sm text-gray-600"
+                          >Use your earned Green Coins</span
+                        >
+                      </div>
+                      <span class="font-medium text-[#473771]"
+                        >Available: 1,250</span
+                      >
+                    </div>
+                    <div
+                      class="border border-gray-200 rounded-lg p-3 flex items-center"
+                    >
+                      <input
+                        type="radio"
+                        name="payment"
+                        id="creditCard"
+                        class="mr-3 accent-[#473771]"
+                      />
+                      <div class="flex-1">
+                        <label
+                          for="creditCard"
+                          class="font-medium text-gray-900 flex items-center"
+                        >
+                          <i class="fas fa-credit-card mr-2"></i>
+                          Credit/Debit Card
+                        </label>
+                        <span class="text-sm text-gray-600"
+                          >Visa, Mastercard, American Express</span
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="border border-gray-200 rounded-lg p-3 flex items-center"
+                    >
+                      <input
+                        type="radio"
+                        name="payment"
+                        id="paypal"
+                        class="mr-3 accent-[#473771]"
+                      />
+                      <div class="flex-1">
+                        <label
+                          for="paypal"
+                          class="font-medium text-gray-900 flex items-center"
+                        >
+                          <i class="fab fa-paypal mr-2"></i>
+                          PayPal
+                        </label>
+                        <span class="text-sm text-gray-600"
+                          >Pay with your PayPal account</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Order Total -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="text-lg font-semibold mb-3">Order Total</h4>
+                  <div class="space-y-2">
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Subtotal</span>
+                      <div class="flex items-center">
+                        <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                        <span id="modalSubtotal">800</span>
+                      </div>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Discount</span>
+                      <span class="text-green-600" id="modalDiscount">-50</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-600">Shipping</span>
+                      <span id="modalShipping">Free</span>
+                    </div>
+                    <div class="border-t border-gray-300 pt-2">
+                      <div class="flex justify-between font-semibold text-lg">
+                        <span>Total</span>
+                        <div class="flex items-center">
+                          <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                          <span class="text-[#473771]" id="modalTotal"
+                            >750</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              id="confirmOrder"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#473771] text-base font-medium text-white hover:bg-[#37265c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              <i class="fas fa-check mr-2"></i>
+              Confirm Order
+            </button>
+            <button
+              type="button"
+              id="backToCart"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Back to Cart
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Links column 1 -->
-    <div>
-      <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
-      <ul class="space-y-2">
-        <li>
-          <a
-            href="index.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Home</a
-          >
-        </li>
-        <li>
-          <a
-            href="article-archive.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Articles</a
-          >
-        </li>
-        <li>
-          <a
-            href="product-catalog.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Shop</a
-          >
-        </li>
-        <li>
-          <a
-            href="donation-basket.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Donate</a
-          >
-        </li>
-        <li>
-          <a
-            href="transaction-history.html"
-            class="text-gray-300 hover:text-white transition-colors"
-            >History</a
-          >
-        </li>
-      </ul>
-    </div>
-
-    <!-- Links column 2 -->
-    <div>
-      <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
-      <ul class="space-y-2">
-        <li>
-          <a
-            href="https://instagram.com/nrfarihaaf"
-            target="_blank"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Instagram</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://github.com/noorfarihaf11"
-            target="_blank"
-            href="#"
-            class="text-gray-300 hover:text-white transition-colors"
-            >Github</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://linkedin.com/in/noorfarihaf11"
-            target="_blank"
-            class="text-gray-300 hover:text-white transition-colors"
-            >LinkedIn</a
-          >
-        </li>
-      </ul>
-    </div>
-
-    <!-- Newsletter column -->
-    <div>
-      <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
-      <p class="h5 mb-4 text-[#FFFFFF]">
-        Subscribe to our newsletter for the latest updates.
-      </p>
-      <form class="flex">
-        <input
-          type="email"
-          placeholder="Your email"
-          class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
-        />
-        <button
-          type="submit"
-          class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+      <div
+        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
         >
-          Subscribe
-        </button>
-      </form>
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full modal-enter"
+        >
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div
+                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10"
+              >
+                <i class="fas fa-check text-green-600"></i>
+              </div>
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  Order Confirmed!
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    Your order has been successfully placed. You'll receive a
+                    confirmation email shortly with your order details and
+                    tracking information.
+                  </p>
+                  <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                    <p class="text-sm font-medium text-green-800">
+                      Order #RG-2025-001
+                    </p>
+                    <p class="text-xs text-green-600">
+                      Estimated delivery: 3-5 business days
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              id="viewOrders"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#473771] text-base font-medium text-white hover:bg-[#37265c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              View My Orders
+            </button>
+            <button
+              type="button"
+              id="continueShopping"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Footer bottom section -->
-  <div
-    class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
-  >
-    <p class="text-gray-400 text-sm">
-      &copy; 2025 Revive Goods. All rights reserved.
-    </p>
-    <div class="flex space-x-6 mt-4 md:mt-0">
-      <a href="#" class="text-gray-400 hover:text-white text-sm"
-        >Privacy Policy</a
-      >
-      <a href="#" class="text-gray-400 hover:text-white text-sm"
-        >Terms of Service</a
-      >
-      <a href="#" class="text-gray-400 hover:text-white text-sm"
-        >Cookie Policy</a
-      >
-    </div>
-  </div>
-</div>
-</footer>
+    <!-- Footer -->
+  <footer class="bg-[#473771] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Footer top section with columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <!-- Company info column -->
+          <div>
+            <h3 class="text-3xl mb-4 flex items-center">
+              <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+              <span class="text-white">Revive Goods.</span>
+            </h3>
+            <p class="h5 mb-4 text-[#FFFFFF]">
+              Our mission is empowering individuals to make sustainable choices
+              by turning unwanted goods into opportunities for a greener future.
+            </p>
+            <div class="flex space-x-4">
+              <!-- Social media icons -->
+              <a
+                href="https://instagram.com/nrfarihaaf"
+                target="_blank"
+                class="text-gray-400 hover:text-white"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/noorfarihaf11"
+                target="_blank"
+                class="text-gray-400 hover:text-white"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
 
-<!-- JavaScript -->
-<script>
-// Mobile menu toggle
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
+          <!-- Links column 1 -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="donate.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Donate</a
+                >
+              </li>
+              <li>
+                <a
+                  href="shop.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Shop</a
+                >
+              </li>
+              <li>
+                <a
+                  href="history.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >History</a
+                >
+              </li>
+              <li>
+                <a
+                  href="articles.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Article</a
+                >
+              </li>
+            </ul>
+          </div>
 
-if (mobileMenuBtn && mobileMenu) {
-  mobileMenuBtn.addEventListener('click', function() {
-    mobileMenu.classList.toggle('hidden');
-  });
-}
+          <!-- Links column 2 -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="https://instagram.com/nrfarihaaf"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/noorfarihaf11"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Github</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://linkedin.com/in/noorfarihaf11"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >LinkedIn</a
+                >
+              </li>
+            </ul>
+          </div>
 
-// Cart functionality
-let cartData = {
-  items: [],
-  subtotal: 0,
-  discount: 50,
-  shipping: 0,
-  total: 0
-};
+          <!-- Newsletter column -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
+            <p class="h5 mb-4 text-[#FFFFFF]">
+              Subscribe to our newsletter for the latest updates.
+            </p>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="Your email"
+                class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
+              />
+              <button
+                type="submit"
+                class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
 
-// Initialize cart data
-function initializeCart() {
-  const cartItems = document.querySelectorAll('.cart-item');
-  cartData.items = [];
-  cartData.subtotal = 0;
-  
-  cartItems.forEach(item => {
-    const name = item.dataset.name;
-    const price = parseInt(item.dataset.price);
-    const quantityInput = item.querySelector('.quantity-input');
-    const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
-    const imageElement = item.querySelector('img');
-    const image = imageElement ? imageElement.src : '/placeholder.svg?height=100&width=100';
-    
-    const itemTotal = price * quantity;
-    cartData.subtotal += itemTotal;
-    
-    cartData.items.push({
-      name: name,
-      price: price,
-      quantity: quantity,
-      image: image,
-      total: itemTotal
-    });
-  });
-  
-  // Get current shipping cost
-  const selectedShipping = document.querySelector('input[name="shipping"]:checked');
-  cartData.shipping = selectedShipping ? parseInt(selectedShipping.value) : 0;
-  
-  // Calculate total
-  cartData.total = cartData.subtotal - cartData.discount + cartData.shipping;
-}
+        <!-- Footer bottom section -->
+        <div
+          class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 text-sm">
+            &copy; 2025 Revive Goods. All rights reserved.
+          </p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
 
-// Quantity controls
-document.addEventListener('click', function(e) {
-  // Handle quantity decrease
-  if (e.target.closest('.quantity-btn') && e.target.closest('.quantity-btn').querySelector('.fa-minus')) {
-    const quantityInput = e.target.closest('.cart-item').querySelector('.quantity-input');
-    let value = parseInt(quantityInput.value);
-    if (value > 1) {
-      quantityInput.value = value - 1;
-      updateCartTotals();
-    }
-  }
-  
-  // Handle quantity increase
-  if (e.target.closest('.quantity-btn') && e.target.closest('.quantity-btn').querySelector('.fa-plus')) {
-    const quantityInput = e.target.closest('.cart-item').querySelector('.quantity-input');
-    let value = parseInt(quantityInput.value);
-    quantityInput.value = value + 1;
-    updateCartTotals();
-  }
-  
-  // Handle remove item
-  if (e.target.closest('.remove-item')) {
-    const cartItem = e.target.closest('.cart-item');
-    cartItem.style.opacity = '0';
-    setTimeout(() => {
-      cartItem.remove();
-      updateCartTotals();
-      updateCartCount();
-    }, 300);
-  }
-});
+    <!-- JavaScript -->
+    <script>
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
 
-// Quantity input change
-document.addEventListener('change', function(e) {
-  if (e.target.classList.contains('quantity-input')) {
-    if (e.target.value < 1) {
-      e.target.value = 1;
-    }
-    updateCartTotals();
-  }
-});
-
-// Shipping options
-document.addEventListener('change', function(e) {
-  if (e.target.name === 'shipping') {
-    // Update shipping container styling
-    document.querySelectorAll('input[name="shipping"]').forEach(input => {
-      const container = input.closest('div');
-      if (input.checked) {
-        container.classList.add('border-[#473771]', 'bg-purple-50');
-        container.classList.remove('border-gray-200');
-      } else {
-        container.classList.remove('border-[#473771]', 'bg-purple-50');
-        container.classList.add('border-gray-200');
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
+        });
       }
-    });
-    
-    cartData.shipping = parseInt(e.target.value);
-    updateCartTotals();
-  }
-});
 
-// Promo code functionality
-const applyPromoBtn = document.getElementById('applyPromo');
-if (applyPromoBtn) {
-  applyPromoBtn.addEventListener('click', function() {
-    const promoCode = document.getElementById('promoCode').value.trim().toLowerCase();
-    
-    if (promoCode === 'save10') {
-      cartData.discount = 100;
-      alert('Promo code applied! You saved 50 additional Green Coins!');
-    } else if (promoCode === 'welcome') {
-      cartData.discount = 75;
-      alert('Welcome promo applied! You saved 25 additional Green Coins!');
-    } else if (promoCode !== '') {
-      alert('Invalid promo code. Please try again.');
-    }
-    
-    updateCartTotals();
-  });
-}
+      // Cart functionality
+      let cartData = {
+        items: [],
+        subtotal: 0,
+        discount: 50,
+        shipping: 0,
+        total: 0,
+      };
 
-// Update cart totals
-function updateCartTotals() {
-  initializeCart();
-  
-  // Update UI elements
-  const subtotalElement = document.getElementById('subtotal');
-  const discountElement = document.getElementById('discount');
-  const totalElement = document.getElementById('total');
-  
-  if (subtotalElement) subtotalElement.textContent = cartData.subtotal;
-  if (discountElement) discountElement.textContent = `-${cartData.discount}`;
-  if (totalElement) totalElement.textContent = cartData.total;
-}
+      // Initialize cart data
+      function initializeCart() {
+        const cartItems = document.querySelectorAll(".cart-item");
+        cartData.items = [];
+        cartData.subtotal = 0;
 
-// Update cart count
-function updateCartCount() {
-  const cartItems = document.querySelectorAll('.cart-item');
-  const cartCountElements = document.querySelectorAll('#cartCount');
-  
-  cartCountElements.forEach(element => {
-    element.textContent = cartItems.length;
-  });
-  
-  // Update cart items count in the heading
-  const cartItemsHeading = document.querySelector('.flex.justify-between.items-center.mb-6 h2');
-  if (cartItemsHeading) {
-    cartItemsHeading.textContent = `Cart Items (${cartItems.length})`;
-  }
-  
-  // Show empty cart message if no items
-  if (cartItems.length === 0) {
-    const cartItemsContainer = document.querySelector('.bg-white.rounded-lg.shadow-md.p-6.mb-6');
-    
-    if (cartItemsContainer) {
-      cartItemsContainer.innerHTML = `
+        cartItems.forEach((item) => {
+          const name = item.dataset.name;
+          const price = parseInt(item.dataset.price);
+          const quantityInput = item.querySelector(".quantity-input");
+          const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
+          const imageElement = item.querySelector("img");
+          const image = imageElement
+            ? imageElement.src
+            : "/placeholder.svg?height=100&width=100";
+
+          const itemTotal = price * quantity;
+          cartData.subtotal += itemTotal;
+
+          cartData.items.push({
+            name: name,
+            price: price,
+            quantity: quantity,
+            image: image,
+            total: itemTotal,
+          });
+        });
+
+        // Get current shipping cost
+        const selectedShipping = document.querySelector(
+          'input[name="shipping"]:checked'
+        );
+        cartData.shipping = selectedShipping
+          ? parseInt(selectedShipping.value)
+          : 0;
+
+        // Calculate total
+        cartData.total =
+          cartData.subtotal - cartData.discount + cartData.shipping;
+      }
+
+      // Quantity controls
+      document.addEventListener("click", function (e) {
+        // Handle quantity decrease
+        if (
+          e.target.closest(".quantity-btn") &&
+          e.target.closest(".quantity-btn").querySelector(".fa-minus")
+        ) {
+          const quantityInput = e.target
+            .closest(".cart-item")
+            .querySelector(".quantity-input");
+          let value = parseInt(quantityInput.value);
+          if (value > 1) {
+            quantityInput.value = value - 1;
+            updateCartTotals();
+          }
+        }
+
+        // Handle quantity increase
+        if (
+          e.target.closest(".quantity-btn") &&
+          e.target.closest(".quantity-btn").querySelector(".fa-plus")
+        ) {
+          const quantityInput = e.target
+            .closest(".cart-item")
+            .querySelector(".quantity-input");
+          let value = parseInt(quantityInput.value);
+          quantityInput.value = value + 1;
+          updateCartTotals();
+        }
+
+        // Handle remove item
+        if (e.target.closest(".remove-item")) {
+          const cartItem = e.target.closest(".cart-item");
+          cartItem.style.opacity = "0";
+          setTimeout(() => {
+            cartItem.remove();
+            updateCartTotals();
+            updateCartCount();
+          }, 300);
+        }
+      });
+
+      // Quantity input change
+      document.addEventListener("change", function (e) {
+        if (e.target.classList.contains("quantity-input")) {
+          if (e.target.value < 1) {
+            e.target.value = 1;
+          }
+          updateCartTotals();
+        }
+      });
+
+      // Shipping options
+      document.addEventListener("change", function (e) {
+        if (e.target.name === "shipping") {
+          // Update shipping container styling
+          document
+            .querySelectorAll('input[name="shipping"]')
+            .forEach((input) => {
+              const container = input.closest("div");
+              if (input.checked) {
+                container.classList.add("border-[#473771]", "bg-purple-50");
+                container.classList.remove("border-gray-200");
+              } else {
+                container.classList.remove("border-[#473771]", "bg-purple-50");
+                container.classList.add("border-gray-200");
+              }
+            });
+
+          cartData.shipping = parseInt(e.target.value);
+          updateCartTotals();
+        }
+      });
+
+      // Promo code functionality
+      const applyPromoBtn = document.getElementById("applyPromo");
+      if (applyPromoBtn) {
+        applyPromoBtn.addEventListener("click", function () {
+          const promoCode = document
+            .getElementById("promoCode")
+            .value.trim()
+            .toLowerCase();
+
+          if (promoCode === "save10") {
+            cartData.discount = 100;
+            alert("Promo code applied! You saved 50 additional Green Coins!");
+          } else if (promoCode === "welcome") {
+            cartData.discount = 75;
+            alert(
+              "Welcome promo applied! You saved 25 additional Green Coins!"
+            );
+          } else if (promoCode !== "") {
+            alert("Invalid promo code. Please try again.");
+          }
+
+          updateCartTotals();
+        });
+      }
+
+      // Update cart totals
+      function updateCartTotals() {
+        initializeCart();
+
+        // Update UI elements
+        const subtotalElement = document.getElementById("subtotal");
+        const discountElement = document.getElementById("discount");
+        const totalElement = document.getElementById("total");
+
+        if (subtotalElement) subtotalElement.textContent = cartData.subtotal;
+        if (discountElement)
+          discountElement.textContent = `-${cartData.discount}`;
+        if (totalElement) totalElement.textContent = cartData.total;
+      }
+
+      // Update cart count
+      function updateCartCount() {
+        const cartItems = document.querySelectorAll(".cart-item");
+        const cartCountElements = document.querySelectorAll("#cartCount");
+
+        cartCountElements.forEach((element) => {
+          element.textContent = cartItems.length;
+        });
+
+        // Update cart items count in the heading
+        const cartItemsHeading = document.querySelector(
+          ".flex.justify-between.items-center.mb-6 h2"
+        );
+        if (cartItemsHeading) {
+          cartItemsHeading.textContent = `Cart Items (${cartItems.length})`;
+        }
+
+        // Show empty cart message if no items
+        if (cartItems.length === 0) {
+          const cartItemsContainer = document.querySelector(
+            ".bg-white.rounded-lg.shadow-md.p-6.mb-6"
+          );
+
+          if (cartItemsContainer) {
+            cartItemsContainer.innerHTML = `
         <div class="text-center py-12">
           <div class="text-gray-400 text-5xl mb-4">
             <i class="fas fa-shopping-cart"></i>
@@ -1107,106 +1432,107 @@ function updateCartCount() {
           <a href="product-catalog.html" class="bg-[#473771] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors">Start Shopping</a>
         </div>
       `;
-    }
-  }
-}
+          }
+        }
+      }
 
-// Checkout Modal functionality
-const checkoutModal = document.getElementById('checkoutModal');
-const checkoutBtn = document.getElementById('checkoutBtn');
-const closeModal = document.getElementById('closeModal');
-const backToCart = document.getElementById('backToCart');
-const confirmOrder = document.getElementById('confirmOrder');
-const successModal = document.getElementById('successModal');
-const viewOrders = document.getElementById('viewOrders');
-const continueShopping = document.getElementById('continueShopping');
+      // Checkout Modal functionality
+      const checkoutModal = document.getElementById("checkoutModal");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      const closeModal = document.getElementById("closeModal");
+      const backToCart = document.getElementById("backToCart");
+      const confirmOrder = document.getElementById("confirmOrder");
+      const successModal = document.getElementById("successModal");
+      const viewOrders = document.getElementById("viewOrders");
+      const continueShopping = document.getElementById("continueShopping");
 
-console.log('Checkout elements found:', {
-  checkoutModal: !!checkoutModal,
-  checkoutBtn: !!checkoutBtn,
-  closeModal: !!closeModal
-});
+      console.log("Checkout elements found:", {
+        checkoutModal: !!checkoutModal,
+        checkoutBtn: !!checkoutBtn,
+        closeModal: !!closeModal,
+      });
 
-// Open checkout modal
-if (checkoutBtn) {
-  checkoutBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    console.log('Checkout button clicked!');
-    
-    // Check if cart has items
-    const cartItems = document.querySelectorAll('.cart-item');
-    console.log('Cart items found:', cartItems.length);
-    
-    if (cartItems.length === 0) {
-      alert('Your cart is empty. Please add some items before checkout.');
-      return;
-    }
-    
-    // Initialize and populate modal
-    initializeCart();
-    populateCheckoutModal();
-    
-    // Show modal
-    if (checkoutModal) {
-      console.log('Showing modal...');
-      checkoutModal.classList.remove('hidden');
-      checkoutModal.style.display = 'block';
-      document.body.style.overflow = 'hidden';
-      
-      // Focus on first input field
-      setTimeout(() => {
-        const firstInput = checkoutModal.querySelector('input[type="text"]');
-        if (firstInput) firstInput.focus();
-      }, 300);
-    } else {
-      console.error('Checkout modal not found!');
-    }
-  });
-} else {
-  console.error('Checkout button not found!');
-}
+      // Open checkout modal
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          console.log("Checkout button clicked!");
 
-// Close checkout modal function
-function closeCheckoutModal() {
-  if (checkoutModal) {
-    checkoutModal.classList.add('hidden');
-    checkoutModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-}
+          // Check if cart has items
+          const cartItems = document.querySelectorAll(".cart-item");
+          console.log("Cart items found:", cartItems.length);
 
-// Close modal event listeners
-if (closeModal) {
-  closeModal.addEventListener('click', closeCheckoutModal);
-}
+          if (cartItems.length === 0) {
+            alert("Your cart is empty. Please add some items before checkout.");
+            return;
+          }
 
-if (backToCart) {
-  backToCart.addEventListener('click', closeCheckoutModal);
-}
+          // Initialize and populate modal
+          initializeCart();
+          populateCheckoutModal();
 
-// Close modal when clicking outside
-if (checkoutModal) {
-  checkoutModal.addEventListener('click', function(e) {
-    if (e.target === checkoutModal) {
-      closeCheckoutModal();
-    }
-  });
-}
+          // Show modal
+          if (checkoutModal) {
+            console.log("Showing modal...");
+            checkoutModal.classList.remove("hidden");
+            checkoutModal.style.display = "block";
+            document.body.style.overflow = "hidden";
 
-// Populate checkout modal with cart data
-function populateCheckoutModal() {
-  const modalOrderItems = document.getElementById('modalOrderItems');
-  
-  if (!modalOrderItems) {
-    console.error('Modal order items container not found');
-    return;
-  }
-  
-  modalOrderItems.innerHTML = '';
+            // Focus on first input field
+            setTimeout(() => {
+              const firstInput =
+                checkoutModal.querySelector('input[type="text"]');
+              if (firstInput) firstInput.focus();
+            }, 300);
+          } else {
+            console.error("Checkout modal not found!");
+          }
+        });
+      } else {
+        console.error("Checkout button not found!");
+      }
 
-  // Check if cart has items
-  if (cartData.items.length === 0) {
-    modalOrderItems.innerHTML = `
+      // Close checkout modal function
+      function closeCheckoutModal() {
+        if (checkoutModal) {
+          checkoutModal.classList.add("hidden");
+          checkoutModal.style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      // Close modal event listeners
+      if (closeModal) {
+        closeModal.addEventListener("click", closeCheckoutModal);
+      }
+
+      if (backToCart) {
+        backToCart.addEventListener("click", closeCheckoutModal);
+      }
+
+      // Close modal when clicking outside
+      if (checkoutModal) {
+        checkoutModal.addEventListener("click", function (e) {
+          if (e.target === checkoutModal) {
+            closeCheckoutModal();
+          }
+        });
+      }
+
+      // Populate checkout modal with cart data
+      function populateCheckoutModal() {
+        const modalOrderItems = document.getElementById("modalOrderItems");
+
+        if (!modalOrderItems) {
+          console.error("Modal order items container not found");
+          return;
+        }
+
+        modalOrderItems.innerHTML = "";
+
+        // Check if cart has items
+        if (cartData.items.length === 0) {
+          modalOrderItems.innerHTML = `
       <div class="text-center py-8">
         <div class="text-gray-400 text-3xl mb-2">
           <i class="fas fa-shopping-cart"></i>
@@ -1214,14 +1540,15 @@ function populateCheckoutModal() {
         <p class="text-gray-600">No items in cart</p>
       </div>
     `;
-    return;
-  }
+          return;
+        }
 
-  // Populate items
-  cartData.items.forEach(item => {
-    const itemElement = document.createElement('div');
-    itemElement.className = 'flex items-center space-x-3 p-3 bg-gray-50 rounded-lg mb-3';
-    itemElement.innerHTML = `
+        // Populate items
+        cartData.items.forEach((item) => {
+          const itemElement = document.createElement("div");
+          itemElement.className =
+            "flex items-center space-x-3 p-3 bg-gray-50 rounded-lg mb-3";
+          itemElement.innerHTML = `
       <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded" onerror="this.src='/placeholder.svg?height=48&width=48'">
       <div class="flex-1">
         <h5 class="font-medium text-gray-900">${item.name}</h5>
@@ -1232,113 +1559,132 @@ function populateCheckoutModal() {
         <span class="font-medium">${item.total}</span>
       </div>
     `;
-    modalOrderItems.appendChild(itemElement);
-  });
+          modalOrderItems.appendChild(itemElement);
+        });
 
-  // Update modal totals
-  const modalSubtotal = document.getElementById('modalSubtotal');
-  const modalDiscount = document.getElementById('modalDiscount');
-  const modalShipping = document.getElementById('modalShipping');
-  const modalTotal = document.getElementById('modalTotal');
-  
-  if (modalSubtotal) modalSubtotal.textContent = cartData.subtotal;
-  if (modalDiscount) modalDiscount.textContent = `-${cartData.discount}`;
-  if (modalShipping) modalShipping.textContent = cartData.shipping === 0 ? 'Free' : cartData.shipping;
-  if (modalTotal) modalTotal.textContent = cartData.total;
-}
+        // Update modal totals
+        const modalSubtotal = document.getElementById("modalSubtotal");
+        const modalDiscount = document.getElementById("modalDiscount");
+        const modalShipping = document.getElementById("modalShipping");
+        const modalTotal = document.getElementById("modalTotal");
 
-// Confirm order
-if (confirmOrder) {
-  confirmOrder.addEventListener('click', function() {
-    // Validate shipping information
-    const firstName = checkoutModal.querySelector('input[placeholder="John"]').value.trim();
-    const lastName = checkoutModal.querySelector('input[placeholder="Doe"]').value.trim();
-    const address = checkoutModal.querySelector('input[placeholder="123 Main Street"]').value.trim();
-    const city = checkoutModal.querySelector('input[placeholder="New York"]').value.trim();
-    const postalCode = checkoutModal.querySelector('input[placeholder="10001"]').value.trim();
-    
-    // Basic validation
-    if (!firstName || !lastName || !address || !city || !postalCode) {
-      alert('Please fill in all shipping information fields.');
-      return;
-    }
-    
-    // Validate payment method
-    const selectedPayment = checkoutModal.querySelector('input[name="payment"]:checked');
-    if (!selectedPayment) {
-      alert('Please select a payment method.');
-      return;
-    }
-    
-    // Check if using Green Coins and have enough balance
-    if (selectedPayment.id === 'greenCoins') {
-      const availableCoins = 1250; // This should come from user data
-      if (cartData.total > availableCoins) {
-        alert(`Insufficient Green Coins. You need ${cartData.total} but only have ${availableCoins}.`);
-        return;
+        if (modalSubtotal) modalSubtotal.textContent = cartData.subtotal;
+        if (modalDiscount) modalDiscount.textContent = `-${cartData.discount}`;
+        if (modalShipping)
+          modalShipping.textContent =
+            cartData.shipping === 0 ? "Free" : cartData.shipping;
+        if (modalTotal) modalTotal.textContent = cartData.total;
       }
-    }
-    
-    // Show loading state
-    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing Order...';
-    this.disabled = true;
-    
-    // Simulate order processing
-    setTimeout(() => {
-      closeCheckoutModal();
-      if (successModal) {
-        successModal.classList.remove('hidden');
-        successModal.style.display = 'block';
+
+      // Confirm order
+      if (confirmOrder) {
+        confirmOrder.addEventListener("click", function () {
+          // Validate shipping information
+          const firstName = checkoutModal
+            .querySelector('input[placeholder="John"]')
+            .value.trim();
+          const lastName = checkoutModal
+            .querySelector('input[placeholder="Doe"]')
+            .value.trim();
+          const address = checkoutModal
+            .querySelector('input[placeholder="123 Main Street"]')
+            .value.trim();
+          const city = checkoutModal
+            .querySelector('input[placeholder="New York"]')
+            .value.trim();
+          const postalCode = checkoutModal
+            .querySelector('input[placeholder="10001"]')
+            .value.trim();
+
+          // Basic validation
+          if (!firstName || !lastName || !address || !city || !postalCode) {
+            alert("Please fill in all shipping information fields.");
+            return;
+          }
+
+          // Validate payment method
+          const selectedPayment = checkoutModal.querySelector(
+            'input[name="payment"]:checked'
+          );
+          if (!selectedPayment) {
+            alert("Please select a payment method.");
+            return;
+          }
+
+          // Check if using Green Coins and have enough balance
+          if (selectedPayment.id === "greenCoins") {
+            const availableCoins = 1250; // This should come from user data
+            if (cartData.total > availableCoins) {
+              alert(
+                `Insufficient Green Coins. You need ${cartData.total} but only have ${availableCoins}.`
+              );
+              return;
+            }
+          }
+
+          // Show loading state
+          this.innerHTML =
+            '<i class="fas fa-spinner fa-spin mr-2"></i> Processing Order...';
+          this.disabled = true;
+
+          // Simulate order processing
+          setTimeout(() => {
+            closeCheckoutModal();
+            if (successModal) {
+              successModal.classList.remove("hidden");
+              successModal.style.display = "block";
+            }
+
+            // Reset button
+            this.innerHTML = '<i class="fas fa-check mr-2"></i> Confirm Order';
+            this.disabled = false;
+
+            // Clear cart after successful order
+            setTimeout(() => {
+              clearCart();
+            }, 1000);
+          }, 2000);
+        });
       }
-      
-      // Reset button
-      this.innerHTML = '<i class="fas fa-check mr-2"></i> Confirm Order';
-      this.disabled = false;
-      
-      // Clear cart after successful order
-      setTimeout(() => {
-        clearCart();
-      }, 1000);
-    }, 2000);
-  });
-}
 
-// Success modal actions
-if (viewOrders) {
-  viewOrders.addEventListener('click', function() {
-    if (successModal) {
-      successModal.classList.add('hidden');
-      successModal.style.display = 'none';
-    }
-    document.body.style.overflow = 'auto';
-    // Redirect to transaction history or orders page
-    window.location.href = 'transaction-history.html';
-  });
-}
+      // Success modal actions
+      if (viewOrders) {
+        viewOrders.addEventListener("click", function () {
+          if (successModal) {
+            successModal.classList.add("hidden");
+            successModal.style.display = "none";
+          }
+          document.body.style.overflow = "auto";
+          // Redirect to transaction history or orders page
+          window.location.href = "history.html";
+        });
+      }
 
-if (continueShopping) {
-  continueShopping.addEventListener('click', function() {
-    if (successModal) {
-      successModal.classList.add('hidden');
-      successModal.style.display = 'none';
-    }
-    document.body.style.overflow = 'auto';
-    // Redirect to product catalog
-    window.location.href = 'product-catalog.html';
-  });
-}
+      if (continueShopping) {
+        continueShopping.addEventListener("click", function () {
+          if (successModal) {
+            successModal.classList.add("hidden");
+            successModal.style.display = "none";
+          }
+          document.body.style.overflow = "auto";
+          // Redirect to product catalog
+          window.location.href = "product-catalog.html";
+        });
+      }
 
-// Clear cart function
-function clearCart() {
-  const cartItems = document.querySelectorAll('.cart-item');
-  cartItems.forEach(item => item.remove());
-  updateCartCount();
-  updateCartTotals();
-  
-  // Show empty cart message
-  const cartItemsContainer = document.querySelector('.bg-white.rounded-lg.shadow-md.p-6.mb-6');
-  if (cartItemsContainer) {
-    cartItemsContainer.innerHTML = `
+      // Clear cart function
+      function clearCart() {
+        const cartItems = document.querySelectorAll(".cart-item");
+        cartItems.forEach((item) => item.remove());
+        updateCartCount();
+        updateCartTotals();
+
+        // Show empty cart message
+        const cartItemsContainer = document.querySelector(
+          ".bg-white.rounded-lg.shadow-md.p-6.mb-6"
+        );
+        if (cartItemsContainer) {
+          cartItemsContainer.innerHTML = `
       <div class="text-center py-12">
         <div class="text-gray-400 text-5xl mb-4">
           <i class="fas fa-shopping-cart"></i>
@@ -1348,69 +1694,70 @@ function clearCart() {
         <a href="product-catalog.html" class="bg-[#473771] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors">Start Shopping</a>
       </div>
     `;
-  }
-}
+        }
+      }
 
-// Add to cart functionality for related products
-document.addEventListener('click', function(e) {
-  if (e.target.closest('.add-to-cart-btn')) {
-    const button = e.target.closest('.add-to-cart-btn');
-    
-    // Animation effect
-    button.innerHTML = '<i class="fas fa-check mr-2"></i> Added to Cart';
-    button.classList.add('bg-green-600');
-    
-    // Reset after 2 seconds
-    setTimeout(() => {
-      button.innerHTML = '<i class="fas fa-shopping-cart mr-2"></i> Add to Cart';
-      button.classList.remove('bg-green-600');
-    }, 2000);
-    
-    // Update cart count
-    const cartCountElements = document.querySelectorAll('#cartCount');
-    cartCountElements.forEach(element => {
-      const currentCount = parseInt(element.textContent);
-      element.textContent = currentCount + 1;
-    });
-  }
-});
+      // Add to cart functionality for related products
+      document.addEventListener("click", function (e) {
+        if (e.target.closest(".add-to-cart-btn")) {
+          const button = e.target.closest(".add-to-cart-btn");
 
-// Initialize cart on page load
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded, initializing cart...');
-  initializeCart();
-  updateCartTotals();
-});
+          // Animation effect
+          button.innerHTML = '<i class="fas fa-check mr-2"></i> Added to Cart';
+          button.classList.add("bg-green-600");
 
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-  // ESC key to close modals
-  if (e.key === 'Escape') {
-    if (checkoutModal && !checkoutModal.classList.contains('hidden')) {
-      closeCheckoutModal();
-    }
-    if (successModal && !successModal.classList.contains('hidden')) {
-      successModal.classList.add('hidden');
-      successModal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  }
-});
+          // Reset after 2 seconds
+          setTimeout(() => {
+            button.innerHTML =
+              '<i class="fas fa-shopping-cart mr-2"></i> Add to Cart';
+            button.classList.remove("bg-green-600");
+          }, 2000);
 
-// Debug function to test modal
-window.testModal = function() {
-  console.log('Testing modal...');
-  if (checkoutModal) {
-    checkoutModal.classList.remove('hidden');
-    checkoutModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    console.log('Modal should be visible now');
-  } else {
-    console.error('Modal not found!');
-  }
-};
+          // Update cart count
+          const cartCountElements = document.querySelectorAll("#cartCount");
+          cartCountElements.forEach((element) => {
+            const currentCount = parseInt(element.textContent);
+            element.textContent = currentCount + 1;
+          });
+        }
+      });
 
-console.log('JavaScript loaded successfully');
-</script>
-</body>
+      // Initialize cart on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded, initializing cart...");
+        initializeCart();
+        updateCartTotals();
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        // ESC key to close modals
+        if (e.key === "Escape") {
+          if (checkoutModal && !checkoutModal.classList.contains("hidden")) {
+            closeCheckoutModal();
+          }
+          if (successModal && !successModal.classList.contains("hidden")) {
+            successModal.classList.add("hidden");
+            successModal.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        }
+      });
+
+      // Debug function to test modal
+      window.testModal = function () {
+        console.log("Testing modal...");
+        if (checkoutModal) {
+          checkoutModal.classList.remove("hidden");
+          checkoutModal.style.display = "block";
+          document.body.style.overflow = "hidden";
+          console.log("Modal should be visible now");
+        } else {
+          console.error("Modal not found!");
+        }
+      };
+
+      console.log("JavaScript loaded successfully");
+    </script>
+  </body>
 </html>

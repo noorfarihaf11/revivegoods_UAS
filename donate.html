@@ -36,12 +36,37 @@
           >
             <i class="fas fa-coins text-yellow-500 mr-2"></i>
             <span class="font-bold text-[#473771]" id="userCoins">0</span>
+        </div>
+          <div class="relative">
+            <button
+              id="profileBtn"
+              class="flex items-center space-x-2 text-[#473771] hover:text-[#37265c]"
+            >
+              <img
+                src="assets/profile.jpg"
+                alt="Profile"
+                class="w-8 h-8 rounded-full"
+              />
+              <span class="font-medium">Noor Fariha</span>
+              <i class="fas fa-chevron-down text-sm"></i>
+            </button>
+            <div
+              id="profileMenu"
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden"
+            >
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Green Coins: 1,250</a
+              >
+              <div class="border-t border-gray-100"></div>
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Sign Out</a
+              >
+            </div>
           </div>
-          <button
-            class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors"
-          >
-            Sign In
-          </button>
         </div>
       </div>
       <!-- Mobile menu button -->
@@ -925,6 +950,19 @@
 
       mobileMenuBtn.addEventListener("click", function () {
         mobileMenu.classList.toggle("hidden");
+      });
+
+        const profileBtn = document.getElementById("profileBtn");
+      const profileMenu = document.getElementById("profileMenu");
+
+      profileBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        profileMenu.classList.toggle("hidden");
+      });
+
+      // Close profile menu when clicking outside
+      document.addEventListener("click", function () {
+        profileMenu.classList.add("hidden");
       });
 
       // Donation flow state

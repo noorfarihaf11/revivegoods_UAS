@@ -435,3 +435,41 @@ body {
       transform: scale(1) translateY(0);
     }
   }
+  /* Add this to ensure consistent input styling */
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus {
+  border-color: #473771;
+  box-shadow: 0 0 0 3px rgba(71, 55, 113, 0.1);
+  outline: none;
+}
+  
+  .social-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .social-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .progress-bar {
+    height: 4px;
+    transition: width 0.3s ease;
+  }

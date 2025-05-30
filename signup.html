@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Revive Goods</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header -->
+    <header
+      class="flex justify-between items-center px-4 md:px-10 py-4 shadow-sm sticky top-0 bg-white z-50"
+    >
+      <div class="text-2xl font-bold flex items-center">
+        <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+        <span class="gradient-text">Revive Goods.</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <nav class="flex gap-6">
+          <a href="index.html" class="links" id="nav-home">Home</a>
+          <a href="donate.html" class="links" id="nav-donate">Donate</a>
+          <a href="shop.html" class="links" id="nav-shop">Shop</a>
+          <a href="history.html" class="links" id="nav-history">History</a>
+          <a href="articles.html" class="links" id="nav-article">Article</a>
+        </nav>
+        <div class="flex items-center gap-4">
+          <a
+            href="login.html"
+            class="border border-[#473771] bg-[#473771] text-white px-6 py-1.5 rounded font-medium text-base hover:bg-white hover:text-[#473771] transition-colors"
+          >
+            Login
+          </a>
+        </div>
+      </div>
+      <!-- Mobile menu button -->
+      <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div
+      class="md:hidden bg-white shadow-lg rounded-b-lg absolute w-full left-0 z-40 hidden"
+      id="mobileMenu"
+    >
+      <nav class="flex flex-col p-4">
+        <a
+          href="index.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-home"
+          >Home</a
+        >
+        <a
+          href="donate.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-donate"
+          >Donate</a
+        >
+        <a
+          href="shop.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-shop"
+          >Shop</a
+        >
+        <a
+          href="history.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-history"
+          >History</a
+        >
+        <a
+          href="articles.html"
+          class="py-2 px-4 hover:bg-gray-100 rounded-lg"
+          id="mobile-nav-article"
+          >Article</a
+        >
+        <a
+          href="login.html"
+          class="bg-[#473771] text-white px-6 py-2 rounded mt-4 font-medium text-base"
+        >
+          Login
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 md:px-8 py-8 md:py-16">
+      <div
+        class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-lg fade-in"
+      >
+        <div class="md:flex">
+          <div class="w-full p-8">
+            <div class="text-center mb-8">
+              <h1 class="text-2xl font-bold gradient-text inline-block">
+                Create Your Account
+              </h1>
+              <p class="text-gray-600 mt-2">
+                Join our community of eco-conscious individuals
+              </p>
+            </div>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="space-y-4">
+              <!-- Name -->
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Full Name</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  >
+                    <i class="fas fa-user text-gray-400"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none input-focus"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+                <p class="hidden text-red-500 text-xs mt-1" id="nameError">
+                  Please enter your full name
+                </p>
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Email</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  >
+                    <i class="fas fa-envelope text-gray-400"></i>
+                  </div>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none input-focus"
+                    placeholder="your@email.com"
+                    required
+                  />
+                </div>
+                <p class="hidden text-red-500 text-xs mt-1" id="emailError">
+                  Please enter a valid email address
+                </p>
+              </div>
+
+              <!-- Password -->
+              <div>
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Password</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  >
+                    <i class="fas fa-lock text-gray-400"></i>
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#473771] focus:ring-2 focus:ring-[#473771]/10"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                    id="togglePassword"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+                <div class="mt-2">
+                  <div class="w-full bg-gray-200 rounded-full h-1 mb-2">
+                    <div
+                      class="bg-red-500 h-1 rounded-full progress-bar"
+                      id="passwordStrength"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <p class="text-xs text-gray-500" id="passwordHint">
+                    Password must be at least 8 characters
+                  </p>
+                </div>
+              </div>
+
+              <!-- Confirm Password -->
+              <div>
+                <label
+                  for="confirmPassword"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Confirm Password</label
+                >
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  >
+                    <i class="fas fa-lock text-gray-400"></i>
+                  </div>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none input-focus"
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+                <p
+                  class="hidden text-red-500 text-xs mt-1"
+                  id="confirmPasswordError"
+                >
+                  Passwords do not match
+                </p>
+              </div>
+
+              <!-- Terms and Conditions -->
+              <div class="pt-2">
+                <div class="flex items-start">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    name="terms"
+                    class="h-4 w-4 mt-1 text-[#473771] focus:ring-[#473771] border-gray-300 rounded"
+                    required
+                  />
+                  <label
+                    for="terms"
+                    class="ml-3 block text-sm text-gray-700 leading-5"
+                  >
+                    I agree to the
+                    <a href="#" class="text-[#473771] hover:underline"
+                      >Terms of Service</a
+                    >
+                    and
+                    <a href="#" class="text-[#473771] hover:underline"
+                      >Privacy Policy</a
+                    >
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-2">
+                <a
+                  href="login.html"
+                  class="w-full bg-[#473771] text-white py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors text-center block btn-hover"
+                >
+                  Create Account
+                </a>
+              </div>
+            </form>
+
+            <!-- Social Sign Up -->
+            <div class="mt-6">
+              <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                  <span class="px-2 bg-white text-gray-500"
+                    >Or sign up with</span
+                  >
+                </div>
+              </div>
+
+              <div class="mt-6 grid grid-cols-3 gap-3">
+                <button
+                  class="social-btn w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <i class="fab fa-google text-red-500"></i>
+                </button>
+                <button
+                  class="social-btn w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <i class="fab fa-facebook text-blue-600"></i>
+                </button>
+                <button
+                  class="social-btn w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <i class="fab fa-apple text-gray-800"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Login Link -->
+            <div class="text-center mt-8">
+              <p class="text-sm text-gray-600">
+                Already have an account?
+                <a
+                  href="login.html"
+                  class="text-[#473771] font-medium hover:underline"
+                  >Login</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#473771] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Footer top section with columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <!-- Company info column -->
+          <div>
+            <h3 class="text-3xl mb-4 flex items-center">
+              <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+              <span class="text-white">Revive Goods.</span>
+            </h3>
+            <p class="h5 mb-4 text-[#FFFFFF]">
+              Our mission is empowering individuals to make sustainable choices
+              by turning unwanted goods into opportunities for a greener future.
+            </p>
+            <div class="flex space-x-4">
+              <!-- Social media icons -->
+              <a
+                href="https://instagram.com/nrfarihaaf"
+                target="_blank"
+                class="text-gray-400 hover:text-white"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/noorfarihaf11"
+                target="_blank"
+                class="text-gray-400 hover:text-white"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Links column 1 -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="donate.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Donate</a
+                >
+              </li>
+              <li>
+                <a
+                  href="shop.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Shop</a
+                >
+              </li>
+              <li>
+                <a
+                  href="history.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >History</a
+                >
+              </li>
+              <li>
+                <a
+                  href="articles.html"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Article</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Links column 2 -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">About Author</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="https://instagram.com/nrfarihaaf"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/noorfarihaf11"
+                  target="_blank"
+                  href="#"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >Github</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://linkedin.com/in/noorfarihaf11"
+                  target="_blank"
+                  class="text-gray-300 hover:text-white transition-colors"
+                  >LinkedIn</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Newsletter column -->
+          <div>
+            <h3 class="h4 text-[#FFFFFF] mb-4">Stay up to date</h3>
+            <p class="h5 mb-4 text-[#FFFFFF]">
+              Subscribe to our newsletter for the latest updates.
+            </p>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="Your email"
+                class="px-4 py-2 text-sm w-full rounded-l text-black focus:outline-none"
+              />
+              <button
+                type="submit"
+                class="bg-[#AE92F7] hover:bg-[#37265c] px-4 py-2 rounded-r text-sm"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Footer bottom section -->
+        <div
+          class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 text-sm">
+            &copy; 2025 Revive Goods. All rights reserved.
+          </p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-gray-400 hover:text-white text-sm"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      mobileMenuBtn.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Toggle password visibility
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+
+      togglePassword.addEventListener("click", function () {
+        const type =
+          passwordInput.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordInput.setAttribute("type", type);
+
+        // Toggle eye icon
+        const eyeIcon = this.querySelector("i");
+        eyeIcon.classList.toggle("fa-eye");
+        eyeIcon.classList.toggle("fa-eye-slash");
+      });
+
+      // Password strength meter
+      const passwordStrength = document.getElementById("passwordStrength");
+      const passwordHint = document.getElementById("passwordHint");
+
+      passwordInput.addEventListener("input", function () {
+        const password = this.value;
+        let strength = 0;
+        let hints = [];
+
+        // Length check
+        if (password.length >= 8) {
+          strength += 25;
+        } else {
+          hints.push("at least 8 characters");
+        }
+
+        // Uppercase check
+        if (/[A-Z]/.test(password)) {
+          strength += 25;
+        } else {
+          hints.push("uppercase letter");
+        }
+
+        // Lowercase check
+        if (/[a-z]/.test(password)) {
+          strength += 25;
+        } else {
+          hints.push("lowercase letter");
+        }
+
+        // Number or special character check
+        if (/[0-9!@#$%^&*]/.test(password)) {
+          strength += 25;
+        } else {
+          hints.push("number or special character");
+        }
+
+        // Update strength bar
+        passwordStrength.style.width = strength + "%";
+
+        // Update color based on strength
+        if (strength <= 25) {
+          passwordStrength.className =
+            "bg-red-500 h-1 rounded-full progress-bar";
+        } else if (strength <= 50) {
+          passwordStrength.className =
+            "bg-orange-500 h-1 rounded-full progress-bar";
+        } else if (strength <= 75) {
+          passwordStrength.className =
+            "bg-yellow-500 h-1 rounded-full progress-bar";
+        } else {
+          passwordStrength.className =
+            "bg-green-500 h-1 rounded-full progress-bar";
+        }
+
+        // Update hint text
+        if (hints.length > 0) {
+          passwordHint.textContent =
+            "Password should include: " + hints.join(", ");
+        } else {
+          passwordHint.textContent = "Strong password!";
+        }
+      });
+
+      // Form validation
+      const signupForm = document.getElementById("signupForm");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const confirmPasswordError = document.getElementById(
+        "confirmPasswordError"
+      );
+
+      signupForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let isValid = true;
+
+        // Name validation
+        if (nameInput.value.trim() === "") {
+          nameError.classList.remove("hidden");
+          isValid = false;
+        } else {
+          nameError.classList.add("hidden");
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+          emailError.classList.remove("hidden");
+          isValid = false;
+        } else {
+          emailError.classList.add("hidden");
+        }
+
+        // Password match validation
+        if (passwordInput.value !== confirmPasswordInput.value) {
+          confirmPasswordError.classList.remove("hidden");
+          isValid = false;
+        } else {
+          confirmPasswordError.classList.add("hidden");
+        }
+
+        if (isValid) {
+          // Simulate signup success
+          alert("Account created successfully! Redirecting to login...");
+          // In a real application, you would submit the form or make an API call here
+          // window.location.href = 'login.html';
+        }
+      });
+
+      // Input validation on blur
+      nameInput.addEventListener("blur", function () {
+        if (this.value.trim() === "") {
+          nameError.classList.remove("hidden");
+        } else {
+          nameError.classList.add("hidden");
+        }
+      });
+
+      emailInput.addEventListener("blur", function () {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.value) && this.value !== "") {
+          emailError.classList.remove("hidden");
+        } else {
+          emailError.classList.add("hidden");
+        }
+      });
+
+      confirmPasswordInput.addEventListener("blur", function () {
+        if (this.value !== passwordInput.value && this.value !== "") {
+          confirmPasswordError.classList.remove("hidden");
+        } else {
+          confirmPasswordError.classList.add("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
