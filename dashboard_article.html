@@ -408,7 +408,7 @@
                           >
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button class="text-gray-600 hover:text-gray-900">
+                          <button class="text-gray-600 hover:text-gray-900"  onclick="openViewModal('10 Ways to Reduce Your Carbon Footprint')">
                             <i class="fas fa-eye"></i>
                           </button>
                         </div>
@@ -471,7 +471,8 @@
                           >
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button class="text-gray-600 hover:text-gray-900">
+                          <button class="text-gray-600 hover:text-gray-900"
+                             onclick="openViewModal('The Benefits of Donating Used Items')">
                             <i class="fas fa-eye"></i>
                           </button>
                         </div>
@@ -534,7 +535,8 @@
                           >
                             <i class="fas fa-trash"></i>
                           </button>
-                          <button class="text-gray-600 hover:text-gray-900">
+                          <button class="text-gray-600 hover:text-gray-900"
+                           onclick="openViewModal('Understanding Green Coins')">
                             <i class="fas fa-eye"></i>
                           </button>
                         </div>
@@ -784,7 +786,7 @@
       </div>
     </div>
 
-    <!-- View Article Modal -->
+      <!-- View Article Modal -->
     <div id="viewModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
       <div
         class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
@@ -855,7 +857,7 @@
                   <div class="prose max-w-none">
                     <div
                       id="viewArticleContent"
-                      class="text-gray-700 leading-relaxed"
+                      class="text-gray-700 leading-relaxed whitespace-pre-wrap"
                     ></div>
                   </div>
                 </div>
@@ -884,6 +886,45 @@
 
     <script>
       let currentArticleToDelete = "";
+
+       const articlesData = {
+        '10 Ways to Reduce Your Carbon Footprint': {
+          title: '10 Ways to Reduce Your Carbon Footprint',
+          category: 'Eco-friendly Tips',
+          author: 'Noor Fariha',
+          status: 'Published',
+          date: 'May 15, 2025',
+          excerpt: 'Simple daily habits that make a difference for our planet and future generations.',
+          content: 'Living sustainably doesn\'t have to be complicated. Here are 10 simple ways you can reduce your carbon footprint:\n\n1. Use public transportation or bike instead of driving\n2. Switch to LED light bulbs\n3. Reduce meat consumption\n4. Use reusable bags and containers\n5. Unplug electronics when not in use\n6. Choose local and seasonal produce\n7. Reduce water usage\n8. Recycle and compost\n9. Buy second-hand when possible\n10. Support renewable energy\n\nEach small action contributes to a larger positive impact on our environment. By implementing these changes gradually, you can make a significant difference while maintaining your quality of life.',
+          image: 'assets/joy.jpg'
+        },
+        'The Benefits of Donating Used Items': {
+          title: 'The Benefits of Donating Used Items',
+          category: 'Sustainability',
+          author: 'Noor Fariha',
+          status: 'Published',
+          date: 'May 10, 2025',
+          excerpt: 'How your donations help the environment and support communities in need.',
+          content: 'Donating used items is one of the most impactful ways to contribute to environmental sustainability while helping others.\n\nEnvironmental Benefits:\n• Reduces landfill waste\n• Decreases demand for new products\n• Saves natural resources\n• Reduces manufacturing emissions\n\nCommunity Benefits:\n• Provides affordable goods to families in need\n• Supports local charities and organizations\n• Creates jobs in the second-hand market\n• Builds stronger communities\n\nEvery item you donate extends its lifecycle and creates positive ripple effects throughout society. Consider donating clothes, electronics, books, and household items that are still in good condition.',
+          image: 'assets/donate.webp'
+        },
+        'Understanding Green Coins': {
+          title: 'Understanding Green Coins',
+          category: 'Rewards',
+          author: 'Noor Fariha',
+          status: 'Draft',
+          date: 'May 5, 2025',
+          excerpt: 'How our reward system works to incentivize sustainable behavior.',
+          content: 'Green Coins are our way of rewarding sustainable actions and encouraging eco-friendly behavior.\n\nHow to Earn Green Coins:\n• Donate items through our platform\n• Complete sustainability challenges\n• Share eco-friendly tips\n• Refer friends to join our community\n\nHow to Use Green Coins:\n• Redeem for discounts on sustainable products\n• Exchange for charitable donations\n• Unlock premium features\n• Enter exclusive giveaways\n\nOur Green Coins system makes sustainability rewarding and fun! Start earning today by taking small steps toward a greener lifestyle.',
+          image: 'assets/boxdonation.jpg'
+        }
+      };
+
+       // View Modal
+      const viewModal = document.getElementById("viewModal");
+      const closeViewModal = document.getElementById("closeViewModal");
+      const closeViewModalBtn = document.getElementById("closeViewModalBtn");
+      const editFromViewBtn = document.getElementById("editFromViewBtn");
 
       // Toast notification functions
       function showToast(message, type = "success") {
@@ -983,21 +1024,21 @@
           document.getElementById("excerpt").value =
             "Simple daily habits that make a difference...";
           document.getElementById("content").value =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            "Living sustainably doesn\'t have to be complicated. Here are 10 simple ways you can reduce your carbon footprint:\n\n1. Use public transportation or bike instead of driving\n2. Switch to LED light bulbs\n3. Reduce meat consumption\n4. Use reusable bags and containers\n5. Unplug electronics when not in use\n6. Choose local and seasonal produce\n7. Reduce water usage\n8. Recycle and compost\n9. Buy second-hand when possible\n10. Support renewable energy\n\nEach small action contributes to a larger positive impact on our environment. By implementing these changes gradually, you can make a significant difference while maintaining your quality of life.";
         } else if (title === "The Benefits of Donating Used Items") {
           document.getElementById("category").value = "sustainability";
           document.getElementById("status").value = "published";
           document.getElementById("excerpt").value =
             "How your donations help the environment...";
           document.getElementById("content").value =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            "Donating used items is one of the most impactful ways to contribute to environmental sustainability while helping others.\n\nEnvironmental Benefits:\n• Reduces landfill waste\n• Decreases demand for new products\n• Saves natural resources\n• Reduces manufacturing emissions\n\nCommunity Benefits:\n• Provides affordable goods to families in need\n• Supports local charities and organizations\n• Creates jobs in the second-hand market\n• Builds stronger communities\n\nEvery item you donate extends its lifecycle and creates positive ripple effects throughout society. Consider donating clothes, electronics, books, and household items that are still in good condition.";
         } else if (title === "Understanding Green Coins") {
           document.getElementById("category").value = "rewards";
           document.getElementById("status").value = "draft";
           document.getElementById("excerpt").value =
             "How our reward system works...";
           document.getElementById("content").value =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+            "Green Coins are our way of rewarding sustainable actions and encouraging eco-friendly behavior.\n\nHow to Earn Green Coins:\n• Donate items through our platform\n• Complete sustainability challenges\n• Share eco-friendly tips\n• Refer friends to join our community\n\nHow to Use Green Coins:\n• Redeem for discounts on sustainable products\n• Exchange for charitable donations\n• Unlock premium features\n• Enter exclusive giveaways\n\nOur Green Coins system makes sustainability rewarding and fun! Start earning today by taking small steps toward a greener lifestyle.";
         }
 
         thumbnailName.textContent = "current-image.jpg";
@@ -1047,6 +1088,45 @@
           addArticleModal.classList.add("hidden");
         }
       });
+
+      // Open View Modal
+      function openViewModal(title) {
+        const article = articlesData[title];
+        if (!article) return;
+
+        document.getElementById('viewArticleTitle').textContent = article.title;
+        document.getElementById('viewArticleCategory').textContent = article.category;
+        document.getElementById('viewArticleAuthor').textContent = `By ${article.author}`;
+        document.getElementById('viewArticleDate').textContent = article.date;
+        document.getElementById('viewArticleExcerpt').textContent = article.excerpt;
+        document.getElementById('viewArticleContent').textContent = article.content;
+        document.getElementById('viewArticleImage').src = article.image;
+        
+        // Set status badge
+        const statusElement = document.getElementById('viewArticleStatus');
+        statusElement.textContent = article.status;
+        if (article.status === 'Published') {
+          statusElement.className = 'px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800';
+        } else if (article.status === 'Draft') {
+          statusElement.className = 'px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800';
+        } else {
+          statusElement.className = 'px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800';
+        }
+
+        viewModal.classList.remove('hidden');
+        showToast(`Viewing article "${title}"`, 'info');
+      }
+
+
+        // Close View Modal
+      closeViewModal.addEventListener('click', function() {
+        viewModal.classList.add('hidden');
+      });
+
+      closeViewModalBtn.addEventListener('click', function() {
+        viewModal.classList.add('hidden');
+      });
+
     </script>
   </body>
 </html>

@@ -478,6 +478,72 @@
         </div>
       </div>
     </div>
+    <!-- View Product Modal -->
+<div id="viewProductModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg leading-6 font-medium text-gray-900" id="viewModalTitle">Product Details</h3>
+              <button id="closeViewProductModal" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <div class="mt-2">
+              <div class="flex flex-col md:flex-row gap-6 mb-6">
+                <div class="w-full md:w-1/3">
+                  <div class="bg-gray-100 rounded-lg overflow-hidden h-48 flex items-center justify-center">
+                    <img id="viewProductImage" src="/placeholder.svg" alt="Product Image" class="max-h-full max-w-full object-contain">
+                  </div>
+                </div>
+                <div class="w-full md:w-2/3">
+                  <h2 id="viewProductName" class="text-xl font-bold text-gray-900 mb-2"></h2>
+                  <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <span class="text-sm font-medium text-gray-700">Category:</span>
+                      <p id="viewProductCategory" class="text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                      <span class="text-sm font-medium text-gray-700">Green Coins:</span>
+                      <p id="viewProductGreenCoins" class="text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                      <span class="text-sm font-medium text-gray-700">Status:</span>
+                      <span id="viewProductStatus" class="text-sm px-2 py-1 rounded-full"></span>
+                    </div>
+                    <div>
+                      <span class="text-sm font-medium text-gray-700">Quantity:</span>
+                      <p id="viewProductQuantity" class="text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                      <span class="text-sm font-medium text-gray-700">Added Date:</span>
+                      <p id="viewProductDate" class="text-sm text-gray-900"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-gray-200 pt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Description</h4>
+                <p id="viewProductDescription" class="text-sm text-gray-900 whitespace-pre-wrap"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button type="button" id="closeViewProductModalBtn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script>
     let currentProductToDelete = "";
@@ -633,6 +699,100 @@
           currentProductToDelete = "";
         }
       });
+
+       // Sample product data
+  const productsData = {
+    'Eco-friendly Water Bottle': {
+      name: 'Eco-friendly Water Bottle',
+      category: 'Eco-friendly Products',
+      greenCoins: 200,
+      status: 'In Stock',
+      quantity: 50,
+      date: 'May 15, 2025',
+      description: 'This reusable stainless steel water bottle is designed to reduce plastic waste. Features include:\n\n• 750ml capacity\n• Double-walled insulation keeps drinks cold for 24 hours or hot for 12 hours\n• BPA-free and eco-friendly materials\n• Leak-proof design\n• Available in multiple colors\n\nBy using this bottle, you\'re helping to reduce single-use plastic waste and contributing to a more sustainable future.',
+      image: 'assets/bottle.webp'
+    },
+    'Organic Cotton Tote Bag': {
+      name: 'Organic Cotton Tote Bag',
+      category: 'Eco-friendly Products',
+      greenCoins: 150,
+      status: 'Low Stock',
+      quantity: 10,
+      date: 'May 10, 2025',
+      description: 'This organic cotton tote bag is perfect for shopping and everyday use. Features include:\n\n• 100% organic cotton material\n• Durable construction that can hold up to 10kg\n• Washable and reusable\n• Compact design that folds easily for storage\n• Natural, undyed fabric\n\nBy using this tote bag instead of plastic bags, you\'re making a positive impact on the environment.',
+      image: 'assets/totebag.webp'
+    },
+    'Natural Shampoo Bar': {
+      name: 'Natural Shampoo Bar',
+      category: 'Eco Shampoo',
+      greenCoins: 500,
+      status: 'In Stock',
+      quantity: 100,
+      date: 'May 5, 2025',
+      description: 'This natural shampoo bar is free from harsh chemicals and plastic packaging. Features include:\n\n• 100% natural ingredients\n• Zero plastic packaging\n• Lasts as long as 2-3 bottles of liquid shampoo\n• Suitable for all hair types\n• Travel-friendly design\n\nBy switching to this shampoo bar, you\'re reducing plastic waste and avoiding harmful chemicals in traditional shampoos.',
+      image: 'assets/shampoo.jpg'
+    }
+  };
+
+  // View Product Modal functionality
+  const viewProductModal = document.getElementById('viewProductModal');
+  const closeViewProductModal = document.getElementById('closeViewProductModal');
+  const closeViewProductModalBtn = document.getElementById('closeViewProductModalBtn');
+
+  // Function to open view modal
+  function openViewProductModal(productName) {
+    const product = productsData[productName];
+    if (!product) return;
+
+    document.getElementById('viewProductName').textContent = product.name;
+    document.getElementById('viewProductCategory').textContent = product.category;
+    document.getElementById('viewProductGreenCoins').textContent = product.greenCoins;
+    document.getElementById('viewProductQuantity').textContent = product.quantity;
+    document.getElementById('viewProductDate').textContent = product.date;
+    document.getElementById('viewProductDescription').textContent = product.description;
+    document.getElementById('viewProductImage').src = product.image;
+    
+    // Set status badge
+    const statusElement = document.getElementById('viewProductStatus');
+    statusElement.textContent = product.status;
+    if (product.status === 'In Stock') {
+      statusElement.className = 'text-sm px-2 py-1 rounded-full bg-green-100 text-green-800';
+    } else if (product.status === 'Low Stock') {
+      statusElement.className = 'text-sm px-2 py-1 rounded-full bg-yellow-100 text-yellow-800';
+    } else {
+      statusElement.className = 'text-sm px-2 py-1 rounded-full bg-red-100 text-red-800';
+    }
+
+    viewProductModal.classList.remove('hidden');
+    showToast(`Viewing product "${productName}"`, 'info');
+  }
+
+  // Close View Modal
+  closeViewProductModal.addEventListener('click', function() {
+    viewProductModal.classList.add('hidden');
+  });
+
+  closeViewProductModalBtn.addEventListener('click', function() {
+    viewProductModal.classList.add('hidden');
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener('click', function(event) {
+    if (event.target === viewProductModal) {
+      viewProductModal.classList.add('hidden');
+    }
+  });
+
+  // Update eye icon buttons to use the view modal
+  document.querySelectorAll('.fa-eye').forEach(icon => {
+    const button = icon.parentElement;
+    button.onclick = function() {
+      // Find the product name from the row
+      const row = button.closest('tr');
+      const productName = row.querySelector('.text-sm.font-medium.text-gray-900').textContent;
+      openViewProductModal(productName);
+    };
+  });
   </script>
 </body>
 </html>

@@ -257,7 +257,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div class="flex space-x-2">
                         <button class="text-red-600 hover:text-red-900" onclick="openDeleteUserModal('Nadila Puspa')"><i class="fas fa-trash"></i></button>
-                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-eye"></i></button>
+                        <button class="text-gray-600 hover:text-gray-900" onclick="openViewUserModal('Nadila Puspa')"><i class="fas fa-eye"></i></button>
                       </div>
                     </td>
                   </tr>
@@ -286,7 +286,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div class="flex space-x-2">
                         <button class="text-red-600 hover:text-red-900"  onclick="openDeleteUserModal('Dania ZN.')"><i class="fas fa-trash"></i></button>
-                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-eye"></i></button>
+                        <button class="text-gray-600 hover:text-gray-900"  onclick="openViewUserModal('Dania ZN.')"><i class="fas fa-eye"></i></button>
                       </div>
                     </td>
                   </tr>
@@ -315,7 +315,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div class="flex space-x-2">
                         <button class="text-red-600 hover:text-red-900" onclick="openDeleteUserModal('Reinahsa T.')"><i class="fas fa-trash"></i></button>
-                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-eye"></i></button>
+                        <button class="text-gray-600 hover:text-gray-900" onclick="openViewUserModal('Reinahsa T.')"><i class="fas fa-eye"></i></button>
                       </div>
                     </td>
                   </tr>
@@ -487,8 +487,99 @@
       </div>
     </div>
 
+    <!-- View User Modal -->
+  <div id="viewUserModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="viewModalTitle">User Details</h3>
+                <button id="closeViewUserModal" class="text-gray-400 hover:text-gray-600">
+                  <i class="fas fa-times text-xl"></i>
+                </button>
+              </div>
+              <div class="mt-2">
+                <div class="flex items-center mb-6">
+                  <img id="viewUserImage" src="/placeholder.svg" alt="User Image" class="w-20 h-20 rounded-full mr-4">
+                  <div>
+                    <h2 id="viewUserName" class="text-xl font-bold text-gray-900 mb-1"></h2>
+                    <p id="viewUserEmail" class="text-gray-600 mb-1"></p>
+                    <span id="viewUserGreenLevel" class="text-sm text-gray-500"></span>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <span class="text-sm font-medium text-gray-700">Role:</span>
+                    <p id="viewUserRole" class="text-sm text-gray-900"></p>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-700">Status:</span>
+                    <span id="viewUserStatus" class="text-sm px-2 py-1 rounded-full"></span>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-700">Joined Date:</span>
+                    <p id="viewUserJoinDate" class="text-sm text-gray-900"></p>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-700">Green Level:</span>
+                    <p id="viewUserGreenLevelDetail" class="text-sm text-gray-900"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <!-- <button type="button" id="editFromViewBtn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#473771] text-base font-medium text-white hover:bg-[#37265c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:ml-3 sm:w-auto sm:text-sm">
+            <i class="fas fa-edit mr-2"></i>Edit User
+          </button> -->
+          <button type="button" id="closeViewUserModalBtn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script>
+
+       const usersData = {
+      'Nadila Puspa': {
+        name: 'Nadila Puspa',
+        email: 'nadilaa2@gmail.com',
+        role: 'Admin',
+        status: 'Active',
+        joinDate: 'Jan 15, 2025',
+        greenLevel: 'Gold',
+        image: 'assets/nadila.jpg'
+      },
+      'Dania ZN.': {
+        name: 'Dania ZN.',
+        email: 'daniazn@gmail.com',
+        role: 'User',
+        status: 'Active',
+        joinDate: 'Feb 20, 2025',
+        greenLevel: 'Silver',
+       image: 'assets/dania.jpg'
+      },
+      'Reinahsa T.': {
+        name: 'Reinahsa T.',
+        email: 'reina.hsa@gmail.com',
+        role: 'User',
+        status: 'Inactive',
+        joinDate: 'Mar 5, 2025',
+        greenLevel: 'Bronze',
+        image: 'assets/reinahsa.jpg'
+      }
+    };
+    
      let currentUserToDelete = "";
 
       // Toast notification functions
@@ -539,6 +630,48 @@
 
     closeMobileMenu.addEventListener('click', function() {
       mobileSidebar.classList.add('hidden');
+    });
+
+      // View modal elements
+    const viewUserModal = document.getElementById('viewUserModal');
+    const closeViewUserModal = document.getElementById('closeViewUserModal');
+    const closeViewUserModalBtn = document.getElementById('closeViewUserModalBtn');
+
+      // Open View User Modal
+    function openViewUserModal(userName) {
+      const user = usersData[userName];
+      if (!user) return;
+
+      document.getElementById('viewUserName').textContent = user.name;
+      document.getElementById('viewUserEmail').textContent = user.email;
+      document.getElementById('viewUserRole').textContent = user.role;
+      document.getElementById('viewUserJoinDate').textContent = user.joinDate;
+      document.getElementById('viewUserGreenLevel').textContent = `Green Level: ${user.greenLevel}`;
+      document.getElementById('viewUserGreenLevelDetail').textContent = user.greenLevel;
+      document.getElementById('viewUserImage').src = user.image;
+      
+      // Set status badge
+      const statusElement = document.getElementById('viewUserStatus');
+      statusElement.textContent = user.status;
+      if (user.status === 'Active') {
+        statusElement.className = 'text-sm px-2 py-1 rounded-full bg-green-100 text-green-800';
+      } else if (user.status === 'Inactive') {
+        statusElement.className = 'text-sm px-2 py-1 rounded-full bg-yellow-100 text-yellow-800';
+      } else {
+        statusElement.className = 'text-sm px-2 py-1 rounded-full bg-red-100 text-red-800';
+      }
+
+      viewUserModal.classList.remove('hidden');
+      showToast(`Viewing user "${userName}"`, 'info');
+    }
+
+      // Close View Modal
+    closeViewUserModal.addEventListener('click', function() {
+      viewUserModal.classList.add('hidden');
+    });
+
+    closeViewUserModalBtn.addEventListener('click', function() {
+      viewUserModal.classList.add('hidden');
     });
 
       // User Modal
@@ -604,6 +737,7 @@
           currentUserToDelete = "";
         }
       });
+
 
         </script>
 </body>
