@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Revive Goods - Transactions Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Import your existing CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Import Poppins font directly as in your original CSS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <aside class="bg-[#473771] text-white w-64 flex-shrink-0 hidden md:block">
+        <div class="p-4 flex items-center">
+          <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+          <span class="text-xl font-semi-bold">Revive Goods.</span>
+        </div>
+
+        <!-- Admin Profile -->
+        <div class="px-4 py-6 border-b border-[#5a4a8a]">
+          <div class="flex items-center">
+            <img
+              src="assets/profile.jpg"
+              alt="Admin Profile"
+              class="w-10 h-10 rounded-full mr-3"
+            />
+            <div>
+              <p class="text-sm font-medium">Admin Panel</p>
+              <p class="text-xs text-gray-300">Noor Fariha</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="mt-6">
+          <div class="px-4 mb-2 text-xs text-gray-300 uppercase">Dashboard</div>
+          <a
+            href="dashboard.html"
+            class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+          >
+            <i class="fas fa-tachometer-alt w-5 mr-3"></i>
+            <span>Overview</span>
+          </a>
+
+          <div class="px-4 mt-6 mb-2 text-xs text-gray-300 uppercase">
+            Content
+          </div>
+          <a
+            href="dashboard_article.html"
+            class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+          >
+            <i class="fas fa-newspaper w-5 mr-3"></i>
+            <span>Articles</span>
+          </a>
+          <a
+            href="dashboard_product.html"
+            class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+          >
+            <i class="fas fa-box w-5 mr-3"></i>
+            <span>Products</span>
+          </a>
+
+          <div class="px-4 mt-6 mb-2 text-xs text-gray-300 uppercase">
+            Users & Transactions
+          </div>
+          <a
+            href="dashboard_user.html"
+            class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+          >
+            <i class="fas fa-users w-5 mr-3"></i>
+            <span>Users</span>
+          </a>
+          <a
+            href="dashboard_transaction.html"
+            class="flex items-center px-4 py-3 text-white bg-[#5a4a8a] hover:bg-[#5a4a8a]"
+          >
+            <i class="fas fa-exchange-alt w-5 mr-3"></i>
+            <span>Transactions</span>
+          </a>
+
+          <div class="px-4 mt-6 mb-2 text-xs text-gray-300 uppercase">
+            Settings
+          </div>
+          <a
+            href="index.html"
+            class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+          >
+            <i class="fas fa-sign-out-alt w-5 mr-3"></i>
+            <span>Back to Site</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Mobile sidebar -->
+      <div
+        class="md:hidden fixed inset-0 z-50 bg-black bg-opacity-50 hidden"
+        id="mobileSidebar"
+      >
+        <div class="bg-[#473771] text-white w-64 h-full overflow-y-auto">
+          <div class="p-4 flex items-center justify-between">
+            <div class="flex items-center">
+              <i class="fas fa-recycle mr-2 text-[#AE92F7]"></i>
+              <span class="gradient-text text-xl font-bold">Revive Goods.</span>
+            </div>
+            <button id="closeMobileMenu" class="text-white">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <!-- Admin Profile -->
+          <div class="px-4 py-6 border-b border-[#5a4a8a]">
+            <div class="flex items-center">
+              <img
+                src="assets/profile.jpg"
+                alt="Admin Profile"
+                class="w-10 h-10 rounded-full mr-3"
+              />
+              <div>
+                <p class="text-sm font-medium">Admin Panel</p>
+                <p class="text-xs text-gray-300">Noor Fariha</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="mt-6">
+            <div class="px-4 mb-2 text-xs text-gray-300 uppercase">
+              Dashboard
+            </div>
+            <a
+              href="dashboard.html"
+              class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+            >
+              <i class="fas fa-tachometer-alt w-5 mr-3"></i>
+              <span>Overview</span>
+            </a>
+
+            <div class="px-4 mt-6 mb-2 text-xs text-gray-300 uppercase">
+              Content
+            </div>
+            <a
+              href="dashboard_article.html"
+              class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+            >
+              <i class="fas fa-newspaper w-5 mr-3"></i>
+              <span>Articles</span>
+            </a>
+            <a
+              href="dashboard_product.html"
+              class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+            >
+              <i class="fas fa-box w-5 mr-3"></i>
+              <span>Products</span>
+            </a>
+
+            <div class="px-4 mt-6 mb-2 text-xs text-gray-300 uppercase">
+              Users & Transactions
+            </div>
+            <a
+              href="dashboard_user.html"
+              class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+            >
+              <i class="fas fa-users w-5 mr-3"></i>
+              <span>Users</span>
+            </a>
+            <a
+              href="dashboard_transaction.html"
+              class="flex items-center px-4 py-3 text-white bg-[#5a4a8a] hover:bg-[#5a4a8a]"
+            >
+              <i class="fas fa-exchange-alt w-5 mr-3"></i>
+              <span>Transactions</span>
+            </a>
+
+            <div class="px-4 mt-6 mb-2 text-xs text-gray-300 uppercase">
+              Settings
+            </div>
+            <a
+              href="index.html"
+              class="flex items-center px-4 py-3 text-white hover:bg-[#5a4a8a]"
+            >
+              <i class="fas fa-sign-out-alt w-5 mr-3"></i>
+              <span>Back to Site</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm z-10">
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center">
+              <button id="mobileMenuBtn" class="text-gray-600 md:hidden">
+                <i class="fas fa-bars"></i>
+              </button>
+              <h1 class="ml-4 h3 text-gray-800">Transactions Management</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+              <button class="text-gray-600 hover:text-gray-800 relative">
+                <i class="fas fa-bell"></i>
+                <span
+                  class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
+                  >3</span
+                >
+              </button>
+              <div class="relative">
+                <button
+                  class="flex items-center text-gray-600 hover:text-gray-800"
+                >
+                  <img
+                    src="assets/profile.jpg"
+                    alt="Admin Profile"
+                    class="w-8 h-8 rounded-full"
+                  />
+                  <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
+          <div class="fade-in">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="h2 gradient-text inline-block">
+                Transactions Management
+              </h2>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+              <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="Search Transactions..."
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771] pl-10"
+                    />
+                    <div class="absolute left-3 top-2.5 text-gray-400">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <select
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                  >
+                    <option>All Transactions</option>
+                    <option>Order</option>
+                    <option>Donation</option>
+                    <option>Green Coins</option>
+                  </select>
+                  <select
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#473771]"
+                  >
+                    <option>All Status</option>
+                    <option>Delivered</option>
+                    <option>Processed</option>
+                    <option>Pending</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transaction Table -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Transaction
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Category
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Green Coins
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Status
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Added Date
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div
+                            class="p-2 rounded-full bg-green-100 text-green-600 mr-3"
+                          >
+                            <i class="fas fa-shopping-bag"></i>
+                          </div>
+
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              Order #RG-2025-001
+                            </div>
+                            <div
+                              class="text-sm text-gray-500 truncate max-w-xs"
+                            >
+                              3 items • Bamboo Utensil Set, Water Bottle, Tote
+                              Bag
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">Orders</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">750</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                          >Delivered</span
+                        >
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        May 15, 2025
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                      >
+                        <div class="flex justify-center items-center space-x-2">
+                          <button class="text-blue-600 hover:text-blue-900" onclick="viewTransactionDetails('RG-2025-001', 'order')">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div
+                            class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3"
+                          >
+                            <i class="fas fa-heart"></i>
+                          </div>
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              Donation #DN-2025-008
+                            </div>
+                            <div
+                              class="text-sm text-gray-500 truncate max-w-xs"
+                            >
+                              Clothing donation • 5 items picked up
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">Donations</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">150</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                          >Processing</span
+                        >
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        May 10, 2025
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                      >
+                       <div class="flex justify-center items-center space-x-2">
+                          <button class="text-blue-600 hover:text-blue-900" onclick="viewTransactionDetails('DN-2025-008', 'donation')">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div
+                            class="p-2 rounded-full bg-yellow-100 text-yellow-600 mr-3"
+                          >
+                            <i class="fas fa-coins"></i>
+                          </div>
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              Green Coins Earned
+                            </div>
+                            <div
+                              class="text-sm text-gray-500 truncate max-w-xs"
+                            >
+                              +100 Green Coins
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">Green Coin</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">100</div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                          >Credited</span
+                        >
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        May 5, 2025
+                      </td>
+                      <td
+                        class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                      >
+                         <div class="flex justify-center items-center space-x-2">
+                          <button class="text-blue-600 hover:text-blue-900" onclick="viewTransactionDetails('GC-2025-045', 'greencoins')">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm text-gray-700">
+                    Showing <span class="font-medium">1</span> to
+                    <span class="font-medium">3</span> of
+                    <span class="font-medium">48</span> results
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+                <!-- Order Details Modal -->
+                <div
+                  id="orderModal"
+                  class="fixed inset-0 z-50 overflow-y-auto hidden"
+                >
+                  <div
+                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                  >
+                    <div
+                      class="fixed inset-0 transition-opacity modal-backdrop"
+                      aria-hidden="true"
+                    >
+                      <div
+                        class="absolute inset-0 bg-gray-500 opacity-75"
+                      ></div>
+                    </div>
+                    <span
+                      class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                      aria-hidden="true"
+                      >&#8203;</span
+                    >
+                    <div
+                      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter"
+                    >
+                      <!-- Modal Header -->
+                      <div
+                        class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200"
+                      >
+                        <div class="flex justify-between items-center">
+                          <h3
+                            class="text-lg leading-6 font-medium text-gray-900"
+                            id="modalOrderTitle"
+                          >
+                            Order Details
+                          </h3>
+                          <button
+                            id="closeOrderModal"
+                            class="text-gray-400 hover:text-gray-600"
+                          >
+                            <i class="fas fa-times text-xl"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Modal Body -->
+                      <div
+                        class="bg-white px-4 pt-5 pb-4 sm:p-6"
+                        id="modalOrderContent"
+                      >
+                        <!-- Content will be populated by JavaScript -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Donation Details Modal -->
+                <div
+                  id="donationModal"
+                  class="fixed inset-0 z-50 overflow-y-auto hidden"
+                >
+                  <div
+                    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                  >
+                    <div
+                      class="fixed inset-0 transition-opacity modal-backdrop"
+                      aria-hidden="true"
+                    >
+                      <div
+                        class="absolute inset-0 bg-gray-500 opacity-75"
+                      ></div>
+                    </div>
+                    <span
+                      class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                      aria-hidden="true"
+                      >&#8203;</span
+                    >
+                    <div
+                      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter"
+                    >
+                      <!-- Modal Header -->
+                      <div
+                        class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200"
+                      >
+                        <div class="flex justify-between items-center">
+                          <h3
+                            class="text-lg leading-6 font-medium text-gray-900"
+                            id="modalDonationTitle"
+                          >
+                            Donation Details
+                          </h3>
+                          <button
+                            id="closeDonationModal"
+                            class="text-gray-400 hover:text-gray-600"
+                          >
+                            <i class="fas fa-times text-xl"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Modal Body -->
+                      <div
+                        class="bg-white px-4 pt-5 pb-4 sm:p-6"
+                        id="modalDonationContent"
+                      >
+                        <!-- Content will be populated by JavaScript -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+      <!-- Transaction Details Modal -->
+    <div
+      id="transactionModal"
+      class="fixed inset-0 z-50 overflow-y-auto hidden"
+    >
+      <div
+        class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div
+          class="fixed inset-0 transition-opacity modal-backdrop"
+          aria-hidden="true"
+        >
+          <div
+            class="absolute inset-0 bg-gray-500 opacity-75"
+          ></div>
+        </div>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >&#8203;</span
+        >
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-enter"
+        >
+          <!-- Modal Header -->
+          <div
+            class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-200"
+          >
+            <div class="flex justify-between items-center">
+              <h3
+                class="text-lg leading-6 font-medium text-gray-900"
+                id="modalTitle"
+              >
+                Transaction Details
+              </h3>
+              <button
+                id="closeTransactionModal"
+                class="text-gray-400 hover:text-gray-600"
+              >
+                <i class="fas fa-times text-xl"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Body -->
+          <div
+            class="bg-white px-4 pt-5 pb-4 sm:p-6"
+            id="modalContent"
+          >
+            <!-- Content will be populated by JavaScript -->
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="button"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#473771] text-base font-medium text-white hover:bg-[#37265c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:ml-3 sm:w-auto sm:text-sm"
+              id="downloadReceiptBtn"
+            >
+              Download Receipt
+            </button>
+            <button
+              type="button"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#473771] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              onclick="closeModal()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      const closeMobileMenu = document.getElementById("closeMobileMenu");
+
+      mobileMenuBtn.addEventListener("click", function () {
+        mobileSidebar.classList.toggle("hidden");
+      });
+
+      closeMobileMenu.addEventListener("click", function () {
+        mobileSidebar.classList.add("hidden");
+      });
+
+      // Transaction data
+      const transactionData = {
+        'RG-2025-001': {
+          id: 'RG-2025-001',
+          type: 'order',
+          title: 'Order #RG-2025-001',
+          status: 'Delivered',
+          date: 'May 15, 2025',
+          greenCoins: 750,
+          customer: {
+            name: 'Sarah Johnson',
+            email: 'sarah.johnson@email.com',
+            phone: '+1 (555) 123-4567',
+            address: '123 Green Street, Eco City, EC 12345'
+          },
+          items: [
+            { name: 'Bamboo Utensil Set', quantity: 1, price: '$25.00', greenCoins: 250 },
+            { name: 'Eco-friendly Water Bottle', quantity: 1, price: '$35.00', greenCoins: 300 },
+            { name: 'Organic Cotton Tote Bag', quantity: 1, price: '$20.00', greenCoins: 200 }
+          ],
+          total: '$80.00',
+          paymentMethod: 'Green Coins + Credit Card',
+          shippingMethod: 'Standard Delivery',
+          trackingNumber: 'RG2025001TRACK'
+        },
+        'DN-2025-008': {
+          id: 'DN-2025-008',
+          type: 'donation',
+          title: 'Donation #DN-2025-008',
+          status: 'Processing',
+          date: 'May 10, 2025',
+          greenCoins: 150,
+          donor: {
+            name: 'Michael Chen',
+            email: 'michael.chen@email.com',
+            phone: '+1 (555) 987-6543',
+            address: '456 Charity Lane, Give City, GC 67890'
+          },
+          items: [
+            { name: 'Winter Jackets', quantity: 2, condition: 'Good' },
+            { name: 'Jeans', quantity: 3, condition: 'Excellent' }
+          ],
+          pickupDate: 'May 12, 2025',
+          pickupTime: '2:00 PM - 4:00 PM',
+          charity: 'Local Homeless Shelter',
+          notes: 'Items in excellent condition, ready for immediate use'
+        },
+        'GC-2025-045': {
+          id: 'GC-2025-045',
+          type: 'greencoins',
+          title: 'Green Coins Earned #GC-2025-045',
+          status: 'Credited',
+          date: 'May 5, 2025',
+          greenCoins: 100,
+          user: {
+            name: 'Emily Rodriguez',
+            email: 'emily.rodriguez@email.com',
+            phone: '+1 (555) 456-7890'
+          },
+          activity: 'Recycling Reward',
+          description: 'Plastic bottles recycling',
+          items: [
+            { type: 'Plastic Bottles', quantity: 20, points: 5 },
+            { type: 'Aluminum Cans', quantity: 10, points: 3 }
+          ],
+          location: 'Eco Center Downtown',
+          verifiedBy: 'Recycling Station #3'
+        }
+      };
+
+      // View transaction details
+      function viewTransactionDetails(transactionId, type) {
+        const transaction = transactionData[transactionId];
+        if (!transaction) return;
+
+        const modal = document.getElementById('transactionModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+
+        modalTitle.textContent = transaction.title;
+
+        let content = '';
+
+        if (type === 'order') {
+          content = `
+            <div class="space-y-6">
+              <!-- Status and Basic Info -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Status</label>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">${transaction.status}</span>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Order Date</label>
+                  <p class="text-sm text-gray-900">${transaction.date}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Green Coins Used</label>
+                  <p class="text-sm text-gray-900">${transaction.greenCoins}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Total Amount</label>
+                  <p class="text-sm font-medium text-gray-900">${transaction.total}</p>
+                </div>
+              </div>
+
+              <!-- Customer Information -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Customer Information</h4>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Name</label>
+                      <p class="text-sm text-gray-900">${transaction.customer.name}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Email</label>
+                      <p class="text-sm text-gray-900">${transaction.customer.email}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Phone</label>
+                      <p class="text-sm text-gray-900">${transaction.customer.phone}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Shipping Address</label>
+                      <p class="text-sm text-gray-900">${transaction.customer.address}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Order Items -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Order Items</h4>
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Item</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Qty</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Green Coins</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      ${transaction.items.map(item => `
+                        <tr>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.name}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.quantity}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.price}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.greenCoins}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Payment and Shipping -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="text-md font-medium text-gray-900 mb-3">Payment Information</h4>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="space-y-2">
+                      <div>
+                        <label class="block text-sm font-medium text-gray-500">Payment Method</label>
+                        <p class="text-sm text-gray-900">${transaction.paymentMethod}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="text-md font-medium text-gray-900 mb-3">Shipping Information</h4>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="space-y-2">
+                      <div>
+                        <label class="block text-sm font-medium text-gray-500">Shipping Method</label>
+                        <p class="text-sm text-gray-900">${transaction.shippingMethod}</p>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-gray-500">Tracking Number</label>
+                        <p class="text-sm text-gray-900">${transaction.trackingNumber}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (type === 'donation') {
+          content = `
+            <div class="space-y-6">
+              <!-- Status and Basic Info -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Status</label>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">${transaction.status}</span>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Donation Date</label>
+                  <p class="text-sm text-gray-900">${transaction.date}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Green Coins Earned</label>
+                  <p class="text-sm text-gray-900">${transaction.greenCoins}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Charity</label>
+                  <p class="text-sm text-gray-900">${transaction.charity}</p>
+                </div>
+              </div>
+
+              <!-- Donor Information -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Donor Information</h4>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Name</label>
+                      <p class="text-sm text-gray-900">${transaction.donor.name}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Email</label>
+                      <p class="text-sm text-gray-900">${transaction.donor.email}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Phone</label>
+                      <p class="text-sm text-gray-900">${transaction.donor.phone}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Address</label>
+                      <p class="text-sm text-gray-900">${transaction.donor.address}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Donated Items -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Donated Items</h4>
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Item</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Condition</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      ${transaction.items.map(item => `
+                        <tr>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.name}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.quantity}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.condition}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Pickup Information -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Pickup Information</h4>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Pickup Date</label>
+                      <p class="text-sm text-gray-900">${transaction.pickupDate}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Pickup Time</label>
+                      <p class="text-sm text-gray-900">${transaction.pickupTime}</p>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-500">Notes</label>
+                    <p class="text-sm text-gray-900">${transaction.notes}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (type === 'greencoins') {
+          content = `
+            <div class="space-y-6">
+              <!-- Status and Basic Info -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Status</label>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">${transaction.status}</span>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Date Earned</label>
+                  <p class="text-sm text-gray-900">${transaction.date}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Green Coins Earned</label>
+                  <p class="text-sm font-medium text-green-600">+${transaction.greenCoins}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-500">Activity Type</label>
+                  <p class="text-sm text-gray-900">${transaction.activity}</p>
+                </div>
+              </div>
+
+              <!-- User Information -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">User Information</h4>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Name</label>
+                      <p class="text-sm text-gray-900">${transaction.user.name}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Email</label>
+                      <p class="text-sm text-gray-900">${transaction.user.email}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Phone</label>
+                      <p class="text-sm text-gray-900">${transaction.user.phone}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Activity Details -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Activity Details</h4>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <div class="space-y-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Description</label>
+                      <p class="text-sm text-gray-900">${transaction.description}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Location</label>
+                      <p class="text-sm text-gray-900">${transaction.location}</p>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-500">Verified By</label>
+                      <p class="text-sm text-gray-900">${transaction.verifiedBy}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recycled Items -->
+              <div>
+                <h4 class="text-md font-medium text-gray-900 mb-3">Recycled Items</h4>
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Item Type</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Points Each</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Points</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      ${transaction.items.map(item => `
+                        <tr>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.type}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.quantity}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.points}</td>
+                          <td class="px-4 py-2 text-sm text-gray-900">${item.quantity * item.points}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        modalContent.innerHTML = content;
+        modal.classList.remove('hidden');
+      }
+
+      // Close modal
+      function closeModal() {
+        document.getElementById('transactionModal').classList.add('hidden');
+      }
+
+      // Close modal when clicking outside
+      document.getElementById('closeTransactionModal').addEventListener('click', closeModal);
+
+      // Close modal when clicking backdrop
+      document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+
+      // Download receipt functionality
+      document.getElementById('downloadReceiptBtn').addEventListener('click', function() {
+        alert('Receipt download functionality would be implemented here');
+      });
+    </script>
+  </body>
+</html>
