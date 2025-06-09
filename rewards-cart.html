@@ -41,6 +41,42 @@
             >
           </a>
         </div>
+         <div class="relative">
+            <button
+              id="profileBtn"
+              class="flex items-center space-x-2 text-[#473771] hover:text-[#37265c]"
+            >
+              <img
+                src="assets/profile.jpg"
+                alt="Profile"
+                class="w-8 h-8 rounded-full"
+              />
+              <span class="font-medium">Noor Fariha</span>
+              <i class="fas fa-chevron-down text-sm"></i>
+            </button>
+            <div
+              id="profileMenu"
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden"
+            >
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Green Coins: 1,250</a
+              >
+              <div class="border-t border-gray-100"></div>
+                <a
+                href="dashboard.html"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Dashboard</a
+              >
+              <div class="border-t border-gray-100"></div>
+              <a
+                href="signup.html"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Sign Out</a
+              >
+            </div>
+          </div>
       </div>
       <!-- Mobile menu button -->
       <button class="md:hidden text-[#473771]" id="mobileMenuBtn">
@@ -500,7 +536,7 @@
                 Proceed to Checkout
               </button>
               <a
-                href="product-catalog.html"
+                href="shop.html"
                 class="block border border-[#473771] text-[#473771] text-center py-3 rounded-lg font-medium hover:bg-purple-50 transition-colors"
               >
                 Continue Shopping
@@ -1429,7 +1465,7 @@
           </div>
           <h2 class="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
           <p class="text-gray-600 mb-6">Looks like you haven't added any items to your cart yet.</p>
-          <a href="product-catalog.html" class="bg-[#473771] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors">Start Shopping</a>
+          <a href="shop.html" class="bg-[#473771] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors">Start Shopping</a>
         </div>
       `;
           }
@@ -1668,7 +1704,7 @@
           }
           document.body.style.overflow = "auto";
           // Redirect to product catalog
-          window.location.href = "product-catalog.html";
+          window.location.href = "shop.html";
         });
       }
 
@@ -1691,7 +1727,7 @@
         </div>
         <h2 class="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
         <p class="text-gray-600 mb-6">Looks like you haven't added any items to your cart yet.</p>
-        <a href="product-catalog.html" class="bg-[#473771] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors">Start Shopping</a>
+        <a href="shop.html" class="bg-[#473771] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#37265c] transition-colors">Start Shopping</a>
       </div>
     `;
         }
